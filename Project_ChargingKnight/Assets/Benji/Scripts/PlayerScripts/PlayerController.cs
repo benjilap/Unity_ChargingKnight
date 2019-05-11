@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
-	// Use this for initialization
+    [HideInInspector]
+    public int playerNum;
+
 	void Start () {
 		
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}
