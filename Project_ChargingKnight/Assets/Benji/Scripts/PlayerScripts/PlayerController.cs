@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    [SerializeField]
+    float deadValue =0.4f;
+
     [HideInInspector]
     public int playerNum;
 
-	void Start () {
-		
-	}
-	
+    public float HorizontalAxis()
+    {
+        if (Input.GetAxis("J" + playerNum + "LeftStickX") > deadValue ||
+            Input.GetAxis("J" + playerNum + "LeftStickX") < -deadValue) 
+        {
+            return Input.GetAxis("J" + playerNum + "LeftStickX");
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-	void Update () {
-		
-	}
+    public float VerticalAxis()
+    {
+        if (Input.GetAxis("J" + playerNum + "LeftStickY") > deadValue ||
+            Input.GetAxis("J" + playerNum + "LeftStickY") < -deadValue)
+        {
+            return Input.GetAxis("J" + playerNum + "LeftStickY");
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 }

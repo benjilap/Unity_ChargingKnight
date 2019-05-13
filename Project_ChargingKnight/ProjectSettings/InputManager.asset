@@ -18,7 +18,7 @@ InputManager:
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
+    type: 2
     axis: 0
     joyNum: 1
   - serializedVersion: 3
@@ -34,8 +34,8 @@ InputManager:
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
-    axis: 0
+    type: 2
+    axis: 1
     joyNum: 1
   - serializedVersion: 3
     m_Name: J2LeftStickX
@@ -44,13 +44,13 @@ InputManager:
     negativeButton: left
     positiveButton: right
     altNegativeButton: 
-    altPositiveButton: mouse 0
+    altPositiveButton: 
     gravity: 3
     dead: 0.001
     sensitivity: 3
-    snap: 0
+    snap: 1
     invert: 0
-    type: 0
+    type: 2
     axis: 0
     joyNum: 2
   - serializedVersion: 3
@@ -60,14 +60,14 @@ InputManager:
     negativeButton: down
     positiveButton: up
     altNegativeButton: 
-    altPositiveButton: mouse 1
-    gravity: 0
+    altPositiveButton: 
+    gravity: 3
     dead: 0.001
-    sensitivity: 0
-    snap: 0
+    sensitivity: 3
+    snap: 1
     invert: 0
-    type: 0
-    axis: 0
+    type: 2
+    axis: 1
     joyNum: 2
   - serializedVersion: 3
     m_Name: Fire3

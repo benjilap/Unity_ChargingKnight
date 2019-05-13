@@ -19,12 +19,12 @@ public class CameraScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        CheckPlayer();
 
     }
 
     private void FixedUpdate()
     {
+        CheckPlayer();
         FollowTarget();
         
     }
@@ -41,20 +41,22 @@ public class CameraScript : MonoBehaviour {
             }
             else
             {
-                camCurrentTarget = camTargets[0].transform.position;
+                camCurrentTarget = camTargets[0].transform.position + new Vector3(0,camHeight,0);
             }
 
         }
     }
 
+
+
     void FollowTarget()
     {
         if (camTargets != null)
         {
-            if (Vector3.Distance(this.transform.position, camCurrentTarget) > 0.5f)
-            {
+            //if (Vector3.Distance(this.transform.position, camCurrentTarget) > 0.5f)
+            //{
                 this.transform.position = Vector3.Lerp(this.transform.position, camCurrentTarget, camOffset);
-            }
+            //}
         }
     }
 }

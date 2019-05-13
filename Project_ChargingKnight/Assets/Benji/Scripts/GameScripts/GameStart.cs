@@ -38,7 +38,7 @@ public class GameStart : MonoBehaviour {
             GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
             if (currentPlayers.Length == 0)
             {
-            Debug.Log(currentPlayers.Length);
+
                 for(int i=1; i <= GameManager.playersNmbrs; i++)
                 {
                     GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(i), Quaternion.identity) as GameObject;
