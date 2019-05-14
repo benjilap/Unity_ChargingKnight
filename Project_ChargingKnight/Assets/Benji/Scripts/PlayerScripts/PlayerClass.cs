@@ -6,13 +6,17 @@ public class PlayerClass : MonoBehaviour {
 
     PlayerController playerController;
     Rigidbody playerRb;
+    Transform aimDir;
 
     [SerializeField]
     float playerSpeed = 1;
 
+    Vector3 playerDir;
+
 	void Start () {
         playerController = this.GetComponent<PlayerController>();
         playerRb = this.GetComponent<Rigidbody>();
+        aimDir = this.transform.Find("DirInd");
 	}
 	
 	// Update is called once per frame
@@ -22,6 +26,9 @@ public class PlayerClass : MonoBehaviour {
 
     void PlayerMovement()
     {
-        playerRb.velocity = new Vector3(playerController.HorizontalAxis(), 0, -playerController.VerticalAxis()).normalized * playerSpeed;
+        playerDir = new Vector3(playerController.HorizontalAxis(), 0, -playerController.VerticalAxis()).normalized;
+        aimDir.localPosition = playerDir;
+
+        playerRb.velocity = playerDir * playerSpeed;
     }
 }
