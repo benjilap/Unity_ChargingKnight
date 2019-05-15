@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField]
-    float deadValue =0.4f;
 
     [HideInInspector]
-    public int playerNum;
+    public int controllerNum;
 
     public float HorizontalAxis()
     {
-        if (Input.GetAxis("J" + playerNum + "LeftStickX") > deadValue ||
-            Input.GetAxis("J" + playerNum + "LeftStickX") < -deadValue) 
+        if (CheckControllerNum())
         {
-            return Input.GetAxis("J" + playerNum + "LeftStickX");
+            return Input.GetAxis("J" + controllerNum + "LeftStickX");
         }
         else
         {
@@ -25,14 +22,25 @@ public class PlayerController : MonoBehaviour {
 
     public float VerticalAxis()
     {
-        if (Input.GetAxis("J" + playerNum + "LeftStickY") > deadValue ||
-            Input.GetAxis("J" + playerNum + "LeftStickY") < -deadValue)
+        if (CheckControllerNum())
         {
-            return Input.GetAxis("J" + playerNum + "LeftStickY");
+            return Input.GetAxis("J" + controllerNum + "LeftStickY");
         }
         else
         {
             return 0;
+        }
+    }
+
+    bool CheckControllerNum()
+    {
+        if(controllerNum !=0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

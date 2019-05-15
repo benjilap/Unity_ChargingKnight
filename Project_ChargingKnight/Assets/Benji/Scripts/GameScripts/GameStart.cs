@@ -6,10 +6,13 @@ public class GameStart : MonoBehaviour {
 
     [SerializeField]
     float spawnHeight;
+    [SerializeField]
+    float spawnOffset = 2;
     Vector3 startPos;
 
     Object playerPrefab;
     Object camPrefab;
+    Object GM_Canvas;
 
     List<GameObject> actualsPlayer = new List<GameObject>();
 
@@ -17,6 +20,8 @@ public class GameStart : MonoBehaviour {
     void Start () {
         playerPrefab = Resources.Load("Player/Player");
         camPrefab = Resources.Load("Player/GameCamera");
+        GM_Canvas = Resources.Load("Canvas/GMCanvas");
+
         CheckPlayer();
         CheckCam();
     }
@@ -27,6 +32,7 @@ public class GameStart : MonoBehaviour {
         CheckPlayer();
         CheckCam();
         CheckPlayerList();
+        CheckGM_Canvas();
 
     }
 
@@ -41,10 +47,10 @@ public class GameStart : MonoBehaviour {
 
                 for(int i=1; i <= GameManager.playersNmbrs; i++)
                 {
-                    GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(i), Quaternion.identity) as GameObject;
-                    if (myNewPlayer.GetComponent<PlayerController>() != null)
+                    GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(i, spawnOffset), Quaternion.identity) as GameObject;
+                    if (myNewPlayer.GetComponent<PlayerClass>() != null)
                     {
-                        myNewPlayer.GetComponent<PlayerController>().playerNum = i;
+                        myNewPlayer.GetComponent<PlayerClass>().playerNum = i;
                         myNewPlayer.name = "Player" + i.ToString();
 
                     }
@@ -56,10 +62,10 @@ public class GameStart : MonoBehaviour {
         {
             if (GameObject.FindGameObjectWithTag("Player") == null)
             {
-                GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(0), Quaternion.identity) as GameObject;
-                if (myNewPlayer.GetComponent<PlayerController>() != null)
+                GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(0,0), Quaternion.identity) as GameObject;
+                if (myNewPlayer.GetComponent<PlayerClass>() != null)
                 {
-                    myNewPlayer.GetComponent<PlayerController>().playerNum = GameManager.playersNmbrs;
+                    myNewPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
                     myNewPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
                 }
                 actualsPlayer.Add(myNewPlayer);
@@ -71,7 +77,18 @@ public class GameStart : MonoBehaviour {
     {
         if (GameObject.FindObjectOfType<CameraScript>() == null)
         {
-            GameObject myNewCam = Instantiate(camPrefab, SetStartPos(0), Quaternion.identity) as GameObject;
+            GameObject myNewCam = Instantiate(camPrefab, SetStartPos(0,0), Quaternion.identity) as GameObject;
+            myNewCam.name = camPrefab.name;
+        }
+    }
+
+    void CheckGM_Canvas()
+    {
+        if (GameObject.FindObjectOfType<GM_CanvasScript>() == null)
+        {
+            GameObject myNewGMCanvas = Instantiate(GM_Canvas, Vector3.zero, Quaternion.identity) as GameObject;
+            myNewGMCanvas.GetComponent<GM_CanvasScript>().listOfPlayers = actualsPlayer;
+            myNewGMCanvas.name = GM_Canvas.name;
         }
     }
 
@@ -86,16 +103,16 @@ public class GameStart : MonoBehaviour {
         }
     }
 
-    Vector3 SetStartPos(int playerNum)
+    Vector3 SetStartPos(int playerNum, float playerOffset)
     {
         if (playerNum == 2)
         {
-            return startPos = new Vector3(-1, spawnHeight, 0);
+            return startPos = new Vector3(playerOffset, spawnHeight, 0);
 
         }
         else if (playerNum == 1)
         {
-            return startPos = new Vector3(1, spawnHeight, 0);
+            return startPos = new Vector3(-playerOffset, spawnHeight, 0);
 
         }
         else

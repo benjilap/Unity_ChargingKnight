@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerClass : MonoBehaviour {
 
+    [HideInInspector]
+    public int playerNum;
+    
     PlayerController playerController;
     Rigidbody playerRb;
     Transform aimDir;
@@ -22,11 +25,12 @@ public class PlayerClass : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         PlayerMovement();
-	}
+
+    }
 
     void PlayerMovement()
     {
-        playerDir = new Vector3(playerController.HorizontalAxis(), 0, -playerController.VerticalAxis()).normalized;
+        playerDir = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized;
         aimDir.localPosition = playerDir;
 
         playerRb.velocity = playerDir * playerSpeed;
