@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    bool CheckControllerNum()
+    public bool CheckControllerNum()
     {
         if(controllerNum !=0)
         {

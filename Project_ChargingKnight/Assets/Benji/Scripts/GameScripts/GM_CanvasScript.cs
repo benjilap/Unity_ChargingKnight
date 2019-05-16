@@ -15,6 +15,8 @@ public class GM_CanvasScript : MonoBehaviour {
     int[] selectableController ;
 
     void Start() {
+        Input.GetJoystickNames().Initialize();
+
         controllerSelectCanvas = Resources.Load("Canvas/ControllerSelection");
         CreateControllerSelection();
         SetSelectableController();
@@ -82,6 +84,7 @@ public class GM_CanvasScript : MonoBehaviour {
 
         for (int i = 0; i < Input.GetJoystickNames().Length; i++)
         {
+            Debug.Log(Input.GetJoystickNames()[i]);
             selectableController.SetValue(i + 1, i);
         }
 
