@@ -10,29 +10,83 @@ public class PlayerClass : MonoBehaviour {
     PlayerController playerController;
     Rigidbody playerRb;
     Transform aimDir;
+    [SerializeField]
+    AnimationCurve accelerationCurve;
 
     [SerializeField]
     float playerSpeed = 1;
+    [SerializeField]
+    float playerAcceleration = 1;
 
-    Vector3 playerDir;
+    Vector3 controllerDir;
+
+    bool accelerationState;
+    float accelerationTime;
 
 	void Start () {
         playerController = this.GetComponent<PlayerController>();
         playerRb = this.GetComponent<Rigidbody>();
         aimDir = this.transform.Find("DirInd");
+        //InitAccelCurve();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        PlayerMovement();
+        if (playerController.CheckControllerNum())
+        {
+            PlayerMovement();
+        }
 
+        
     }
 
     void PlayerMovement()
     {
-        playerDir = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized;
-        aimDir.localPosition = playerDir;
+        aimDir.localPosition = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized; 
 
-        playerRb.velocity = playerDir * playerSpeed;
+        playerRb.velocity = PlayerDir() * playerSpeed;
+    }
+
+    Vector3 ControllerDir()
+    {
+        Vector3 tempControllerDir = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized;
+        if ( tempControllerDir.magnitude != 0)
+        {
+            controllerDir = tempControllerDir;
+            return controllerDir;
+        }
+        else
+        {
+            if(controllerDir == Vector3.zero)
+            {
+                controllerDir = Vector3.forward;
+            }
+            return controllerDir;
+        }
+
+    }
+
+    Vector3 PlayerDir()
+    {
+        return ControllerDir() * AccelerationSpeed();
+    }
+
+    float AccelerationSpeed()
+    {
+        if(!accelerationState)
+        {
+            accelerationState = true;
+            accelerationTime = Time.time;
+        }
+
+        float tempTime = Mathf.Clamp01((Time.time - accelerationTime) * (1 / playerAcceleration));
+
+        return accelerationCurve.Evaluate(tempTime);
+    }
+
+    void InitAccelCurve()
+    {
+        accelerationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.4f, 0.6f), new Keyframe(1, 1));
+
     }
 }
