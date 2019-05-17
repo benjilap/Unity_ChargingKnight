@@ -7,11 +7,12 @@ public class PlayerLifeManager : MonoBehaviour {
 
     public float life;
     int degats;
-    public Slider barVie;
+    Slider barVie;
     float sliderValue;
 
 	// Use this for initialization
 	void Start () {
+        //barVie = Slider.Fin("BarVie");
      barVie.maxValue = life;
      sliderValue = life;
      barVie.value = sliderValue;
