@@ -10,6 +10,9 @@ public class PlayerClass : MonoBehaviour {
     PlayerController playerController;
     Rigidbody playerRb;
     Transform aimDir;
+    Transform plyrDir;
+    Transform cldDir;
+
     [SerializeField]
     AnimationCurve accelerationCurve;
 
@@ -17,18 +20,24 @@ public class PlayerClass : MonoBehaviour {
     float playerSpeed = 1;
     [SerializeField]
     float playerAcceleration = 1;
+    [SerializeField]
+    float playerAngularSpeed = 1;
 
     Vector3 controllerDir;
 
     bool accelerationState;
     float accelerationTime;
+    bool angularMoveState;
+    float angularMoveTime;
 
-	void Start () {
+    void Start () {
         playerController = this.GetComponent<PlayerController>();
         playerRb = this.GetComponent<Rigidbody>();
-        aimDir = this.transform.Find("DirInd");
+        aimDir = this.transform.Find("CtlrDir");
+        cldDir = this.transform.Find("CltdDir");
+        plyrDir = this.transform.Find("PlyrDir");
         //InitAccelCurve();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -42,7 +51,8 @@ public class PlayerClass : MonoBehaviour {
 
     void PlayerMovement()
     {
-        aimDir.localPosition = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized; 
+        aimDir.localPosition = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized;
+        plyrDir.localPosition = playerRb.velocity;
 
         playerRb.velocity = PlayerDir() * playerSpeed;
     }
@@ -68,7 +78,11 @@ public class PlayerClass : MonoBehaviour {
 
     Vector3 PlayerDir()
     {
-        return ControllerDir() * AccelerationSpeed();
+        Vector3 tempPlayerDir = Vector3.RotateTowards(playerRb.velocity.normalized, ControllerDir(), playerAngularSpeed * Time.deltaTime, 1f);
+        cldDir.localPosition = tempPlayerDir;
+        Debug.Log(tempPlayerDir);
+
+        return tempPlayerDir * AccelerationSpeed();
     }
 
     float AccelerationSpeed()
