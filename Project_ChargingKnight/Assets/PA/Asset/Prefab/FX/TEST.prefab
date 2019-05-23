@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198233909380255574}
   - component: {fileID: 199721979373273172}
   m_Layer: 0
-  m_Name: Test_Movement_ParticleSystem
+  m_Name: TEST
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

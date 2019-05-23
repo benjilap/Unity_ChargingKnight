@@ -71,6 +71,10 @@ public class PlayerClass : MonoBehaviour {
             {
                 controllerDir = Vector3.forward;
             }
+            else
+            {
+                controllerDir = playerRb.velocity.normalized;
+            }
             return controllerDir;
         }
 
