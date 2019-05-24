@@ -840,21 +840,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114436806141374338, guid: 22809e7ecf07c9d41b2376c59d7aea40,
-        type: 2}
-      propertyPath: playerDodgeTime
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114436806141374338, guid: 22809e7ecf07c9d41b2376c59d7aea40,
-        type: 2}
-      propertyPath: playerSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114436806141374338, guid: 22809e7ecf07c9d41b2376c59d7aea40,
-        type: 2}
-      propertyPath: playerAngularSpeed
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22809e7ecf07c9d41b2376c59d7aea40, type: 2}
   m_IsPrefabAsset: 0
