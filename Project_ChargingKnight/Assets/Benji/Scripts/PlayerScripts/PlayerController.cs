@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 
-    [HideInInspector]
+    //[HideInInspector]
     public int controllerNum;
 
     public float HorizontalAxis()
@@ -29,6 +29,30 @@ public class PlayerController : MonoBehaviour {
         else
         {
             return 0;
+        }
+    }
+
+    public bool LeftBumper()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetButtonUp("J" + controllerNum + "LeftBumper");
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool ButtonA()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetButtonUp("J" + controllerNum + "ButtonA");
+        }
+        else
+        {
+            return false;
         }
     }
 
