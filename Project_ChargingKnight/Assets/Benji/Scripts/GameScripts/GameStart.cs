@@ -40,8 +40,7 @@ public class GameStart : MonoBehaviour {
     {
         if (GameManager.playersNmbrs == 2)
         {
-
-            GameObject[] currentPlayers = GameObject.FindGameObjectsWithTag("Player");
+            PlayerClass[] currentPlayers = GameObject.FindObjectsOfType<PlayerClass>();
             if (currentPlayers.Length == 0)
             {
 
@@ -57,18 +56,39 @@ public class GameStart : MonoBehaviour {
                     actualsPlayer.Add(myNewPlayer);
                 }
             }
+            else if (actualsPlayer.Count < GameManager.playersNmbrs)
+            {
+                if (currentPlayers.Length <2)
+                {
+                    GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(GameManager.playersNmbrs, spawnOffset), Quaternion.identity) as GameObject;
+                    if (myNewPlayer.GetComponent<PlayerClass>() != null)
+                    {
+                        myNewPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
+                        myNewPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
+
+                    }
+                    actualsPlayer.Add(myNewPlayer);
+                }
+            }
         }
         else if(GameManager.playersNmbrs == 1)
         {
-            if (GameObject.FindGameObjectWithTag("Player") == null)
+            if (GameObject.FindObjectOfType<PlayerClass>() == null)
             {
-                GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(0,0), Quaternion.identity) as GameObject;
+                GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(0, 0), Quaternion.identity) as GameObject;
                 if (myNewPlayer.GetComponent<PlayerClass>() != null)
                 {
                     myNewPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
                     myNewPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
                 }
                 actualsPlayer.Add(myNewPlayer);
+            }
+            else if (actualsPlayer.Count < GameManager.playersNmbrs)
+            {
+                GameObject actualPlayer = GameObject.FindObjectOfType<PlayerClass>().gameObject;
+                actualPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
+                actualPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
+                actualsPlayer.Add(actualPlayer);
             }
         }
     }
@@ -87,8 +107,13 @@ public class GameStart : MonoBehaviour {
         if (GameObject.FindObjectOfType<GM_CanvasScript>() == null)
         {
             GameObject myNewGMCanvas = Instantiate(GM_Canvas, Vector3.zero, Quaternion.identity) as GameObject;
-            myNewGMCanvas.GetComponent<GM_CanvasScript>().listOfPlayers = actualsPlayer;
+            myNewGMCanvas.GetComponent<ControllerSelectionScript>().listOfPlayers = actualsPlayer;
             myNewGMCanvas.name = GM_Canvas.name;
+        }
+        else
+        {
+            GameObject actualGMCanvas = GameObject.FindObjectOfType<GM_CanvasScript>().gameObject;
+            actualGMCanvas.GetComponent<ControllerSelectionScript>().listOfPlayers = actualsPlayer;
         }
     }
 
