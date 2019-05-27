@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraScript : MonoBehaviour {
 
     Vector3 camCurrentTarget;
-    GameObject[] camTargets;
+    PlayerClass[] camTargets;
 
     [SerializeField]
     float camHeight = 10;
@@ -31,7 +31,7 @@ public class CameraScript : MonoBehaviour {
 
     void CheckPlayer()
     {
-        camTargets = GameObject.FindGameObjectsWithTag("Player");
+        camTargets = GameObject.FindObjectsOfType<PlayerClass>();
         if (camTargets != null)
         {
             if (camTargets.Length == 2)

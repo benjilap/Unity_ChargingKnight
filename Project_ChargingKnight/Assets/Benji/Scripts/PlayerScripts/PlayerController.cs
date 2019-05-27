@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 
-    //[HideInInspector]
+    [HideInInspector]
     public int controllerNum;
 
     public float HorizontalAxis()

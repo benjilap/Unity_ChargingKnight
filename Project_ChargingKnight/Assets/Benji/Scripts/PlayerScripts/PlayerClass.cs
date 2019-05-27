@@ -29,6 +29,8 @@ public class PlayerClass : MonoBehaviour {
     float playerDodgeAngle = 40;
     [SerializeField]
     float playerDodgeTime = 1;
+    [SerializeField]
+    float playerAtkDuration = 0.5f;
 
     Vector3 controllerDir;
     Vector3 dodgeDir;
@@ -61,7 +63,7 @@ public class PlayerClass : MonoBehaviour {
             PlayerDodgeActivate();
             PlayerAttack();
         }
-        Debug.Log(PlayerDirFaced());
+
     }
 
     void PlayerMovement()
@@ -142,7 +144,25 @@ public class PlayerClass : MonoBehaviour {
 
     Vector3 PlayerDir()
     {
-        Vector3 tempPlayerDir = Vector3.RotateTowards(playerRb.velocity.normalized, ControllerDir(), playerAngularSpeed * Time.deltaTime, 1f);
+        Vector3 tempPlayerDir = Vector3.zero;
+
+        //BounceWall
+        Ray fwdRay = new Ray(this.transform.position, playerRb.velocity.normalized);
+        RaycastHit hit;
+
+
+        //if (Physics.Raycast(fwdRay, out hit, 1))
+        //{
+        //    print(hit.collider.tag);
+        //    if (hit.collider.tag != "Player")
+        //    {
+        //        tempPlayerDir = Vector3.Reflect(playerRb.velocity.normalized, hit.normal);
+        //    }
+        //}
+        //else
+        //{
+            tempPlayerDir = Vector3.RotateTowards(playerRb.velocity.normalized, ControllerDir(), playerAngularSpeed * Time.deltaTime, 1f);
+        //}
 
         //VisualInfos
         cldDir.localPosition = tempPlayerDir;
@@ -192,14 +212,14 @@ public class PlayerClass : MonoBehaviour {
     
     IEnumerator ResetAttack()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(playerAtkDuration);
         playerAttackZone.playerIsAttacking = false;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(playerAtkDuration/2);
         canAttack = true;
 
     }
 
-    int PlayerDirFaced()
+    public int PlayerDirFaced()
     {
         if (playerRb.velocity.normalized.x > 0.5f)
         {
