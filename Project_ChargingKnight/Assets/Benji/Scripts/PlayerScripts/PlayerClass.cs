@@ -14,6 +14,7 @@ public class PlayerClass : MonoBehaviour {
     Transform plyrDir;
     Transform cldDir;
     Transform angularInd;
+    AttackTriggerScript playerAttackZone;
 
     [SerializeField]
     AnimationCurve accelerationCurve;
@@ -36,6 +37,8 @@ public class PlayerClass : MonoBehaviour {
     float accelerationTime;
     bool dodgeState;
     float dodgeTime;
+    bool canAttack = true;
+
 
     //TempVar
     float tempSpeedPct;
@@ -47,6 +50,7 @@ public class PlayerClass : MonoBehaviour {
         cldDir = this.transform.Find("CtlrDir");
         plyrDir = this.transform.Find("PlyrDir");
         angularInd = this.transform.Find("ControllerDirT");
+        playerAttackZone = this.transform.Find("AttackZone").GetComponent<AttackTriggerScript>();
         //InitAccelCurve();
     }
 	
@@ -55,7 +59,9 @@ public class PlayerClass : MonoBehaviour {
         {
             PlayerMovement();
             PlayerDodgeActivate();
+            PlayerAttack();
         }
+        Debug.Log(PlayerDirFaced());
     }
 
     void PlayerMovement()
@@ -72,7 +78,7 @@ public class PlayerClass : MonoBehaviour {
 
     void PlayerDodgeActivate()
     {
-        if (!dodgeState)
+        if (!dodgeState&&canAttack)
         {
             if (playerController.ButtonA())
             {
@@ -152,7 +158,6 @@ public class PlayerClass : MonoBehaviour {
             accelerationState = true;
             accelerationTime = Time.time;
             tempSpeedPct = playerRb.velocity.magnitude / playerSpeed;
-            print(tempSpeedPct);
         }
 
         float tempTime = Mathf.Clamp01((Time.time - accelerationTime) * (1 / playerAcceleration) + tempSpeedPct);
@@ -169,5 +174,85 @@ public class PlayerClass : MonoBehaviour {
 
     }
 
+    void PlayerAttack()
+    {
+        UpdateAttackZoneTrans();
+
+        if (hittable)
+        {
+            if (playerController.LeftBumper() && canAttack)
+            {
+                canAttack = false;
+                playerAttackZone.playerIsAttacking = true;
+
+                StartCoroutine(ResetAttack());
+            }
+        }
+    }
     
+    IEnumerator ResetAttack()
+    {
+        yield return new WaitForSeconds(0.3f);
+        playerAttackZone.playerIsAttacking = false;
+        yield return new WaitForSeconds(0.3f);
+        canAttack = true;
+
+    }
+
+    int PlayerDirFaced()
+    {
+        if (playerRb.velocity.normalized.x > 0.5f)
+        {
+            return 1;
+
+        }
+        else if (playerRb.velocity.normalized.x < -0.5f)
+        {
+            return 3;
+
+        }
+        else if (playerRb.velocity.normalized.z >= 0.5f)
+        {
+            return 2;
+
+        }
+        else if (playerRb.velocity.normalized.z <= 0.5f)
+        {
+            return 0;
+
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    void UpdateAttackZoneTrans()
+    {
+        if (PlayerDirFaced() == 0)
+        {
+            playerAttackZone.transform.localPosition = new Vector3(0, 0, -0.75f);
+            playerAttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        if(PlayerDirFaced() == 1)
+        {
+            playerAttackZone.transform.localPosition = new Vector3(0.75f, 0, 0);
+            playerAttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+        else
+        if(PlayerDirFaced() == 2)
+        {
+            playerAttackZone.transform.localPosition = new Vector3(0, 0, 0.75f);
+            playerAttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        if(PlayerDirFaced() == 3)
+        {
+            playerAttackZone.transform.localPosition = new Vector3(-0.75f, 0, 0);
+            playerAttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+    }
+
+
 }
