@@ -65,7 +65,7 @@ public class PlayerClass : MonoBehaviour {
             PlayerDodgeActivate();
             PlayerAttack();
         }
-
+        Debug.Log(ScreenLimit());
     }
 
     void PlayerMovement()
@@ -73,10 +73,16 @@ public class PlayerClass : MonoBehaviour {
         //VisualInfos
         plyrDir.localPosition = playerRb.velocity;
 
-        if (hittable)
+        if (hittable )
         {
-            playerRb.velocity = PlayerDir() * playerSpeed;
-
+            if (ScreenLimit())
+            {
+                playerRb.velocity = PlayerDir() * playerSpeed;
+            }
+            else
+            {
+                playerRb.velocity = Vector3.zero;
+            }
         }
     }
 
@@ -278,5 +284,19 @@ public class PlayerClass : MonoBehaviour {
         }
     }
 
+    bool ScreenLimit()
+    {
+        Vector3 maxViewportWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 9.25f));
 
+        if(this.transform.position.x >= maxViewportWorldPos.x || this.transform.position.x <= -maxViewportWorldPos.x || this.transform.position.z >= maxViewportWorldPos.z || this.transform.position.z <= -maxViewportWorldPos.z)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+
+        }
+
+    }
 }
