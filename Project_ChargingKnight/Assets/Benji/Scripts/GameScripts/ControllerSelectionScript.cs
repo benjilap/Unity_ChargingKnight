@@ -31,6 +31,10 @@ public class ControllerSelectionScript : MonoBehaviour {
             CreateControllerSelection();
         }
         CheckController();
+        foreach(GameObject player in listOfPlayers)
+        {
+            Debug.Log(player.GetComponent<PlayerClass>().playerNum);
+        }
     }
 
     void CreateControllerSelection()

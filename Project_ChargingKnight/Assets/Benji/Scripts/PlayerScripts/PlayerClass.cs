@@ -31,6 +31,8 @@ public class PlayerClass : MonoBehaviour {
     float playerDodgeTime = 1;
     [SerializeField]
     float playerAtkDuration = 0.5f;
+    [SerializeField]
+    LayerMask RayLM;
 
     Vector3 controllerDir;
     Vector3 dodgeDir;
@@ -150,19 +152,21 @@ public class PlayerClass : MonoBehaviour {
         Ray fwdRay = new Ray(this.transform.position, playerRb.velocity.normalized);
         RaycastHit hit;
 
+        
+        Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized*1,Color.red);
 
-        //if (Physics.Raycast(fwdRay, out hit, 1))
-        //{
-        //    print(hit.collider.tag);
-        //    if (hit.collider.tag != "Player")
-        //    {
-        //        tempPlayerDir = Vector3.Reflect(playerRb.velocity.normalized, hit.normal);
-        //    }
-        //}
-        //else
-        //{
+
+        if (Physics.Raycast(fwdRay, out hit, 1,RayLM))
+        {
+            print(hit.collider.name);
+
+            tempPlayerDir = Vector3.Reflect(playerRb.velocity.normalized, hit.normal);
+
+        }
+        else
+        {
             tempPlayerDir = Vector3.RotateTowards(playerRb.velocity.normalized, ControllerDir(), playerAngularSpeed * Time.deltaTime, 1f);
-        //}
+        }
 
         //VisualInfos
         cldDir.localPosition = tempPlayerDir;
