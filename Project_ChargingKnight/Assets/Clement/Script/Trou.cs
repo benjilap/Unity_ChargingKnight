@@ -47,7 +47,7 @@ public class Trou : MonoBehaviour
             playerX = player.transform.position.x;
             player.GetComponent<PlayerLifeManager>().life -= degats;
 
-            if (velocity.x < 0)
+            if (velocity.x < 0 && Mathf.Abs(velocity.x) > Mathf.Abs(velocity.z))
             {
                 player.transform.position.Set(boundMaxX + 1, playerY, playerZ);
                 //vecWithPl = new Vector3(-1, playerY, playerZ);
