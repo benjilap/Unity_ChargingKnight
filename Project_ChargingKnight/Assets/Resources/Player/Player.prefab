@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4874770270226904}
   - component: {fileID: 212829154286267484}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PlyrDir
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114920858623185872}
   - component: {fileID: 114436806141374338}
   - component: {fileID: 65186165078789566}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4796134635336202}
   - component: {fileID: 212542071541274336}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ControlerDirT
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4327410689693882}
   - component: {fileID: 212137709075389716}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: CtlrDir
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 23198780939946432}
   - component: {fileID: 65197344165110662}
   - component: {fileID: 114912700594159292}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: AttackZone
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 212644726377382398}
   - component: {fileID: 95018173842635296}
   - component: {fileID: 114323368063389294}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -394,9 +394,7 @@ MonoBehaviour:
   playerDodgeAngle: 40
   playerDodgeTime: 0.4
   playerAtkDuration: 0.5
-  RayLM:
-    serializedVersion: 2
-    m_Bits: 2147484471
+  playerAtkRecover: 0.3
 --- !u!114 &114912700594159292
 MonoBehaviour:
   m_ObjectHideFlags: 1

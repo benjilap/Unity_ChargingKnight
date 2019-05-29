@@ -19,21 +19,17 @@ public class PlayerClass : MonoBehaviour {
     [SerializeField]
     AnimationCurve accelerationCurve;
 
-    [SerializeField]
-    float playerSpeed = 1;
-    [SerializeField]
-    float playerAcceleration = 1;
-    [SerializeField]
-    float playerAngularSpeed = 1;
-    [SerializeField]
-    float playerDodgeAngle = 40;
-    [SerializeField]
-    float playerDodgeTime = 1;
-    [SerializeField]
-    float playerAtkDuration = 0.5f;
-    [SerializeField]
-    LayerMask RayLM;
+    // Alterable Value
+    public float playerSpeed = 1;
+    public float playerAcceleration = 1;
+    public float playerAngularSpeed = 1;
+    public float playerDodgeAngle = 40;
+    public float playerDodgeTime = 1;
+    public float playerAtkDuration = 0.5f;
+    public float playerAtkRecover = 0.3f;
+    
 
+    LayerMask rayLayerMask;
     Vector3 controllerDir;
     Vector3 dodgeDir;
 
@@ -65,6 +61,8 @@ public class PlayerClass : MonoBehaviour {
             PlayerDodgeActivate();
             PlayerAttack();
         }
+
+        SetLayerMask();
         Debug.Log(ScreenLimit());
     }
 
@@ -75,14 +73,9 @@ public class PlayerClass : MonoBehaviour {
 
         if (hittable )
         {
-            if (ScreenLimit())
-            {
+
                 playerRb.velocity = PlayerDir() * playerSpeed;
-            }
-            else
-            {
-                playerRb.velocity = Vector3.zero;
-            }
+
         }
     }
 
@@ -162,7 +155,7 @@ public class PlayerClass : MonoBehaviour {
         Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized*1,Color.red);
 
 
-        if (Physics.Raycast(fwdRay, out hit, 1,RayLM))
+        if (Physics.Raycast(fwdRay, out hit, 1,rayLayerMask))
         {
             print(hit.collider.name);
 
@@ -224,7 +217,7 @@ public class PlayerClass : MonoBehaviour {
     {
         yield return new WaitForSeconds(playerAtkDuration);
         playerAttackZone.playerIsAttacking = false;
-        yield return new WaitForSeconds(playerAtkDuration/2);
+        yield return new WaitForSeconds(playerAtkRecover);
         canAttack = true;
 
     }
@@ -296,6 +289,36 @@ public class PlayerClass : MonoBehaviour {
         {
             return true;
 
+        }
+
+    }
+
+    void SetLayerMask()
+    {
+        if (this.gameObject.layer != LayerMask.NameToLayer(this.name))
+        {
+            for (int i = 0; i < 32; i++)
+            {
+                Debug.Log(LayerMask.LayerToName(i));
+                if (LayerMask.LayerToName(i) != "")
+                {
+                    if (LayerMask.LayerToName(i) == this.gameObject.name)
+                    {
+                        rayLayerMask.value |= 0 << i;
+                        this.gameObject.layer = i;
+
+                    }
+                    else if (LayerMask.LayerToName(i) == "MinimapRender")
+                    {
+                        rayLayerMask.value |= 0 << i;
+                    }
+                    else
+                    {
+                        rayLayerMask.value |= 1 << i;
+
+                    }
+                }
+            }
         }
 
     }
