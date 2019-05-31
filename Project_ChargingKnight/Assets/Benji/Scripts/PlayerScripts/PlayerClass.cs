@@ -83,7 +83,7 @@ public class PlayerClass : MonoBehaviour {
 
         if(BounceObstacle() != Vector3.zero)
         {
-            playerRb.velocity = Vector3.Reflect(playerRb.velocity, BounceObstacle()) * playerSpeed * AccelerationSpeed();
+            playerRb.velocity = Vector3.Reflect(playerRb.velocity.normalized, BounceObstacle()) * playerSpeed * AccelerationSpeed();
         }
     }
 
@@ -269,12 +269,15 @@ public class PlayerClass : MonoBehaviour {
 
     Vector3 BounceObstacle()
     {
+        Vector3 minViewportWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9.25f));
         Vector3 maxViewportWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 9.25f));
         Vector3 playerNextDir = this.transform.position + playerRb.velocity.normalized * 0.5f;
 
         Ray fwdRay = new Ray(this.transform.position, playerRb.velocity.normalized);
         RaycastHit hit;
 
+        Debug.Log(minViewportWorldPos);
+        Debug.Log(maxViewportWorldPos);
         Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized * 1, Color.red);
 
         if (Physics.Raycast(fwdRay, out hit, 1, rayLayerMask))
@@ -283,92 +286,41 @@ public class PlayerClass : MonoBehaviour {
             return hit.normal;
         }
         else
-        if (playerNextDir.x >= 0)
+
+        if (playerNextDir.x >= maxViewportWorldPos.x)
         {
-            if (playerNextDir.x >= gameCamera.camCurrentTarget.x + maxViewportWorldPos.x)
-            {
-                Debug.Log(playerNextDir.x + " >=" + (gameCamera.camCurrentTarget.x + maxViewportWorldPos.x));
+            Debug.Log(playerNextDir.x + " >=" + (maxViewportWorldPos.x));
+            Debug.Log(gameCamera.camCurrentTarget);
 
-                return Vector3.left;
-            }
-            else
-           if (playerNextDir.x <= gameCamera.camCurrentTarget.x - maxViewportWorldPos.x)
-            {
-                Debug.Log("2");
-
-                return Vector3.right;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
-        }
-        else if (playerNextDir.x < 0)
-        {
-            if (playerNextDir.x <= gameCamera.camCurrentTarget.x + maxViewportWorldPos.x)
-            {
-                Debug.Log(playerNextDir.x + " >=" + (gameCamera.camCurrentTarget.x + maxViewportWorldPos.x));
-
-                return Vector3.left;
-            }
-            else
-            if (playerNextDir.x >= gameCamera.camCurrentTarget.x - maxViewportWorldPos.x)
-            {
-                Debug.Log("2");
-
-                return Vector3.right;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
+            return Vector3.left;
         }
         else
-        if (playerNextDir.z >= 0)
+        if (playerNextDir.x <= minViewportWorldPos.x)
         {
-            if (playerNextDir.z >= gameCamera.camCurrentTarget.z + maxViewportWorldPos.z)
-            {
-                Debug.Log("3");
+            Debug.Log(playerNextDir.x + " <=" + (minViewportWorldPos.x));
+            Debug.Log(gameCamera.camCurrentTarget);
 
-                return Vector3.back;
-            }
-            else
-            if (playerNextDir.z <= gameCamera.camCurrentTarget.z - maxViewportWorldPos.z)
-            {
-                Debug.Log("4");
-
-                return Vector3.forward;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
+            return Vector3.right;
         }
-        else if (playerNextDir.z < 0)
+        else
+
+        if (playerNextDir.z >=  maxViewportWorldPos.z)
         {
-            if (playerNextDir.z >= gameCamera.camCurrentTarget.z + maxViewportWorldPos.z)
-            {
-                Debug.Log("3");
-
-                return Vector3.back;
-            }
-            else
-            if (playerNextDir.z <= gameCamera.camCurrentTarget.z - maxViewportWorldPos.z)
-            {
-                Debug.Log("4");
-
-                return Vector3.forward;
-            }
-            else
-            {
-                return Vector3.zero;
-            }
+            Debug.Log(playerNextDir.z + " >=" + (maxViewportWorldPos.z));
+            Debug.Log(gameCamera.camCurrentTarget);
+            return Vector3.back;
+        }
+        else
+        if (playerNextDir.z <= minViewportWorldPos.z)
+        {
+            Debug.Log(playerNextDir.z + " <=" + (minViewportWorldPos.z));
+            Debug.Log(gameCamera.camCurrentTarget);
+            return Vector3.forward;
         }
         else
         {
             return Vector3.zero;
         }
-
     }
 
     void SetLayerMask()
