@@ -223,5 +223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e11fd9293e3a124a8542bfb110c21ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camCurrentTarget: {x: 0, y: 0, z: 0}
   camHeight: 10
   camOffset: 0.5

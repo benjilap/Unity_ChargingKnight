@@ -8,6 +8,8 @@ public class PlayerClass : MonoBehaviour {
     public int playerNum;
     [HideInInspector]
     public bool hittable = true;
+    [HideInInspector]
+    public CameraScript gameCamera;
 
     PlayerController playerController;
     Rigidbody playerRb;
@@ -15,6 +17,7 @@ public class PlayerClass : MonoBehaviour {
     Transform cldDir;
     Transform angularInd;
     AttackTriggerScript playerAttackZone;
+
 
     [SerializeField]
     AnimationCurve accelerationCurve;
@@ -63,7 +66,7 @@ public class PlayerClass : MonoBehaviour {
         }
 
         SetLayerMask();
-        Debug.Log(ScreenLimit());
+        Debug.Log(BounceObstacle());
     }
 
     void PlayerMovement()
@@ -74,8 +77,13 @@ public class PlayerClass : MonoBehaviour {
         if (hittable )
         {
 
-                playerRb.velocity = PlayerDir() * playerSpeed;
+            playerRb.velocity = PlayerDir() * playerSpeed;
 
+        }
+
+        if(BounceObstacle() != Vector3.zero)
+        {
+            playerRb.velocity = Vector3.Reflect(playerRb.velocity.normalized, BounceObstacle()) * playerSpeed * AccelerationSpeed();
         }
     }
 
@@ -147,25 +155,7 @@ public class PlayerClass : MonoBehaviour {
     {
         Vector3 tempPlayerDir = Vector3.zero;
 
-        //BounceWall
-        Ray fwdRay = new Ray(this.transform.position, playerRb.velocity.normalized);
-        RaycastHit hit;
-
-        
-        Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized*1,Color.red);
-
-
-        if (Physics.Raycast(fwdRay, out hit, 1,rayLayerMask))
-        {
-            print(hit.collider.name);
-
-            tempPlayerDir = Vector3.Reflect(playerRb.velocity.normalized, hit.normal);
-
-        }
-        else
-        {
-            tempPlayerDir = Vector3.RotateTowards(playerRb.velocity.normalized, ControllerDir(), playerAngularSpeed * Time.deltaTime, 1f);
-        }
+        tempPlayerDir = Vector3.RotateTowards(playerRb.velocity.normalized, ControllerDir(), playerAngularSpeed * Time.deltaTime, 1f);
 
         //VisualInfos
         cldDir.localPosition = tempPlayerDir;
@@ -277,20 +267,60 @@ public class PlayerClass : MonoBehaviour {
         }
     }
 
-    bool ScreenLimit()
+    Vector3 BounceObstacle()
     {
+        Vector3 minViewportWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9.25f));
         Vector3 maxViewportWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 9.25f));
+        Vector3 playerNextDir = this.transform.position + playerRb.velocity.normalized * 0.5f;
 
-        if(this.transform.position.x >= maxViewportWorldPos.x || this.transform.position.x <= -maxViewportWorldPos.x || this.transform.position.z >= maxViewportWorldPos.z || this.transform.position.z <= -maxViewportWorldPos.z)
+        Ray fwdRay = new Ray(this.transform.position, playerRb.velocity.normalized);
+        RaycastHit hit;
+
+        Debug.Log(minViewportWorldPos);
+        Debug.Log(maxViewportWorldPos);
+        Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized * 1, Color.red);
+
+        if (Physics.Raycast(fwdRay, out hit, 1, rayLayerMask))
         {
-            return false;
+            Debug.Log("0");
+            return hit.normal;
+        }
+        else
+
+        if (playerNextDir.x >= maxViewportWorldPos.x)
+        {
+            Debug.Log(playerNextDir.x + " >=" + (maxViewportWorldPos.x));
+            Debug.Log(gameCamera.camCurrentTarget);
+
+            return Vector3.left;
+        }
+        else
+        if (playerNextDir.x <= minViewportWorldPos.x)
+        {
+            Debug.Log(playerNextDir.x + " <=" + (minViewportWorldPos.x));
+            Debug.Log(gameCamera.camCurrentTarget);
+
+            return Vector3.right;
+        }
+        else
+
+        if (playerNextDir.z >=  maxViewportWorldPos.z)
+        {
+            Debug.Log(playerNextDir.z + " >=" + (maxViewportWorldPos.z));
+            Debug.Log(gameCamera.camCurrentTarget);
+            return Vector3.back;
+        }
+        else
+        if (playerNextDir.z <= minViewportWorldPos.z)
+        {
+            Debug.Log(playerNextDir.z + " <=" + (minViewportWorldPos.z));
+            Debug.Log(gameCamera.camCurrentTarget);
+            return Vector3.forward;
         }
         else
         {
-            return true;
-
+            return Vector3.zero;
         }
-
     }
 
     void SetLayerMask()
@@ -299,7 +329,7 @@ public class PlayerClass : MonoBehaviour {
         {
             for (int i = 0; i < 32; i++)
             {
-                Debug.Log(LayerMask.LayerToName(i));
+
                 if (LayerMask.LayerToName(i) != "")
                 {
                     if (LayerMask.LayerToName(i) == this.gameObject.name)
@@ -319,7 +349,13 @@ public class PlayerClass : MonoBehaviour {
                     }
                 }
             }
+            for(int i = 0; i < this.transform.childCount; i++)
+            {
+                if(this.transform.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Default"))
+                {
+                    this.transform.GetChild(i).gameObject.layer = this.gameObject.layer;
+                }
+            }
         }
-
     }
 }
