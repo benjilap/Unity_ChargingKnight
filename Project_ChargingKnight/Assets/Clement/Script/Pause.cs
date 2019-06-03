@@ -11,13 +11,33 @@ public class Pause : MonoBehaviour {
     [SerializeField]
     float pauseFadeDuration = 0.3f;
     GameObject menuPause;
-
+    List<Transform> listMenuPause = new List<Transform>();
+    GameObject curseur;
+    GameObject player;
+    PlayerController playerOneController;
+    PlayerController playerTwoController;
+    int currentCursor;
 
     // Use this for initialization
     void Start () {
         gonePaused = false;
         menuPause = GameObject.Find("MenuPause");
         Time.timeScale = 0f;
+        for(int i = 0; i < menuPause.transform.childCount; i++ )
+        {
+            
+            listMenuPause.Add(menuPause.transform.GetChild(i));
+           
+        }
+        listMenuPause.RemoveAt(0);
+        curseur = listMenuPause[0].gameObject;
+        if(GameObject.Find("Player1") && GameObject.Find("Player2") !=null)
+        {
+            playerOneController = GameObject.Find("Player1").GetComponent<PlayerController>();
+            playerTwoController = GameObject.Find("Player2").GetComponent<PlayerController>();
+        }
+        currentCursor = 1;
+        menuPause.active = false;
 
     }
 
@@ -26,11 +46,24 @@ public class Pause : MonoBehaviour {
     {
 
 
+
         if (Input.GetKeyDown(KeyCode.C))
             pause();
-    
 
- 
+        if (isPaused && playerOneController.VerticalAxis() != 0)
+        {
+            if(playerController.VerticalAxis() < 0 && currentCursor < listMenuPause.Count)
+            {
+                currentCursor--;
+                curseur.transform.localPosition = listMenuPause[currentCursor].localPosition;
+            }
+            if(playerController.VerticalAxis() > 0 && currentCursor > 1)
+            {
+                currentCursor++;
+                curseur.transform.localPosition = listMenuPause[currentCursor].localPosition;
+            }
+        }
+    
 
 
     }
