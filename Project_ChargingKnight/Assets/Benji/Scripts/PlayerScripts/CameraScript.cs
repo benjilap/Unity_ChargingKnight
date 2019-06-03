@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
 
-    Vector3 camCurrentTarget;
+    [HideInInspector]
+    public Vector3 camCurrentTarget;
     PlayerClass[] camTargets;
 
     [SerializeField]
@@ -15,7 +16,9 @@ public class CameraScript : MonoBehaviour {
 	void Start () {
         this.transform.position = new Vector3(this.transform.position.x, camHeight, this.transform.position.z);
         CheckPlayer();
-	}
+        AssignCamVarToPl();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,6 +47,7 @@ public class CameraScript : MonoBehaviour {
                 camCurrentTarget = camTargets[0].transform.position + new Vector3(0,camHeight,0);
             }
 
+
         }
     }
 
@@ -57,6 +61,17 @@ public class CameraScript : MonoBehaviour {
             //{
                 this.transform.position = Vector3.Lerp(this.transform.position, camCurrentTarget, camOffset);
             //}
+        }
+    }
+
+    void AssignCamVarToPl()
+    {
+        if (camTargets != null)
+        {
+            foreach(PlayerClass player in camTargets)
+            {
+                player.gameCamera = this;
+            }
         }
     }
 }
