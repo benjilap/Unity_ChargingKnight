@@ -14,5 +14,6 @@ public class EnemyCacScript : EnemyScript {
 	// Update is called once per frame
 	void Update () {
         FovRadar();
+        EnemyPatrolling();
 	}
 }

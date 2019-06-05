@@ -1,15 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour {
 
     public float fovViewRadius;
-    [Range(0, 360)]
-    public float fovViewAngle;
+    [SerializeField,Range(0, 179)]
+    float fovViewAngle;
+
+    [SerializeField]
+    float timeOfPatrol = 1;
+    [SerializeField]
+    float distOfPatrol = 1;
+    Vector3 enemyPatrolNextPos;
+    Vector3 randomNextDir;
+    bool inMove;
+
 
     public LayerMask targetMask;
+    public LayerMask obstacleMask;
+    
     protected Rigidbody enemyRb;
+    protected NavMeshAgent enemyNavAgent;
 
     [HideInInspector]
     public List<PlayerClass> targetsList = new List<PlayerClass>();
@@ -36,11 +49,12 @@ public class EnemyScript : MonoBehaviour {
                     else if (LayerMask.LayerToName(i) == "MinimapRender" ) 
                     {
                         targetMask.value |= 0 << i;
+                        obstacleMask.value |= 0 << i;
                     }
                     else
                     {
                         targetMask.value |= 1 << i;
-
+                        obstacleMask.value |= 1 << i;
                     }
                 }
             }
@@ -58,7 +72,7 @@ public class EnemyScript : MonoBehaviour {
     {
         if (enemyRb.velocity.magnitude > 0)
         {
-            enemyTempDir = enemyRb.velocity.normalized;
+            enemyTempDir = enemyNavAgent.velocity.normalized;
         }
         bool canswitch=false;
         float angleLerpTimer = (Time.time - timeSaveFov);
@@ -104,12 +118,56 @@ public class EnemyScript : MonoBehaviour {
     protected void InitVar()
     {
         enemyRb = this.GetComponent<Rigidbody>();
+        enemyNavAgent = this.GetComponent<NavMeshAgent>();
+        enemyPatrolNextPos = this.transform.position;
     }
 
     protected void UpdateAngleLimit()
     {
         angleLimit[0] =  fovViewAngle / 2;
         angleLimit[1] = -fovViewAngle / 2;
+
+    }
+
+    protected void EnemyPatrolling()
+    {
+
+        if (Vector3.Distance(this.transform.position, enemyPatrolNextPos) <= 0.19f)
+        {
+            Debug.Log("0");
+            StartCoroutine(PatrolNextPosLoop());
+            Ray rayDir = new Ray(this.transform.position, randomNextDir);
+            Ray rayDown = new Ray(this.transform.position+randomNextDir*distOfPatrol, Vector3.down);
+
+            RaycastHit hit;
+            if (!Physics.Raycast(rayDir, out hit, distOfPatrol, obstacleMask) && Physics.Raycast(rayDown, out hit, distOfPatrol, obstacleMask))
+            {
+
+                enemyPatrolNextPos = this.transform.position + randomNextDir * distOfPatrol;
+
+            }
+            else
+            {
+                enemyPatrolNextPos = this.transform.position + randomNextDir * -distOfPatrol;
+            }
+        }
+        else
+        {
+            Debug.Log("1");
+
+            if (!inMove)
+            {
+                inMove = true;
+                enemyNavAgent.SetDestination(enemyPatrolNextPos);
+            }
+        }
+    }
+
+    IEnumerator PatrolNextPosLoop()
+    {
+        yield return new WaitForSeconds(timeOfPatrol);
+        inMove = false;
+        randomNextDir = new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f)).normalized;
 
     }
 }
