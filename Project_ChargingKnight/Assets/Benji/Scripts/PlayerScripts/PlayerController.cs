@@ -20,11 +20,35 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public float HorizontalAxisRaw()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetAxisRaw("J" + controllerNum + "LeftStickX");
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     public float VerticalAxis()
     {
         if (CheckControllerNum())
         {
             return Input.GetAxis("J" + controllerNum + "LeftStickY");
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public float VerticalAxisRaw()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetAxisRaw("J" + controllerNum + "LeftStickY");
         }
         else
         {
@@ -49,6 +73,30 @@ public class PlayerController : MonoBehaviour {
         if (CheckControllerNum())
         {
             return Input.GetButtonUp("J" + controllerNum + "ButtonA");
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool ButtonB()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetButtonUp("J" + controllerNum + "ButtonB");
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool Start()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetButtonUp("J" + controllerNum + "Start");
         }
         else
         {

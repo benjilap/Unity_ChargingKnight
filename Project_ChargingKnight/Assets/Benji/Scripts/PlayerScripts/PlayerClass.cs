@@ -67,7 +67,7 @@ public class PlayerClass : MonoBehaviour {
 
 
         SetLayerMask();
-        Debug.Log(BounceObstacle());
+        //Debug.Log(BounceObstacle());
 
     }
 
@@ -284,29 +284,29 @@ public class PlayerClass : MonoBehaviour {
         Ray fwdRay = new Ray(this.transform.position, playerRb.velocity.normalized);
         RaycastHit hit;
 
-        Debug.Log(minViewportWorldPos);
-        Debug.Log(maxViewportWorldPos);
-        Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized * 1, Color.red);
+        //Debug.Log(minViewportWorldPos);
+        //Debug.Log(maxViewportWorldPos);
+        //Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized * 1, Color.red);
 
         if (Physics.Raycast(fwdRay, out hit, 1, rayLayerMask))
         {
-            Debug.Log("0");
+            //Debug.Log("0");
             return hit.normal;
         }
         else
 
         if (playerNextDir.x >= maxViewportWorldPos.x)
         {
-            Debug.Log(playerNextDir.x + " >=" + (maxViewportWorldPos.x));
-            Debug.Log(gameCamera.camCurrentTarget);
+            //Debug.Log(playerNextDir.x + " >=" + (maxViewportWorldPos.x));
+            //Debug.Log(gameCamera.camCurrentTarget);
 
             return Vector3.left;
         }
         else
         if (playerNextDir.x <= minViewportWorldPos.x)
         {
-            Debug.Log(playerNextDir.x + " <=" + (minViewportWorldPos.x));
-            Debug.Log(gameCamera.camCurrentTarget);
+            //Debug.Log(playerNextDir.x + " <=" + (minViewportWorldPos.x));
+            //Debug.Log(gameCamera.camCurrentTarget);
 
             return Vector3.right;
         }
@@ -314,15 +314,15 @@ public class PlayerClass : MonoBehaviour {
 
         if (playerNextDir.z >=  maxViewportWorldPos.z)
         {
-            Debug.Log(playerNextDir.z + " >=" + (maxViewportWorldPos.z));
-            Debug.Log(gameCamera.camCurrentTarget);
+            //Debug.Log(playerNextDir.z + " >=" + (maxViewportWorldPos.z));
+           //Debug.Log(gameCamera.camCurrentTarget);
             return Vector3.back;
         }
         else
         if (playerNextDir.z <= minViewportWorldPos.z)
         {
-            Debug.Log(playerNextDir.z + " <=" + (minViewportWorldPos.z));
-            Debug.Log(gameCamera.camCurrentTarget);
+            //Debug.Log(playerNextDir.z + " <=" + (minViewportWorldPos.z));
+            //Debug.Log(gameCamera.camCurrentTarget);
             return Vector3.forward;
         }
         else
