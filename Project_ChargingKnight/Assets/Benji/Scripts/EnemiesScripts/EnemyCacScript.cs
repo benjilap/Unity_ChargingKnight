@@ -15,5 +15,5 @@ public class EnemyCacScript : EnemyScript {
 	void Update () {
         FovRadar();
         EnemyPatrolling();
-	}
+    }
 }
