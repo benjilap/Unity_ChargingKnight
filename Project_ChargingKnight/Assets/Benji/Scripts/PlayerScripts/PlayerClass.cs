@@ -331,7 +331,6 @@ public class PlayerClass : MonoBehaviour {
                     else
                     {
                         rayLayerMask.value |= 1 << i;
-
                     }
                 }
             }
