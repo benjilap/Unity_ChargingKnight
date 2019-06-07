@@ -8,6 +8,7 @@ public class Pause : MonoBehaviour {
     int forTime;
     bool gonePaused;
     bool isPaused;
+    bool isInReliques;
     [SerializeField]
     float pauseFadeDuration = 0.3f;
     GameObject menuPause;
@@ -15,33 +16,65 @@ public class Pause : MonoBehaviour {
     GameObject menuReliques;
     List<Transform> listMenuPause = new List<Transform>();
     List<Transform> listMenuQuitter = new List<Transform>();
+    List<Transform> listMenuReliques = new List<Transform>();
     GameObject curseurPause;
     GameObject curseurQuitter;
     GameObject player;
     PlayerController playerOneController;
     PlayerController playerTwoController;
     int currentCursor;
+    int currentSlot;
     bool canMoveCursor;
-    [SerializeField]
     int nombreSlots;
-    Object slotPrefab;
+    GameObject manager;
+    GameObject slot;
+    GameObject curseurReliques;
+    GameObject lastSlot;
+
+
 
     // Use this for initialization
     void Start () {
-        slotPrefab = Resources.Load("Reliques/Slot");
+
         canMoveCursor = true;
         gonePaused = false;
         isPaused = false;
+        isInReliques = false;
+        manager = GameObject.Find("MANAGER");
+        nombreSlots = manager.GetComponent<ReliqueManager>().nombreSlots;
         menuPause = GameObject.Find("MenuPause");
         menuQuitter = GameObject.Find("MenuQuitter");
         menuReliques = GameObject.Find("MenuReliques");
+        curseurReliques = menuReliques.transform.GetChild(1).gameObject;
+        curseurReliques.transform.SetAsFirstSibling();
+        slot = menuReliques.transform.GetChild(1).gameObject;
+
+
         Time.timeScale = 0f;
-        for(int i = 0; i < menuPause.transform.childCount; i++ )
+
+        for(int i = 0; i < nombreSlots - 1; i++)
+        {
+            lastSlot = Instantiate(slot, menuReliques.transform);
+            lastSlot.name = "Slot" + (i + 1);
+        }
+
+        for(int i = 0; i < menuReliques.transform.childCount; i++)
+        {
+            listMenuReliques.Add(menuReliques.transform.GetChild(i));
+        }
+        listMenuReliques.RemoveAt(0);
+        listMenuReliques.RemoveAt(1);
+        currentSlot = 0;
+        curseurReliques.SetActive(false);
+        menuReliques.SetActive(false);
+
+        for (int i = 0; i < menuPause.transform.childCount; i++ )
         {            
             listMenuPause.Add(menuPause.transform.GetChild(i));
         }
         listMenuPause.RemoveAt(0);
         curseurPause = listMenuPause[0].gameObject;
+
         for (int i = 0; i < menuQuitter.transform.childCount; i++)
         {
             listMenuQuitter.Add(menuQuitter.transform.GetChild(i));
@@ -50,7 +83,7 @@ public class Pause : MonoBehaviour {
         listMenuQuitter.RemoveAt(1);
         curseurQuitter = listMenuQuitter[0].gameObject;
         curseurQuitter.transform.localPosition = listMenuQuitter[1].transform.localPosition;
-        menuQuitter.active = false;
+        menuQuitter.SetActive(false);
 
         curseurPause = listMenuPause[0].gameObject;
         if (GameObject.Find("Player1") && GameObject.Find("Player2") !=null)
@@ -63,12 +96,10 @@ public class Pause : MonoBehaviour {
             playerOneController = GameObject.Find("Player1").GetComponent<PlayerController>();
             playerTwoController = null;
         }
-        for(int i = 0; i < nombreSlots; i++)
-        {
-            Instantiate(slotPrefab, menuReliques.transform);
-        }
+
+
         currentCursor = 1;
-        menuPause.active = false;
+        menuPause.SetActive(false);
 
     }
 
@@ -112,19 +143,103 @@ public class Pause : MonoBehaviour {
                         currentCursor = 1;
                         break;
                     case 4:
-                        menuQuitter.active = true;
-                        menuPause.active = false;
+                        menuQuitter.SetActive(true);
+                        menuPause.SetActive(false);
+                        menuReliques.SetActive(false);
                         currentCursor = 1;
                         break;
                 }
             }
         }
+        ///////////////////
+        ///////////////////
         else
         {
             if (playerOneController.Start())
                 pause();
 
-            if (menuPause.active == true && isPaused && (playerOneController.VerticalAxisRaw() != 0))
+            if (isInReliques == false && menuPause.active == true && isPaused && (playerOneController.HorizontalAxisRaw() < 0))
+            {
+                isInReliques = true;
+                curseurReliques.SetActive(true);
+                curseurPause.SetActive(false);
+            }
+
+            if(isInReliques && isPaused)
+            {
+                if(playerOneController.HorizontalAxisRaw() != 0)
+                {
+                    else if(playerOneController.HorizontalAxisRaw() < 0 && canMoveCursor)
+                    if(currentCursor % 3 == 0 && canMoveCursor)
+                    {
+
+                    }
+                    else
+                    {                                                
+                            currentSlot--;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                    }
+                    else if(playerOneController.HorizontalAxisRaw() > 0 && canMoveCursor)
+                    {                
+                            currentSlot++;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                        
+                    }
+                }
+                if (playerOneController.VerticalAxisRaw() != 0)
+                {
+                    if (playerOneController.VerticalAxisRaw() < 0 && canMoveCursor)
+                    {
+                        if(listMenuReliques[currentSlot + 3].gameObject != null)
+                        {
+                            currentSlot = currentSlot + 3;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                        }
+                        else if(listMenuReliques[currentSlot - 3].gameObject != null)
+                        {
+                            currentSlot = currentSlot - 3;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                        }
+                    }
+                    else if (playerOneController.VerticalAxisRaw() > 0 && canMoveCursor)
+                    {
+                        if (listMenuReliques[currentSlot - 3].gameObject != null)
+                        {
+                            currentSlot = currentSlot - 3;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                        }
+                        else 
+                        {
+
+                            currentSlot = (nombreSlots % Mathf.FloorToInt(nombreSlots / 3));
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                        }
+
+                    }
+                }
+                if (playerOneController.ButtonB())
+                {
+                    currentCursor = 1;
+                    currentSlot = 0;
+                    curseurReliques.SetActive(false);
+                    curseurPause.SetActive(true);
+                    isInReliques = false;
+                }
+            }
+
+            if (isInReliques == false && menuPause.active == true && isPaused && (playerOneController.VerticalAxisRaw() != 0))
             {
                 if (playerOneController.VerticalAxisRaw() < 0 && currentCursor < (listMenuPause.Count - 1) && canMoveCursor)
                 {
@@ -154,7 +269,29 @@ public class Pause : MonoBehaviour {
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
-
+            }
+            else if (isInReliques == false && menuPause.active == true && isPaused && (playerOneController.HorizontalAxisRaw() != 0))
+            {
+                if(playerOneController.HorizontalAxisRaw() < 0 && canMoveCursor)
+                {
+                    isInReliques = true;
+                    curseurPause.SetActive(false);
+                    curseurReliques.SetActive(true);
+                    currentSlot = 0;
+                    curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                    canMoveCursor = false;
+                    StartCoroutine(MoveCursor());
+                }
+                else if (playerOneController.HorizontalAxisRaw() > 0 && canMoveCursor)
+                {
+                    isInReliques = true;
+                    curseurPause.SetActive(false);
+                    curseurReliques.SetActive(true);
+                    currentSlot = 0;
+                    curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                    canMoveCursor = false;
+                    StartCoroutine(MoveCursor());
+                }
             }
             if (playerOneController.ButtonA() && isPaused && menuPause.active == true)
             {
@@ -171,8 +308,9 @@ public class Pause : MonoBehaviour {
                         currentCursor = 1;
                         break;
                     case 4:
-                        menuQuitter.active = true;
-                        menuPause.active = false;
+                        menuQuitter.SetActive(true);
+                        menuPause.SetActive(false);
+                        menuReliques.SetActive(false);
                         currentCursor = 1;
                         break;
                 }
@@ -204,8 +342,9 @@ public class Pause : MonoBehaviour {
                             Application.Quit();
                             break;
                         case 2:
-                            menuQuitter.active = false;
-                            menuPause.active = true;
+                            menuQuitter.SetActive(false);
+                            menuPause.SetActive(true);
+                            menuReliques.SetActive(true);
                             currentCursor = 5;
                             break;
                         default:
@@ -215,8 +354,9 @@ public class Pause : MonoBehaviour {
             }
             else if(playerOneController.ButtonB() && isPaused && menuQuitter.active == true)
                 {
-                menuQuitter.active = false;
-                menuPause.active = true;
+                menuQuitter.SetActive(false);
+                menuPause.SetActive(true);
+                menuReliques.SetActive(true);
                 currentCursor = 5;
             
                 }
@@ -229,14 +369,16 @@ public class Pause : MonoBehaviour {
         {
             StartCoroutine(PauseCoroutine(true));
             gonePaused = false;
-            menuPause.active = true;
+            menuPause.SetActive(true);
+            menuReliques.SetActive(true);
             isPaused = true;
         }
         else
         {
             StartCoroutine(PauseCoroutine(false));
             gonePaused = true;
-            menuPause.active = false;
+            menuPause.SetActive(false);
+            menuReliques.active = false;
             isPaused = false;
         }
     }
