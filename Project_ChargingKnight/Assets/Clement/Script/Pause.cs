@@ -169,12 +169,7 @@ public class Pause : MonoBehaviour {
             {
                 if(playerOneController.HorizontalAxisRaw() != 0)
                 {
-                    else if(playerOneController.HorizontalAxisRaw() < 0 && canMoveCursor)
-                    if(currentCursor % 3 == 0 && canMoveCursor)
-                    {
-
-                    }
-                    else
+                    if(playerOneController.HorizontalAxisRaw() < 0 && canMoveCursor)
                     {                                                
                             currentSlot--;
                             curseurReliques.transform.position = listMenuReliques[currentSlot].position;
@@ -186,8 +181,24 @@ public class Pause : MonoBehaviour {
                             currentSlot++;
                             curseurReliques.transform.position = listMenuReliques[currentSlot].position;
                             canMoveCursor = false;
+                            StartCoroutine(MoveCursor());                        
+                    }
+                    else if(currentSlot % 3 == 0 && canMoveCursor)
+                    {
+                        if(listMenuReliques[currentSlot + 3].gameObject != null)
+                        {
+                            currentSlot = currentSlot + 3;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
                             StartCoroutine(MoveCursor());
-                        
+                        }
+                        else
+                        {
+                            currentSlot = currentSlot + currentSlot % 3;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                        }
                     }
                 }
                 if (playerOneController.VerticalAxisRaw() != 0)
