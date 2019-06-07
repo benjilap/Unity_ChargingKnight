@@ -65,9 +65,7 @@ public class PlayerClass : MonoBehaviour {
             PlayerAttack();
         }
 
-
         SetLayerMask();
-
     }
 
     void PlayerMovement()
@@ -75,12 +73,8 @@ public class PlayerClass : MonoBehaviour {
         //VisualInfos
         plyrDir.localPosition = playerRb.velocity;
 
-        if (hittable)
+        if (hittable )
         {
-
-            playerRb.velocity = PlayerDir() * playerSpeed;
-
-
 
             playerRb.velocity = PlayerDir() * playerSpeed;
 
@@ -89,7 +83,6 @@ public class PlayerClass : MonoBehaviour {
         if(BounceObstacle() != Vector3.zero)
         {
             playerRb.velocity = Vector3.Reflect(playerRb.velocity.normalized, BounceObstacle()) * playerSpeed * AccelerationSpeed();
-
         }
     }
 
@@ -273,7 +266,6 @@ public class PlayerClass : MonoBehaviour {
         }
     }
 
-
     Vector3 BounceObstacle()
     {
         Vector3 minViewportWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 9.25f));
@@ -283,41 +275,32 @@ public class PlayerClass : MonoBehaviour {
         Ray fwdRay = new Ray(this.transform.position, playerRb.velocity.normalized);
         RaycastHit hit;
 
-
-        if (Physics.Raycast(fwdRay, out hit, 1, rayLayerMask))
-        {
-
         Debug.DrawLine(this.transform.position, this.transform.position + playerRb.velocity.normalized * 1, Color.red);
 
         if (Physics.Raycast(fwdRay, out hit, 1, rayLayerMask))
         {
-
             return hit.normal;
         }
         else
 
         if (playerNextDir.x >= maxViewportWorldPos.x)
         {
-
             return Vector3.left;
         }
         else
         if (playerNextDir.x <= minViewportWorldPos.x)
         {
-
             return Vector3.right;
         }
         else
 
         if (playerNextDir.z >=  maxViewportWorldPos.z)
         {
-
             return Vector3.back;
         }
         else
         if (playerNextDir.z <= minViewportWorldPos.z)
         {
-
             return Vector3.forward;
         }
         else
@@ -360,5 +343,4 @@ public class PlayerClass : MonoBehaviour {
             }
         }
     }
-
 }
