@@ -81,7 +81,7 @@ public class EnemyScript : MonoBehaviour {
 
         }
         bool canswitch=false;
-        float angleLerpTimer = (Time.time - timeSaveFov);
+        float angleLerpTimer = (Time.time - timeSaveFov)*1.2f;
         float angleRayDir = Mathf.LerpAngle(currentDirAngle + angleLimit[0], currentDirAngle + angleLimit[1],angleLerpTimer);
         UpdateAngleLimit();
         Vector3 FovRayDir = new Vector3(Mathf.Sin( angleRayDir * Mathf.Deg2Rad), 0, Mathf.Cos(angleRayDir * Mathf.Deg2Rad));

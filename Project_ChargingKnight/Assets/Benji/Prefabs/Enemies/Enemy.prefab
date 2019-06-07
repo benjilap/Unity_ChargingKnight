@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1639099707925384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: -4.77}
+  m_LocalPosition: {x: 0.04, y: 0.25, z: -9.92}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4076516745710632}
@@ -111,16 +111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b58ebb6a745e84fb379731bc8c3d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDirAngle: 0
   fovViewRadius: 3
   fovViewAngle: 170
   timeOfPatrol: 1
   distOfPatrol: 3
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
   targetsList: []
 --- !u!195 &195941543477753986
 NavMeshAgent:
