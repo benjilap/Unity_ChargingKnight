@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackScript : AttackScript {
+public class PlayerCacAttackScript : AttackCacScript {
 
     PlayerClass myPlayer;
     PlayerController myPlayerController;

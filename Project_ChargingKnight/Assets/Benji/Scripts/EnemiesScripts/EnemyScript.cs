@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour {
 
 
     //FovValue
-    [SerializeField]
+
     float currentDirAngle;
     float[] angleLimit = new float[2];
     float timeSaveFov;
@@ -232,7 +232,7 @@ public class EnemyScript : MonoBehaviour {
         }
         else
         {
-            tempDirVector = this.transform.position - TargetSelection().transform.position;
+            tempDirVector = TargetSelection().transform.position - this.transform.position;
         }
 
         if (tempDirVector.normalized.x > 0.5f)
