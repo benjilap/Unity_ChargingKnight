@@ -37,14 +37,14 @@ public class EnemyScript : MonoBehaviour {
 
     protected void InitLayerMask()
     {
-        if (this.gameObject.layer != LayerMask.NameToLayer(this.name))
+        if (this.gameObject.layer != LayerMask.NameToLayer("Enemy"))
         {
             for (int i = 0; i < 32; i++)
             {
 
                 if (LayerMask.LayerToName(i) != "")
                 {
-                    if (LayerMask.LayerToName(i) == this.gameObject.name)
+                    if (LayerMask.LayerToName(i) == "Enemy")
                     {
                         targetMask.value |= 0 << i;
                         this.gameObject.layer = i;

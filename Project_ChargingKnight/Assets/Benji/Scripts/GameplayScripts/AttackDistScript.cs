@@ -9,6 +9,8 @@ public class AttackDistScript : MonoBehaviour {
     [SerializeField]
     protected float AtkRecover;
     public float AtkDist;
+    [SerializeField]
+    protected float projectileSpd =1;
 
     [HideInInspector]
     public bool canAttack = true;
@@ -18,16 +20,11 @@ public class AttackDistScript : MonoBehaviour {
     protected Object projectileObj;
     protected Vector3 projectileSpwPos;
 
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [SerializeField]
+    protected bool hasToShoot;
 
-    void InitVar()
+
+    protected void InitVar()
     {
         projectileObj = Resources.Load("Projectiles/Projectile");
     }
@@ -35,7 +32,7 @@ public class AttackDistScript : MonoBehaviour {
     protected IEnumerator ChargeAttack()
     {
         yield return new WaitForSeconds(AtkCharge);
-        //AttackZone.isAttacking = false;
+        hasToShoot = true;
     }
 
     protected IEnumerator ResetAttack()

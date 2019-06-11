@@ -117,6 +117,7 @@ MonoBehaviour:
   timeOfPatrol: 1
   distOfPatrol: 3
   targetsList: []
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114663041071637032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,10 +129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6168ccfadfbc71e44bf9da1913b19e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AtkCharge: 0.5
-  AtkRecover: 0.3
-  AtkDist: 3
+  AtkCharge: 1
+  AtkRecover: 0.6
+  AtkDist: 5
+  projectileSpd: 1
   canAttack: 1
+  launchProjectile: 1
+  hasToShoot: 0
 --- !u!195 &195100801446878222
 NavMeshAgent:
   m_ObjectHideFlags: 1

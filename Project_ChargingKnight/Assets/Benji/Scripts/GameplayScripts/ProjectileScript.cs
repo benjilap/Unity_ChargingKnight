@@ -6,6 +6,14 @@ public class ProjectileScript : MonoBehaviour {
 
     protected Rigidbody projectileRb;
 
+    [HideInInspector]
+    public string instantiatorName;
+
+    private void Start()
+    {
+        InitVar();
+    }
+
     void Update()
     {
         LookAtDirection();
@@ -23,6 +31,10 @@ public class ProjectileScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(this.gameObject, 0.3f);
+        if (other.gameObject.layer != this.gameObject.layer)
+        {
+            Destroy(this.gameObject, 0.1f);
+
+        }
     }
 }
