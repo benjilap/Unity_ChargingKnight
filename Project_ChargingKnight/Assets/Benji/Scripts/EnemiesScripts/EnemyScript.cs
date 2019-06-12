@@ -35,6 +35,9 @@ public class EnemyScript : MonoBehaviour {
     [HideInInspector]
     public List<PlayerClass> targetsList = new List<PlayerClass>();
 
+    [SerializeField]
+    protected float AtkDist;
+
     protected void InitLayerMask()
     {
         if (this.gameObject.layer != LayerMask.NameToLayer("Enemy"))

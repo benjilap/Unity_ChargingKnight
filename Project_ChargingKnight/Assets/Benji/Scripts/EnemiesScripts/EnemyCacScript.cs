@@ -35,7 +35,7 @@ public class EnemyCacScript : EnemyScript {
             enemyNavAgent.SetDestination(TargetSelection().transform.position);
         }
 
-        if (Vector3.Distance(this.transform.position, enemyNavAgent.destination) <= enemyAttack.AtkDist)
+        if (Vector3.Distance(this.transform.position, enemyNavAgent.destination) <= AtkDist)
         {
             enemyNavAgent.SetDestination(this.transform.position);
 
