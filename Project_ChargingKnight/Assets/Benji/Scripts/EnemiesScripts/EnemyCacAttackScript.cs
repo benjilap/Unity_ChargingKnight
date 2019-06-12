@@ -2,21 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCacAttackScript : AttackScript {
+public class EnemyCacAttackScript : AttackCacScript {
 
     EnemyCacScript myEnemy;
 
-    // Use this for initialization
     void Start()
     {
         InitVar();
         myEnemy = this.GetComponent<EnemyCacScript>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 
