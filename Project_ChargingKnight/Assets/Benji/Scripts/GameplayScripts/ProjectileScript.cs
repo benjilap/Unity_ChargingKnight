@@ -8,6 +8,8 @@ public class ProjectileScript : MonoBehaviour {
 
     [HideInInspector]
     public string instantiatorName;
+    [HideInInspector]
+    public float knokbackPower;
 
     private void Start()
     {
@@ -26,15 +28,23 @@ public class ProjectileScript : MonoBehaviour {
 
     void LookAtDirection()
     {
-        this.transform.rotation = Quaternion.LookRotation(projectileRb.velocity.normalized);
+        if (projectileRb.velocity.magnitude != 0)
+        {
+            this.transform.rotation = Quaternion.LookRotation(projectileRb.velocity.normalized);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer != this.gameObject.layer)
-        {
-            Destroy(this.gameObject, 0.1f);
-
+        { 
+            Rigidbody targetRb = other.GetComponent<Rigidbody>();
+            if (targetRb != null)
+            {
+                targetRb.AddForce(projectileRb.velocity.normalized * 100 * knokbackPower);
+            }
+            
+            Destroy(this.gameObject, 0.05f);
         }
     }
 }

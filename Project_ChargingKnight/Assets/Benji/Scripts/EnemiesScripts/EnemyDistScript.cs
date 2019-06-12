@@ -43,7 +43,7 @@ public class EnemyDistScript : EnemyScript {
             enemyAttack.EnemyDistAttack();
 
         }
-        else if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) > enemyAttack.AtkDist)
+        else if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) > AtkDist)
         {
             if (enemyNavAgent.destination != TargetSelection().transform.position)
             {

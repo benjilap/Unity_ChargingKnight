@@ -117,6 +117,7 @@ MonoBehaviour:
   timeOfPatrol: 1
   distOfPatrol: 3
   targetsList: []
+  AtkDist: 3
   targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114663041071637032
 MonoBehaviour:
@@ -133,6 +134,7 @@ MonoBehaviour:
   AtkRecover: 0.6
   AtkDist: 5
   projectileSpd: 1
+  projectileKnokback: 5
   canAttack: 1
   launchProjectile: 1
   hasToShoot: 0
