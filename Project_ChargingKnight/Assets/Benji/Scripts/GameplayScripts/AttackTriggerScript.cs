@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttackTriggerScript : MonoBehaviour {
 
     [HideInInspector]
-    public bool playerIsAttacking;
+    public bool isAttacking;
 
     private void Update()
     {
@@ -14,7 +14,7 @@ public class AttackTriggerScript : MonoBehaviour {
 
     private void TriggerActive()
     {
-        if (playerIsAttacking)
+        if (isAttacking)
         {
             this.GetComponent<MeshRenderer>().enabled = true;
         }
@@ -25,11 +25,11 @@ public class AttackTriggerScript : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (playerIsAttacking)
-        {
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (isAttacking)
+    //    {
 
-        }
-    }
+    //    }
+    //}
 }

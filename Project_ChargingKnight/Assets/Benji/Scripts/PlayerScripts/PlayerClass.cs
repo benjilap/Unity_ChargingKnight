@@ -16,7 +16,7 @@ public class PlayerClass : MonoBehaviour {
     Transform plyrDir;
     Transform cldDir;
     Transform angularInd;
-    AttackTriggerScript playerAttackZone;
+    PlayerAttackScript playerAttack;
 
 
     [SerializeField]
@@ -28,10 +28,9 @@ public class PlayerClass : MonoBehaviour {
     public float playerAngularSpeed = 1;
     public float playerDodgeAngle = 40;
     public float playerDodgeTime = 1;
-    public float playerAtkDuration = 0.5f;
-    public float playerAtkRecover = 0.3f;
+    //public float playerAtkDuration = 0.5f;
+    //public float playerAtkRecover = 0.3f;
     
-
     LayerMask rayLayerMask;
     Vector3 controllerDir;
     Vector3 dodgeDir;
@@ -40,8 +39,7 @@ public class PlayerClass : MonoBehaviour {
     float accelerationTime;
     bool dodgeState;
     float dodgeTime;
-    bool canAttack = true;
-
+    int playerDirFaced;
 
     //TempVar
     float tempSpeedPct;
@@ -49,11 +47,12 @@ public class PlayerClass : MonoBehaviour {
 
     void Start () {
         playerController = this.GetComponent<PlayerController>();
+        playerAttack = this.GetComponent<PlayerAttackScript>();
         playerRb = this.GetComponent<Rigidbody>();
         cldDir = this.transform.Find("CtlrDir");
         plyrDir = this.transform.Find("PlyrDir");
         angularInd = this.transform.Find("ControllerDirT");
-        playerAttackZone = this.transform.Find("AttackZone").GetComponent<AttackTriggerScript>();
+        
         //InitAccelCurve();
     }
 	
@@ -62,7 +61,7 @@ public class PlayerClass : MonoBehaviour {
         {
             PlayerMovement();
             PlayerDodgeActivate();
-            PlayerAttack();
+            playerAttack.PlayerAttack();
         }
 
         SetLayerMask();
@@ -88,7 +87,7 @@ public class PlayerClass : MonoBehaviour {
 
     void PlayerDodgeActivate()
     {
-        if (!dodgeState&&canAttack)
+        if (!dodgeState&&playerAttack.canAttack)
         {
             if (playerController.ButtonA())
             {
@@ -186,85 +185,37 @@ public class PlayerClass : MonoBehaviour {
 
     }
 
-    void PlayerAttack()
-    {
-        UpdateAttackZoneTrans();
 
-        if (hittable)
-        {
-            if (playerController.LeftBumper() && canAttack)
-            {
-                canAttack = false;
-                playerAttackZone.playerIsAttacking = true;
-
-                StartCoroutine(ResetAttack());
-            }
-        }
-    }
     
-    IEnumerator ResetAttack()
-    {
-        yield return new WaitForSeconds(playerAtkDuration);
-        playerAttackZone.playerIsAttacking = false;
-        yield return new WaitForSeconds(playerAtkRecover);
-        canAttack = true;
 
-    }
 
     public int PlayerDirFaced()
     {
         if (playerRb.velocity.normalized.x > 0.5f)
         {
-            return 1;
+            playerDirFaced = 1;
 
         }
         else if (playerRb.velocity.normalized.x < -0.5f)
         {
-            return 3;
+            playerDirFaced = 3;
 
         }
         else if (playerRb.velocity.normalized.z >= 0.5f)
         {
-            return 2;
+            playerDirFaced =2;
 
         }
         else if (playerRb.velocity.normalized.z <= 0.5f)
         {
-            return 0;
+            playerDirFaced = 0;
 
         }
-        else
-        {
-            return 0;
-        }
+
+        return playerDirFaced;
     }
 
-    void UpdateAttackZoneTrans()
-    {
-        if (PlayerDirFaced() == 0)
-        {
-            playerAttackZone.transform.localPosition = new Vector3(0, 0, -0.75f);
-            playerAttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else
-        if(PlayerDirFaced() == 1)
-        {
-            playerAttackZone.transform.localPosition = new Vector3(0.75f, 0, 0);
-            playerAttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
-        }
-        else
-        if(PlayerDirFaced() == 2)
-        {
-            playerAttackZone.transform.localPosition = new Vector3(0, 0, 0.75f);
-            playerAttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else
-        if(PlayerDirFaced() == 3)
-        {
-            playerAttackZone.transform.localPosition = new Vector3(-0.75f, 0, 0);
-            playerAttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
-        }
-    }
+
 
     Vector3 BounceObstacle()
     {

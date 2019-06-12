@@ -24,13 +24,13 @@ public class EnemyScript : MonoBehaviour {
     Vector3 randomNextDir;
     bool inMove;
     float saveTimePatrolStuck;
-
+    
 
     protected LayerMask targetMask;
     protected LayerMask obstacleMask;
-    
     protected Rigidbody enemyRb;
     protected NavMeshAgent enemyNavAgent;
+    protected int enemyDirFaced;
 
     [HideInInspector]
     public List<PlayerClass> targetsList = new List<PlayerClass>();
@@ -74,6 +74,7 @@ public class EnemyScript : MonoBehaviour {
 
     protected void FovRadar()
     {
+        UpdateAngleLimit();
         if (enemyNavAgent.velocity.magnitude > 0)
         {
            Vector3 enemyTempDir = enemyNavAgent.velocity.normalized;
@@ -81,7 +82,7 @@ public class EnemyScript : MonoBehaviour {
 
         }
         bool canswitch=false;
-        float angleLerpTimer = (Time.time - timeSaveFov)*1.2f;
+        float angleLerpTimer = (Time.time - timeSaveFov)*5f;
         float angleRayDir = Mathf.LerpAngle(currentDirAngle + angleLimit[0], currentDirAngle + angleLimit[1],angleLerpTimer);
         UpdateAngleLimit();
         Vector3 FovRayDir = new Vector3(Mathf.Sin( angleRayDir * Mathf.Deg2Rad), 0, Mathf.Cos(angleRayDir * Mathf.Deg2Rad));
@@ -140,7 +141,7 @@ public class EnemyScript : MonoBehaviour {
         enemyPatrolNextPos = this.transform.position;
     }
 
-    protected void UpdateAngleLimit()
+    void UpdateAngleLimit()
     {
         angleLimit[0] =  fovViewAngle / 2;
         angleLimit[1] = -fovViewAngle / 2;
@@ -201,5 +202,70 @@ public class EnemyScript : MonoBehaviour {
 
     }
 
+    protected PlayerClass TargetSelection()
+    {
+        if(targetsList.Count == 1)
+        {
+            return targetsList[0];
+        }
+        else 
+        {
+            PlayerClass tempTarget = targetsList[0];
+            for(int i = 0; i < targetsList.Count; i++)
+            {
+                
+                if(Vector3.Distance(this.transform.position,tempTarget.transform.position)> Vector3.Distance(this.transform.position, targetsList[i].transform.position))
+                {
+                    tempTarget = targetsList[i];
+                }
+            }
+            return tempTarget;
+        }
+    }
 
+    public int EnemyDirFaced()
+    {
+        Vector3 tempDirVector = Vector3.zero;
+        if (enemyNavAgent.velocity.magnitude != 0)
+        {
+            tempDirVector = enemyNavAgent.velocity;
+        }
+        else
+        {
+            tempDirVector = this.transform.position - TargetSelection().transform.position;
+        }
+
+        if (tempDirVector.normalized.x > 0.5f)
+        {
+            enemyDirFaced= 1;
+
+            return enemyDirFaced;
+
+        }
+        else if (tempDirVector.normalized.x < -0.5f)
+        {
+            enemyDirFaced= 3;
+            return enemyDirFaced;
+
+        }
+        else if (tempDirVector.normalized.z >= 0.5f)
+        {
+            enemyDirFaced= 2;
+            return enemyDirFaced;
+
+        }
+        else if (tempDirVector.normalized.z <= 0.5f)
+        {
+            enemyDirFaced= 0;
+            return enemyDirFaced;
+
+        }
+        else
+        {
+            return enemyDirFaced;
+
+        }
+
+
+    }
 }

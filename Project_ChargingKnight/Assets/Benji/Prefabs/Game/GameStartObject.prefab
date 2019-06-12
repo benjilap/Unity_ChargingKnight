@@ -51,4 +51,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4401bcb533db84fb47de74a6a43ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnHeight: 1
+  spawnHeight: 0.25
+  spawnOffset: 2
