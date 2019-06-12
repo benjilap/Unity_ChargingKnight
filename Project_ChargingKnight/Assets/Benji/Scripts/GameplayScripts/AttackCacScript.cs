@@ -2,36 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackScript : MonoBehaviour {
+public class AttackCacScript : MonoBehaviour {
 
     [SerializeField]
     protected float AtkDuration;
     [SerializeField]
     protected float AtkRecover;
-    
+    public float AtkDist;
+
     [HideInInspector]
     public bool canAttack = true;
 
     protected AttackTriggerScript AttackZone;
-
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     protected void InitVar()
     {
         AttackZone = this.transform.Find("AttackZone").GetComponent<AttackTriggerScript>();
 
     }
-
-
 
     protected IEnumerator ResetAttack()
     {

@@ -16,7 +16,7 @@ public class PlayerClass : MonoBehaviour {
     Transform plyrDir;
     Transform cldDir;
     Transform angularInd;
-    PlayerAttackScript playerAttack;
+    PlayerCacAttackScript playerAttack;
 
 
     [SerializeField]
@@ -47,7 +47,7 @@ public class PlayerClass : MonoBehaviour {
 
     void Start () {
         playerController = this.GetComponent<PlayerController>();
-        playerAttack = this.GetComponent<PlayerAttackScript>();
+        playerAttack = this.GetComponent<PlayerCacAttackScript>();
         playerRb = this.GetComponent<Rigidbody>();
         cldDir = this.transform.Find("CtlrDir");
         plyrDir = this.transform.Find("PlyrDir");

@@ -4,13 +4,51 @@ using UnityEngine;
 
 public class EnemyDistScript : EnemyScript {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    EnemyDistAttackScript enemyAttack;
+
+    [HideInInspector]
+    public Vector3 targetPos;
+
+    // Use this for initialization
+    void Start()
+    {
+        InitLayerMask();
+        InitVar();
+        enemyAttack = this.GetComponent<EnemyDistAttackScript>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        FovRadar();
+
+        if (targetsList.Count != 0)
+        {
+            MoveToAttack();
+        }
+        else
+        {
+            EnemyPatrolling();
+
+        }
+    }
+
+    void MoveToAttack()
+    {
+
+        targetPos = TargetSelection().transform.position + TargetSelection().GetComponent<Rigidbody>().velocity;
+        if (Vector3.Distance(this.transform.position, targetPos) <= enemyAttack.AtkDist)
+        {
+            enemyNavAgent.SetDestination(this.transform.position);
+            enemyAttack.EnemyDistAttack();
+
+        }
+        else if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) > enemyAttack.AtkDist)
+        {
+            if (enemyNavAgent.destination != TargetSelection().transform.position)
+            {
+                enemyNavAgent.SetDestination(TargetSelection().transform.position);
+            }
+        }
+    }
 }
