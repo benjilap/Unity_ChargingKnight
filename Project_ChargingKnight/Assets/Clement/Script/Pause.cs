@@ -14,6 +14,7 @@ public class Pause : MonoBehaviour {
     GameObject menuPause;
     GameObject menuQuitter;
     GameObject menuReliques;
+    GameObject menuStats;
     List<Transform> listMenuPause = new List<Transform>();
     List<Transform> listMenuQuitter = new List<Transform>();
     List<Transform> listMenuReliques = new List<Transform>();
@@ -45,6 +46,7 @@ public class Pause : MonoBehaviour {
         menuPause = GameObject.Find("MenuPause");
         menuQuitter = GameObject.Find("MenuQuitter");
         menuReliques = GameObject.Find("MenuReliques");
+        menuStats = GameObject.Find("MenuStats");
         curseurReliques = menuReliques.transform.GetChild(1).gameObject;
         curseurReliques.transform.SetAsFirstSibling();
         slot = menuReliques.transform.GetChild(1).gameObject;
@@ -97,7 +99,7 @@ public class Pause : MonoBehaviour {
             playerTwoController = null;
         }
 
-
+       
         currentCursor = 1;
         menuPause.SetActive(false);
 
@@ -106,6 +108,8 @@ public class Pause : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(currentSlot);
+        ////Debug.Log(listMenuReliques.Count);
         if (playerOneController && playerTwoController != null)
         {
             if (playerOneController.Start() || playerTwoController.Start())
@@ -169,73 +173,161 @@ public class Pause : MonoBehaviour {
             {
                 if(playerOneController.HorizontalAxisRaw() != 0)
                 {
-                    if(playerOneController.HorizontalAxisRaw() < 0 && canMoveCursor)
-                    {                                                
+                    if(playerOneController.HorizontalAxisRaw() < 0 && canMoveCursor )
+                    {
+                        if ((currentSlot == 0 ||currentSlot % 3 == 0) && canMoveCursor )
+                        {
+                            if (currentSlot + 2 < listMenuReliques.Count)
+                            {
+                                //Debug.Log("yolo");
+                                currentSlot = currentSlot + 2;
+                                curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                canMoveCursor = false;
+                                StartCoroutine(MoveCursor());
+                            }
+                            else if (currentSlot + 1 < listMenuReliques.Count)
+                            {
+                                //Debug.Log("ui");
+                                currentSlot = currentSlot + 1;
+                                curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                canMoveCursor = false;
+                                StartCoroutine(MoveCursor());
+                            }
+                            else { }
+                                //Debug.Log("jaaj");
+                        }
+                        else
+                        {
+                            //Debug.Log("merde");
                             currentSlot--;
                             curseurReliques.transform.position = listMenuReliques[currentSlot].position;
                             canMoveCursor = false;
                             StartCoroutine(MoveCursor());
+                        }
                     }
-                    else if(playerOneController.HorizontalAxisRaw() > 0 && canMoveCursor)
-                    {                
+                    else if(playerOneController.HorizontalAxisRaw() > 0 && canMoveCursor )
+                    {
+                        if ((currentSlot + 1) % 3 == 0 && canMoveCursor)
+                        {
+                            currentSlot = currentSlot - 2;
+                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                            canMoveCursor = false;
+                            StartCoroutine(MoveCursor());
+                        }
+                        else if (currentSlot + 1 < listMenuReliques.Count)
+                        {
                             currentSlot++;
                             curseurReliques.transform.position = listMenuReliques[currentSlot].position;
                             canMoveCursor = false;
-                            StartCoroutine(MoveCursor());                        
-                    }
-                    else if(currentSlot % 3 == 0 && canMoveCursor)
-                    {
-                        if(listMenuReliques[currentSlot + 3].gameObject != null)
+                            StartCoroutine(MoveCursor());
+                        }
+                        else if (currentSlot % 3 == 1 && currentSlot + 1 >= listMenuReliques.Count)
                         {
-                            currentSlot = currentSlot + 3;
+                            currentSlot = currentSlot - 1;
                             curseurReliques.transform.position = listMenuReliques[currentSlot].position;
                             canMoveCursor = false;
                             StartCoroutine(MoveCursor());
                         }
-                        else
-                        {
-                            currentSlot = currentSlot + currentSlot % 3;
-                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
-                            canMoveCursor = false;
-                            StartCoroutine(MoveCursor());
-                        }
+                                                
                     }
                 }
                 if (playerOneController.VerticalAxisRaw() != 0)
                 {
                     if (playerOneController.VerticalAxisRaw() < 0 && canMoveCursor)
                     {
-                        if(listMenuReliques[currentSlot + 3].gameObject != null)
+                        Debug.Log(currentSlot);
+                        if(currentSlot + 3<listMenuReliques.Count)
                         {
+                            Debug.Log("pute");
                             currentSlot = currentSlot + 3;
-                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
-                            canMoveCursor = false;
-                            StartCoroutine(MoveCursor());
-                        }
-                        else if(listMenuReliques[currentSlot - 3].gameObject != null)
-                        {
-                            currentSlot = currentSlot - 3;
-                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
-                            canMoveCursor = false;
-                            StartCoroutine(MoveCursor());
-                        }
-                    }
-                    else if (playerOneController.VerticalAxisRaw() > 0 && canMoveCursor)
-                    {
-                        if (listMenuReliques[currentSlot - 3].gameObject != null)
-                        {
-                            currentSlot = currentSlot - 3;
                             curseurReliques.transform.position = listMenuReliques[currentSlot].position;
                             canMoveCursor = false;
                             StartCoroutine(MoveCursor());
                         }
                         else 
                         {
-
-                            currentSlot = (nombreSlots % Mathf.FloorToInt(nombreSlots / 3));
+                            Debug.Log("reste" + currentSlot % 3);
+                            switch( currentSlot % 3)
+                            { 
+                                case 0 :
+                                    currentSlot = 0;
+                                    curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                    canMoveCursor = false;
+                                    StartCoroutine(MoveCursor());
+                                    break;
+                                case 1:
+                                    currentSlot = 1;
+                                    curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                    canMoveCursor = false;
+                                    StartCoroutine(MoveCursor());
+                                    break;
+                                case 2:
+                                    currentSlot = 2;
+                                    curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                    canMoveCursor = false;
+                                    StartCoroutine(MoveCursor());
+                                    break;
+                            }
+                        }
+                        
+                    }
+                    else if (playerOneController.VerticalAxisRaw() > 0 && canMoveCursor)
+                    {
+                        if (currentSlot - 3 >= 0 )
+                        {
+                            currentSlot = currentSlot - 3;
                             curseurReliques.transform.position = listMenuReliques[currentSlot].position;
                             canMoveCursor = false;
                             StartCoroutine(MoveCursor());
+                        }
+                        else
+                        {
+                            for (int i = 0; i < listMenuReliques.Count; i++)
+                            {
+                                Debug.Log(i + "=" + listMenuReliques[i]);
+                            }
+                            switch (currentSlot % 3)
+                            {
+                                case 0: for(int i = 1; i<4; i++)
+                                    {
+                                        if ((listMenuReliques.Count - i) % 3 == 0)
+                                        {
+                                            currentSlot = listMenuReliques.Count - i;
+                                            Debug.Log(currentSlot);
+                                            Debug.Log(listMenuReliques[3].position);
+                                            Debug.Log(listMenuReliques[9].position);
+                                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                            canMoveCursor = false;
+                                            StartCoroutine(MoveCursor());                                         
+                                        }
+                                       
+                                    }
+                                    break;
+                                case 1:
+                                    for (int i = 1; i < 4; i++)
+                                    {
+                                        if ((listMenuReliques.Count - i) % 3 == 1)
+                                        {
+                                            currentSlot = listMenuReliques.Count - i;
+                                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                            canMoveCursor = false;
+                                            StartCoroutine(MoveCursor());
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    for (int i = 1; i < 4; i++)
+                                    {
+                                        if ((listMenuReliques.Count - i) % 3 == 2)
+                                        {
+                                            currentSlot = listMenuReliques.Count - i;
+                                            curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                                            canMoveCursor = false;
+                                            StartCoroutine(MoveCursor());
+                                        }
+                                    }
+                                    break;
+                            }                            
                         }
 
                     }
@@ -304,7 +396,7 @@ public class Pause : MonoBehaviour {
                     StartCoroutine(MoveCursor());
                 }
             }
-            if (playerOneController.ButtonA() && isPaused && menuPause.active == true)
+            if (playerOneController.ButtonA() && isInReliques == false && isPaused && menuPause.active == true)
             {
                 switch (currentCursor)
                 {
