@@ -16,3 +16,8 @@ public class ReliqueManager : MonoBehaviour {
 		
 	}
 }
+
+void RelicSpawn(Transform trans)
+{
+
+}
