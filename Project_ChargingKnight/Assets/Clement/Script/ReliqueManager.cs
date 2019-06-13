@@ -5,6 +5,8 @@ using UnityEngine;
 public class ReliqueManager : MonoBehaviour {
 
     public int nombreSlots;
+    List<GameObject> listRelics = new List<GameObject>();
+    int relicToSpawn;
 
 	// Use this for initialization
 	void Start () {
@@ -15,9 +17,10 @@ public class ReliqueManager : MonoBehaviour {
 	void Update () {
 		
 	}
-}
 
-void RelicSpawn(Transform trans)
-{
+    void SpawnRelic(Transform trans)
+    {
+        relicToSpawn = Random.Range(0, listRelics.Count);
+    }
 
 }
