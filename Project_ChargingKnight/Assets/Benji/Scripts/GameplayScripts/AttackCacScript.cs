@@ -5,12 +5,13 @@ using UnityEngine;
 public class AttackCacScript : MonoBehaviour {
 
     [SerializeField]
-    protected float hitKnokback = 5;
+    protected float AtkKnokback = 5;
     [SerializeField]
     protected float AtkDuration;
     [SerializeField]
     protected float AtkRecover;
-
+    [SerializeField]
+    protected float AtkDamage = 10;
 
     [HideInInspector]
     public bool canAttack = true;
@@ -20,7 +21,8 @@ public class AttackCacScript : MonoBehaviour {
     protected void InitVar()
     {
         AttackZone = this.transform.Find("AttackZone").GetComponent<AttackTriggerScript>();
-        AttackZone.knokbackPower = hitKnokback;
+        AttackZone.knokbackPower = AtkKnokback;
+        AttackZone.hitDamage = AtkDamage;
     }
 
     protected IEnumerator ResetAttack()

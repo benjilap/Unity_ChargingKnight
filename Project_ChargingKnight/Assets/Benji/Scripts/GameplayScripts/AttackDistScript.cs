@@ -13,6 +13,8 @@ public class AttackDistScript : MonoBehaviour {
     protected float projectileSpd =1;
     [SerializeField]
     protected float projectileKnokback = 5;
+    [SerializeField]
+    protected float projectileDamage = 10;
 
     [HideInInspector]
     public bool canAttack = true;

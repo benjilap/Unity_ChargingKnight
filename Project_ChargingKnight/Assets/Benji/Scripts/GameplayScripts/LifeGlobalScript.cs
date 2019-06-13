@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LifeGlobalScript : MonoBehaviour {
 
-    protected float lifeValue;
+    public float lifeValue;
 
 	void Start () {
 		

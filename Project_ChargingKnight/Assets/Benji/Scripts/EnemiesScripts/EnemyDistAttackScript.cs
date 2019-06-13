@@ -24,8 +24,9 @@ public class EnemyDistAttackScript : AttackDistScript {
                 canAttack = false;
                 newProjectile = Instantiate(projectileObj, this.transform.position + projectileSpwPos, Quaternion.identity) as GameObject;
                 newProjectile.GetComponent<ProjectileScript>().instantiatorName = this.gameObject.name;
-                newProjectile.layer = this.gameObject.layer;
                 newProjectile.GetComponent<ProjectileScript>().knokbackPower = projectileKnokback;
+                newProjectile.GetComponent<ProjectileScript>().projectileDmg = projectileDamage;
+                newProjectile.layer = this.gameObject.layer;
 
                 StartCoroutine(ChargeAttack());
             }

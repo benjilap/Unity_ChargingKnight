@@ -10,6 +10,10 @@ public class ProjectileScript : MonoBehaviour {
     public string instantiatorName;
     [HideInInspector]
     public float knokbackPower;
+    [HideInInspector]
+    public float projectileDmg;
+
+    bool hasHit;
 
     private void Start()
     {
@@ -39,11 +43,21 @@ public class ProjectileScript : MonoBehaviour {
         if (other.gameObject.layer != this.gameObject.layer)
         { 
             Rigidbody targetRb = other.GetComponent<Rigidbody>();
-            if (targetRb != null)
+            LifeGlobalScript targetLife = other.GetComponent<LifeGlobalScript>();
+
+            if (!hasHit)
             {
-                targetRb.AddForce(projectileRb.velocity.normalized * 100 * knokbackPower);
+                if (targetRb != null)
+                {
+                    hasHit = true;
+                    targetRb.AddForce(projectileRb.velocity.normalized * 100 * knokbackPower);
+                    if (targetLife != null)
+                    {
+                        targetLife.lifeValue -= projectileDmg;
+                    }
+                }
             }
-            
+
             Destroy(this.gameObject, 0.05f);
         }
     }

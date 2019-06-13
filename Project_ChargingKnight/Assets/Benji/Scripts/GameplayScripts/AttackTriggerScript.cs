@@ -8,6 +8,8 @@ public class AttackTriggerScript : MonoBehaviour {
     public bool isAttacking;
     [HideInInspector]
     public float knokbackPower;
+    [HideInInspector]
+    public float hitDamage;
 
     bool hasAttacked;
 
@@ -38,9 +40,13 @@ public class AttackTriggerScript : MonoBehaviour {
                 Rigidbody targetRb = other.GetComponent<Rigidbody>();
                 if (targetRb != null)
                 {
-
+                    LifeGlobalScript targetLife = other.GetComponent<LifeGlobalScript>();
                     targetRb.AddForce((this.transform.position - this.transform.parent.position).normalized * 100 *knokbackPower);
                     hasAttacked = true;
+                    if (targetLife != null)
+                    {
+                        targetLife.lifeValue -= hitDamage;
+                    }
                 }
             }
         }
