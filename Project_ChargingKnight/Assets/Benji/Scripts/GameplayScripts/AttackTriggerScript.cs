@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AttackTriggerScript : MonoBehaviour {
 
@@ -37,7 +38,13 @@ public class AttackTriggerScript : MonoBehaviour {
         {
             if( other.gameObject.layer != this.gameObject.layer)
             {
+
                 Rigidbody targetRb = other.GetComponent<Rigidbody>();
+                NavMeshAgent enemyAgt = other.GetComponent<NavMeshAgent>();
+                if (enemyAgt != null)
+                {
+                    targetRb.isKinematic = false;
+                }
                 if (targetRb != null)
                 {
                     LifeGlobalScript targetLife = other.GetComponent<LifeGlobalScript>();
@@ -46,9 +53,26 @@ public class AttackTriggerScript : MonoBehaviour {
                     if (targetLife != null)
                     {
                         targetLife.lifeValue -= hitDamage;
+                        if (enemyAgt != null)
+                        {
+                            StartCoroutine(EnemyRecoverMovement(targetRb));
+
+                        }
+
+
                     }
                 }
             }
+        }
+    }
+
+    private IEnumerator EnemyRecoverMovement(Rigidbody enemyRigidbody)
+    {
+        yield return new WaitForSeconds(0.8f);
+        if (enemyRigidbody != null)
+        {
+            enemyRigidbody.isKinematic = true;
+
         }
     }
 }

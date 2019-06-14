@@ -420,6 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AtkKnokback: 5
+  AtkCharge: 0.05
   AtkDuration: 0.5
   AtkRecover: 0.3
   AtkDamage: 10

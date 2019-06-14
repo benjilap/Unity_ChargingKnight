@@ -65,6 +65,7 @@ public class PlayerClass : MonoBehaviour {
         }
 
         SetLayerMask();
+        ClampPlayerHeight();
     }
 
     void PlayerMovement()
@@ -185,9 +186,7 @@ public class PlayerClass : MonoBehaviour {
 
     }
 
-
     
-
 
     public int PlayerDirFaced()
     {
@@ -297,5 +296,22 @@ public class PlayerClass : MonoBehaviour {
                 }
             }
         }
+    }
+
+    void ClampPlayerHeight()
+    {
+        Ray ray = new Ray(this.transform.position, Vector3.down);
+        RaycastHit hit;
+
+        Debug.DrawRay(this.transform.position, this.transform.position + Vector3.down*0.5f, Color.yellow);
+
+        if(Physics.Raycast(ray,out hit, 0.5f, rayLayerMask))
+        {
+            if (this.transform.position.y != GameManager.playersHeight)
+            {
+                this.transform.position = new Vector3(this.transform.position.x, GameManager.playersHeight, this.transform.position.z);
+            }
+        }
+        
     }
 }

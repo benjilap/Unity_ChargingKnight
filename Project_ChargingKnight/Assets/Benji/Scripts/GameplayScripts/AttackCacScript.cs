@@ -7,6 +7,8 @@ public class AttackCacScript : MonoBehaviour {
     [SerializeField]
     protected float AtkKnokback = 5;
     [SerializeField]
+    protected float AtkCharge;
+    [SerializeField]
     protected float AtkDuration;
     [SerializeField]
     protected float AtkRecover;
@@ -32,6 +34,14 @@ public class AttackCacScript : MonoBehaviour {
         yield return new WaitForSeconds(AtkRecover);
         canAttack = true;
 
+    }
+
+    protected IEnumerator AttackAction()
+    {
+        yield return new WaitForSeconds(AtkCharge);
+        AttackZone.isAttacking = true;
+
+        StartCoroutine(ResetAttack());
     }
 
     protected void UpdateAttackZoneTrans(int dirFaced)

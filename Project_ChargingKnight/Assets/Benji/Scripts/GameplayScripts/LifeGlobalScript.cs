@@ -12,6 +12,14 @@ public class LifeGlobalScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        CheckDeath();
 	}
+
+    void CheckDeath()
+    {
+        if (lifeValue <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
