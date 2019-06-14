@@ -89,6 +89,7 @@ public class RoomEnemiesManager : MonoBehaviour {
 
     void CheckCacEnemiesTargets()
     {
+        CleanListOfNullValue(listOfCacEnemy);
         foreach (GameObject cacEnemy in listOfCacEnemy)
         {
             if (targetsList.Count < GameManager.playersNmbrs)
@@ -121,7 +122,9 @@ public class RoomEnemiesManager : MonoBehaviour {
     }
 
     void CheckDistEnemiesTargets()
-    { 
+    {
+        CleanListOfNullValue(listOfDistEnemy);
+
         foreach (GameObject distEnemy in listOfDistEnemy)
         {
             if (targetsList.Count < GameManager.playersNmbrs)

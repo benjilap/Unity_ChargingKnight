@@ -43,13 +43,13 @@ public class AttackTriggerScript : MonoBehaviour {
                 NavMeshAgent enemyAgt = other.GetComponent<NavMeshAgent>();
                 if (enemyAgt != null)
                 {
+                    hasAttacked = true;
                     targetRb.isKinematic = false;
                 }
                 if (targetRb != null)
                 {
                     LifeGlobalScript targetLife = other.GetComponent<LifeGlobalScript>();
                     targetRb.AddForce((this.transform.position - this.transform.parent.position).normalized * 100 *knokbackPower);
-                    hasAttacked = true;
                     if (targetLife != null)
                     {
                         targetLife.lifeValue -= hitDamage;
@@ -68,7 +68,7 @@ public class AttackTriggerScript : MonoBehaviour {
 
     private IEnumerator EnemyRecoverMovement(Rigidbody enemyRigidbody)
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
         if (enemyRigidbody != null)
         {
             enemyRigidbody.isKinematic = true;
