@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class AttackCacScript : MonoBehaviour {
 
-    [SerializeField]
-    protected float AtkKnokback = 5;
-    [SerializeField]
-    protected float AtkCharge;
-    [SerializeField]
-    protected float AtkDuration;
-    [SerializeField]
-    protected float AtkRecover;
-    [SerializeField]
-    protected float AtkDamage = 10;
+    public float AtkKnokback = 5;
+    public float AtkCharge;
+    public float AtkDuration;
+    public float AtkRecover;
+    public float AtkDamage = 10;
 
     [HideInInspector]
     public bool canAttack = true;
@@ -33,6 +28,7 @@ public class AttackCacScript : MonoBehaviour {
         AttackZone.isAttacking = false;
         yield return new WaitForSeconds(AtkRecover);
         canAttack = true;
+        AttackZone.hasAttacked = false;
 
     }
 

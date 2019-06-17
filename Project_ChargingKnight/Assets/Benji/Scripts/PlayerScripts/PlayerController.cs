@@ -92,6 +92,30 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public bool ButtonX()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetButtonUp("J" + controllerNum + "ButtonX");
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool ButtonY()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetButtonUp("J" + controllerNum + "ButtonY");
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public bool Start()
     {
         if (CheckControllerNum())

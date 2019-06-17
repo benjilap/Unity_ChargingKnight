@@ -17,8 +17,7 @@ public class PlayerClass : MonoBehaviour {
     Transform cldDir;
     Transform angularInd;
     PlayerCacAttackScript playerAttack;
-
-
+    
     [SerializeField]
     AnimationCurve accelerationCurve;
 
@@ -45,6 +44,24 @@ public class PlayerClass : MonoBehaviour {
     float tempSpeedPct;
     float tempDecceleration;
 
+    //CharacterAbilities
+
+    KnightClass characterClass;
+
+
+    //[HideInInspector]
+    //public delegate void FirstSkill();
+    //[HideInInspector]
+    //public FirstSkill primarySkill;
+    //[HideInInspector]
+    //public delegate void SecondSkill();
+    //[HideInInspector]
+    //public SecondSkill secondarySkill;
+    //[HideInInspector]
+    //public delegate void UltimateSkill();
+    //[HideInInspector]
+    //public UltimateSkill ultiSkill;
+
     void Start () {
         playerController = this.GetComponent<PlayerController>();
         playerAttack = this.GetComponent<PlayerCacAttackScript>();
@@ -59,15 +76,23 @@ public class PlayerClass : MonoBehaviour {
 	void Update () {
         if (playerController.CheckControllerNum())
         {
-            PlayerMovement();
-            PlayerDodgeActivate();
-            playerAttack.PlayerAttack();
+            if (!characterClass.useSkill)
+            {
+                UsePrimarySkill();
+                UseSecondarySkill();
+                UseUltiSkill();
+                PlayerMovement();
+                PlayerDodgeActivate();
+                playerAttack.PlayerAttack();
+
+            }
         }
 
         SetLayerMask();
         ClampPlayerHeight();
     }
 
+    //PlayerMecanics//
     void PlayerMovement()
     {
         //VisualInfos
@@ -85,48 +110,7 @@ public class PlayerClass : MonoBehaviour {
             playerRb.velocity = Vector3.Reflect(playerRb.velocity.normalized, BounceObstacle()) * playerSpeed * AccelerationSpeed();
         }
     }
-
-    void PlayerDodgeActivate()
-    {
-        if (!dodgeState&&playerAttack.canAttack)
-        {
-            if (playerController.ButtonA())
-            {
-                dodgeState = true;
-                dodgeTime = Time.time;
-                hittable = false;
-                dodgeDir = ControllerDir();
-            }
-        }
-        if (!hittable)
-        {
-            float dodgeTimer = Time.time - dodgeTime;
-            if (dodgeTimer >= playerDodgeTime)
-            {
-                if (playerRb.velocity.magnitude / playerSpeed <= 0.5f)
-                {
-                    hittable = true;
-                    accelerationState = false;
-                }
-                else
-                {
-                    float tempTime = playerDodgeTime - (dodgeTimer - playerDodgeTime / 2) * (1 / playerAcceleration);
-                    playerRb.velocity = dodgeDir * accelerationCurve.Evaluate(tempTime) * playerSpeed;
-                }
-            }
-            else if (dodgeTimer >= playerDodgeTime / 2)
-            {
-                float tempTime = playerDodgeTime - (dodgeTimer - playerDodgeTime / 2) * (1 / playerAcceleration);
-                playerRb.velocity = dodgeDir * accelerationCurve.Evaluate(tempTime) * playerSpeed;
-            }
-            else
-            {
-                playerRb.velocity = dodgeDir  * playerSpeed;
-
-            }
-        }
-    }
-
+    
     Vector3 ControllerDir()
     {
         Vector3 tempControllerDir = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized;
@@ -186,8 +170,6 @@ public class PlayerClass : MonoBehaviour {
 
     }
 
-    
-
     public int PlayerDirFaced()
     {
         if (playerRb.velocity.normalized.x > 0.5f)
@@ -213,8 +195,6 @@ public class PlayerClass : MonoBehaviour {
 
         return playerDirFaced;
     }
-
-
 
     Vector3 BounceObstacle()
     {
@@ -313,5 +293,71 @@ public class PlayerClass : MonoBehaviour {
             }
         }
         
+    }
+
+    void PlayerDodgeActivate()
+    {
+        if (!dodgeState&&playerAttack.canAttack)
+        {
+            if (playerController.ButtonA())
+            {
+                dodgeState = true;
+                dodgeTime = Time.time;
+                hittable = false;
+                dodgeDir = ControllerDir();
+            }
+        }
+        if (!hittable)
+        {
+            float dodgeTimer = Time.time - dodgeTime;
+            if (dodgeTimer >= playerDodgeTime)
+            {
+                if (playerRb.velocity.magnitude / playerSpeed <= 0.5f)
+                {
+                    hittable = true;
+                    accelerationState = false;
+                }
+                else
+                {
+                    float tempTime = playerDodgeTime - (dodgeTimer - playerDodgeTime / 2) * (1 / playerAcceleration);
+                    playerRb.velocity = dodgeDir * accelerationCurve.Evaluate(tempTime) * playerSpeed;
+                }
+            }
+            else if (dodgeTimer >= playerDodgeTime / 2)
+            {
+                float tempTime = playerDodgeTime - (dodgeTimer - playerDodgeTime / 2) * (1 / playerAcceleration);
+                playerRb.velocity = dodgeDir * accelerationCurve.Evaluate(tempTime) * playerSpeed;
+            }
+            else
+            {
+                playerRb.velocity = dodgeDir  * playerSpeed;
+
+            }
+        }
+    }
+
+    //PlayerAbilities//
+    void UsePrimarySkill()
+    {
+        if (playerController.ButtonX())
+        {
+            //characterClass.;
+        }
+    }
+
+    void UseSecondarySkill()
+    {
+        if (playerController.ButtonY())
+        {
+            characterClass.BashingShield();
+        }
+    }
+
+    void UseUltiSkill()
+    {
+        if (playerController.ButtonB())
+        {
+            characterClass.BurstMode();
+        }
     }
 }

@@ -161,7 +161,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
@@ -203,6 +203,7 @@ MonoBehaviour:
   isAttacking: 0
   knokbackPower: 0
   hitDamage: 0
+  hasAttacked: 0
 --- !u!114 &114742465586825670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73486e9fbc90d54fa0b1c24bb5b6e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AtkKnokback: 5
+  AtkKnokback: 10
   AtkCharge: 0.2
   AtkDuration: 0.5
   AtkRecover: 0.3
