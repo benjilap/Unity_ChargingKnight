@@ -7,6 +7,7 @@ public class KnightClass : MonoBehaviour {
     PlayerClass playerClass;
     PlayerCacAttackScript playerAttack;
     AttackTriggerScript playerAtkTrigger;
+    PlayerController playerController;
     Rigidbody playerRb;
     [HideInInspector]
     public bool useSkill;
@@ -14,15 +15,23 @@ public class KnightClass : MonoBehaviour {
     //BurstModeValue
     bool burstModeEnable;
     float burstModeDuration = 10;
-    int burstModePowerPourcent = 30;
+    float burstModePowerPourcent = 30;
+    [SerializeField]
     float burstModePower;
+    [SerializeField]
+    float burstModeRecoverTime;
+    bool burstModeRecover;
 
     //BashingShieldValue
-    bool bashingShieldEnable;
-    float bashingShieldSpeed;
-    float bashingShieldKnockback;
-    float bashingShieldDuration;
-    float bashingShieldDmg;
+    [HideInInspector]
+    public bool bashingShieldEnable;
+    float bashingShieldSpeed = 20;
+    float bashingShieldKnockback = 20;
+    float bashingShieldDuration = 1;
+    float bashingShieldDmg = 5;
+    [SerializeField]
+    float bashingShieldRecoverTime;
+    bool bashingShieldRecover;
 
     // Use this for initialization
     void Start () {
@@ -30,32 +39,41 @@ public class KnightClass : MonoBehaviour {
         playerAttack = this.GetComponent<PlayerCacAttackScript>();
         playerAtkTrigger = this.transform.Find("AttackZone").GetComponent<AttackTriggerScript>();
         playerRb = this.GetComponent<Rigidbody>();
-        burstModePower = 100 / burstModePowerPourcent;
+        playerController = this.GetComponent<PlayerController>();
+        burstModePower = burstModePowerPourcent/100;
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (bashingShieldEnable)
+        {
+            BashingShield();
+        }
+        Debug.DrawRay(this.transform.position, this.transform.position + RazorSlashDir(),Color.red);
 	}
 
-    /*void InitPlayerSkill()
-    //{
-    //    if (playerClass != null)
-    //    {
-    //        playerClass.ultiSkill += playerClass.UltimateSkill(BurstMode();
-    //    }
-    }*/
+    void InitPlayerSkill()
+    {
+        if (playerClass != null)
+        {
+            playerClass.ultiSkill = BurstMode;
+        }
+    }
 
 
     //BURSTMODE
     public void BurstMode()
     {
-        if (!burstModeEnable)
+        if (!burstModeRecover)
         {
-            burstModeEnable = true;
-            BurstModeStatsAlteration(playerClass, playerAtkTrigger, 1);
-            StartCoroutine(BurstModeCooldown());
+            if (!burstModeEnable)
+            {
+                burstModeEnable = true;
+                BurstModeStatsAlteration(playerClass, playerAtkTrigger, 1);
+                StartCoroutine(BurstModeCooldown());
+            }
+
         }
     }
 
@@ -71,8 +89,17 @@ public class KnightClass : MonoBehaviour {
         yield return new WaitForSeconds(burstModeDuration);
         BurstModeStatsAlteration(playerClass, playerAtkTrigger, -1);
         burstModeEnable = false;
+        StartCoroutine(BurstModeRecover());
+    }
+    IEnumerator BurstModeRecover()
+    {
+        burstModeRecover = true;
+        yield return new WaitForSeconds(burstModeRecoverTime);
+        burstModeRecover = false;
+
     }
 
+    //BASHINGSHIELD
     public void BashingShield()
     {
         if (!bashingShieldEnable && !useSkill)
@@ -83,18 +110,62 @@ public class KnightClass : MonoBehaviour {
             playerAtkTrigger.hitDamage = bashingShieldDmg;
             playerAtkTrigger.knokbackPower = bashingShieldKnockback;
             playerAtkTrigger.inBashing = true;
-
+            playerAtkTrigger.isAttacking = true;
+            StartCoroutine(BashingShieldCooldown());
         }
+            playerRb.velocity = playerRb.velocity.normalized * bashingShieldSpeed;
+
     }
 
     IEnumerator BashingShieldCooldown()
     {
-        yield return new WaitForSeconds(burstModeDuration);
+        yield return new WaitForSeconds(bashingShieldDuration);
         playerAtkTrigger.hitDamage = playerAttack.AtkDamage;
         playerAtkTrigger.knokbackPower = playerAttack.AtkKnokback;
+        playerAtkTrigger.isAttacking = false;
         playerAtkTrigger.inBashing = false;
         bashingShieldEnable = false;
         useSkill = false;
+        StartCoroutine(BashingShieldRecover());
+    }
+    IEnumerator BashingShieldRecover()
+    {
+        bashingShieldRecover = true;
+        yield return new WaitForSeconds(bashingShieldRecoverTime);
+        bashingShieldRecover = false;
+
+    }
+
+    //RAZORSLASH
+    public Vector3 RazorSlashDir()
+    {
+        Vector3 controllerDir = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized;
+        Vector3 playerDir = playerRb.velocity.normalized;
+        float angleToControllerDir = AngleTo(Vector3.forward, controllerDir);
+        float angleToPlayerDir = AngleTo(Vector3.forward, playerDir);
+
+        if (angleToControllerDir < angleToPlayerDir)
+        {
+            return new Vector3(Mathf.Cos(angleToPlayerDir), 0, Mathf.Sin(angleToPlayerDir));
+        }
+        else
+        {
+            return new Vector3(Mathf.Cos(-angleToPlayerDir), 0, Mathf.Sin(-angleToPlayerDir));
+
+        }
+
+    }
+
+    private float AngleTo(Vector3 pos, Vector3 target)
+    {
+        float angle = 0;
+
+        if (target.x > pos.x)
+            angle = Vector3.Angle(target, pos);
+        else
+            angle = 360 - Vector3.Angle(target, pos);
+
+        return angle;
     }
 
 }

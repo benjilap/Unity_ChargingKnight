@@ -56,18 +56,21 @@ public class AttackTriggerScript : MonoBehaviour {
                 NavMeshAgent enemyAgt = objectToModify.GetComponent<NavMeshAgent>();
                 if (enemyAgt != null)
                 {
+                    Debug.Log("atkknockback");
+
                     targetRb.isKinematic = false;
                 }
                 if (targetRb != null)
                 {
                     LifeGlobalScript targetLife = objectToModify.GetComponent<LifeGlobalScript>();
-                    targetRb.AddForce((this.transform.position - this.transform.parent.position).normalized * 100 *knokbackPower);
+                    targetRb.AddForce((this.transform.position+this.transform.parent.GetComponent<Rigidbody>().velocity - objectToModify.transform.position).normalized * 100 *knokbackPower);
                     if (targetLife != null)
                     {
                         targetLife.lifeValue -= hitDamage;
                         if (enemyAgt != null)
                         {
-                            Debug.Log("hit");
+                            Debug.Log("atkhit");
+
                             StartCoroutine(EnemyRecoverMovement(targetRb));
 
                         }
@@ -97,18 +100,19 @@ public class AttackTriggerScript : MonoBehaviour {
                 Rigidbody targetRb = objectToModify.GetComponent<Rigidbody>();
                 if (enemyAgt != null)
                 {
+                    Debug.Log("bashknockback");
                     targetRb.isKinematic = false;
                 }
                 if (targetRb != null)
                 {
                     LifeGlobalScript targetLife = objectToModify.GetComponent<LifeGlobalScript>();
-                    targetRb.AddForce((this.transform.position - this.transform.parent.position).normalized * 100 * knokbackPower);
+                    targetRb.AddForce((this.transform.position + this.transform.parent.GetComponent<Rigidbody>().velocity - objectToModify.transform.position).normalized * 100 * knokbackPower);
                     if (targetLife != null)
                     {
                         targetLife.lifeValue -= hitDamage;
                         if (enemyAgt != null)
                         {
-                            Debug.Log("hit");
+                            Debug.Log("bashhit");
                             StartCoroutine(EnemyRecoverMovement(targetRb));
 
                         }

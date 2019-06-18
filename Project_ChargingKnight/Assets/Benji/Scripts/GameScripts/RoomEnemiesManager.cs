@@ -22,7 +22,8 @@ public class RoomEnemiesManager : MonoBehaviour {
     Vector3 minAreaSpawn;
     Vector3 maxAreaSpawn;
 
-    int enemyInSpawning;
+    int enemyCacInSpawning;
+    int enemyDistInSpawning;
 
 
     void Start () {
@@ -35,35 +36,57 @@ public class RoomEnemiesManager : MonoBehaviour {
 	void Update () {
         if (EnemyCacNumber != 0)
         {
-            CheckEnemyNumbers(EnemyCac, listOfCacEnemy, EnemyCacNumber);
+            CheckEnemyCacNumbers(EnemyCac, listOfCacEnemy, EnemyCacNumber);
             CheckCacEnemiesTargets();
         }
 
         if(EnemyDistNumber != 0)
         {
-            CheckEnemyNumbers(EnemyDist, listOfDistEnemy, EnemyDistNumber);
+            CheckEnemyDistNumbers(EnemyDist, listOfDistEnemy, EnemyDistNumber);
             CheckDistEnemiesTargets();
         }
 
 
     }
 
-    void CheckEnemyNumbers(Object EnemyPrefab,List<GameObject> listToCheck, int enemyNbrs)
+    void CheckEnemyCacNumbers(Object EnemyPrefab,List<GameObject> listToCheck, int enemyNbrs)
     {
         if(listToCheck.Count == enemyNbrs)
         {
-            enemyInSpawning = 0;
+            enemyCacInSpawning = 0;
         }
 
         CleanListOfNullValue(listToCheck);
                 
-        int enemiesToSpawn = enemyNbrs - listToCheck.Count - enemyInSpawning;
+        int enemiesToSpawn = enemyNbrs - listToCheck.Count - enemyCacInSpawning;
         if (enemiesToSpawn !=0)
         {
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                enemyInSpawning++;
+                enemyCacInSpawning++;
+                StartCoroutine(SpawnEnemy(EnemyPrefab, listToCheck));
+            }
+        }
+    }
+
+
+    void CheckEnemyDistNumbers(Object EnemyPrefab, List<GameObject> listToCheck, int enemyNbrs)
+    {
+        if (listToCheck.Count == enemyNbrs)
+        {
+            enemyDistInSpawning = 0;
+        }
+
+        CleanListOfNullValue(listToCheck);
+
+        int enemiesToSpawn = enemyNbrs - listToCheck.Count - enemyDistInSpawning;
+        if (enemiesToSpawn != 0)
+        {
+
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                enemyDistInSpawning++;
                 StartCoroutine(SpawnEnemy(EnemyPrefab, listToCheck));
             }
         }
@@ -129,27 +152,27 @@ public class RoomEnemiesManager : MonoBehaviour {
         {
             if (targetsList.Count < GameManager.playersNmbrs)
             {
-                if (distEnemy.GetComponent<EnemyCacScript>().targetsList.Count != 0)
+                if (distEnemy.GetComponent<EnemyDistScript>().targetsList.Count != 0)
                 {
-                    for (int i = 0; i < distEnemy.GetComponent<EnemyCacScript>().targetsList.Count; i++)
+                    for (int i = 0; i < distEnemy.GetComponent<EnemyDistScript>().targetsList.Count; i++)
                     {
-                        if (!targetsList.Contains(distEnemy.GetComponent<EnemyCacScript>().targetsList[i].GetComponent<PlayerClass>()))
+                        if (!targetsList.Contains(distEnemy.GetComponent<EnemyDistScript>().targetsList[i].GetComponent<PlayerClass>()))
                         {
 
-                            targetsList.Add(distEnemy.GetComponent<EnemyCacScript>().targetsList[i].GetComponent<PlayerClass>());
+                            targetsList.Add(distEnemy.GetComponent<EnemyDistScript>().targetsList[i].GetComponent<PlayerClass>());
                         }
                     }
                 }
             }
 
-            if (distEnemy.GetComponent<EnemyCacScript>().targetsList.Count < targetsList.Count)
+            if (distEnemy.GetComponent<EnemyDistScript>().targetsList.Count < targetsList.Count)
             {
                 for (int i = 0; i < targetsList.Count; i++)
                 {
-                    if (!distEnemy.GetComponent<EnemyCacScript>().targetsList.Contains(targetsList[i].GetComponent<PlayerClass>()))
+                    if (!distEnemy.GetComponent<EnemyDistScript>().targetsList.Contains(targetsList[i].GetComponent<PlayerClass>()))
                     {
 
-                        distEnemy.GetComponent<EnemyCacScript>().targetsList.Add(targetsList[i].GetComponent<PlayerClass>());
+                        distEnemy.GetComponent<EnemyDistScript>().targetsList.Add(targetsList[i].GetComponent<PlayerClass>());
                     }
                 }
             }

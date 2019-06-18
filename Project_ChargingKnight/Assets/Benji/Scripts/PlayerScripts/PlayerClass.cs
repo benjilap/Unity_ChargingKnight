@@ -48,23 +48,17 @@ public class PlayerClass : MonoBehaviour {
 
     KnightClass characterClass;
 
-
-    //[HideInInspector]
-    //public delegate void FirstSkill();
-    //[HideInInspector]
-    //public FirstSkill primarySkill;
-    //[HideInInspector]
-    //public delegate void SecondSkill();
-    //[HideInInspector]
-    //public SecondSkill secondarySkill;
-    //[HideInInspector]
-    //public delegate void UltimateSkill();
-    //[HideInInspector]
-    //public UltimateSkill ultiSkill;
+    [HideInInspector]
+    public System.Action primarySkill;
+    [HideInInspector]
+    public System.Action secondarySkill;
+    [HideInInspector]
+    public System.Action ultiSkill;
 
     void Start () {
         playerController = this.GetComponent<PlayerController>();
         playerAttack = this.GetComponent<PlayerCacAttackScript>();
+        characterClass = this.GetComponent<KnightClass>();
         playerRb = this.GetComponent<Rigidbody>();
         cldDir = this.transform.Find("CtlrDir");
         plyrDir = this.transform.Find("PlyrDir");
@@ -79,13 +73,13 @@ public class PlayerClass : MonoBehaviour {
             if (!characterClass.useSkill)
             {
                 UsePrimarySkill();
-                UseSecondarySkill();
                 UseUltiSkill();
                 PlayerMovement();
                 PlayerDodgeActivate();
                 playerAttack.PlayerAttack();
 
             }
+            UseSecondarySkill();
         }
 
         SetLayerMask();
@@ -100,9 +94,7 @@ public class PlayerClass : MonoBehaviour {
 
         if (hittable )
         {
-
             playerRb.velocity = PlayerDir() * playerSpeed;
-
         }
 
         if(BounceObstacle() != Vector3.zero)
@@ -285,7 +277,7 @@ public class PlayerClass : MonoBehaviour {
 
         Debug.DrawRay(this.transform.position, this.transform.position + Vector3.down*0.5f, Color.yellow);
 
-        if(Physics.Raycast(ray,out hit, 0.5f, rayLayerMask))
+        if(Physics.Raycast(ray,out hit, 1f, rayLayerMask))
         {
             if (this.transform.position.y != GameManager.playersHeight)
             {

@@ -44,25 +44,25 @@ public class AttackCacScript : MonoBehaviour {
     {
         if (dirFaced == 0)
         {
-            AttackZone.transform.localPosition = new Vector3(0, 0, -0.75f);
+            AttackZone.transform.localPosition = new Vector3(0, 0, -0.9f);
             AttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         if (dirFaced == 1)
         {
-            AttackZone.transform.localPosition = new Vector3(0.75f, 0, 0);
+            AttackZone.transform.localPosition = new Vector3(0.9f, 0, 0);
             AttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
         }
         else
         if (dirFaced == 2)
         {
-            AttackZone.transform.localPosition = new Vector3(0, 0, 0.75f);
+            AttackZone.transform.localPosition = new Vector3(0, 0, 0.9f);
             AttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         if (dirFaced == 3)
         {
-            AttackZone.transform.localPosition = new Vector3(-0.75f, 0, 0);
+            AttackZone.transform.localPosition = new Vector3(-0.9f, 0, 0);
             AttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
         }
     }
