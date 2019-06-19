@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class ReliqueManager : MonoBehaviour
 {
-
+    GameObject manager;
     public int nombreSlots;
     List<GameObject> relicsExistantes = new List<GameObject>();
-    List<GameObject> relicsEquip = new List<GameObject>();
+    public List<GameObject> relicsEquip = new List<GameObject>();
     Object relicPrefab;
     GameObject player;
     GameObject lastCreated;
@@ -24,6 +24,7 @@ public class ReliqueManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        manager = GameObject.Find("MANAGER");
         relicPrefab = Resources.Load("Relics/Relic");
         player = GameObject.Find("Player1");
 
@@ -43,7 +44,12 @@ public class ReliqueManager : MonoBehaviour
 
     }
 
+    public void AddRelic(GameObject anotherOne)
+    {
+        relicsEquip.Add(anotherOne);
+        manager.GetComponent<Pause>().RelicRender(relicsEquip);
 
+    }
 
     void SpawnRelic(Vector3 posi)
     {

@@ -50,7 +50,8 @@ public class KnightClass : MonoBehaviour {
         {
             BashingShield();
         }
-        Debug.DrawRay(this.transform.position, this.transform.position + RazorSlashDir(),Color.red);
+        Debug.DrawRay(this.transform.position, RazorSlashDir(),Color.red);
+        Debug.Log(RazorSlashDir());
 	}
 
     void InitPlayerSkill()
@@ -146,11 +147,12 @@ public class KnightClass : MonoBehaviour {
 
         if (angleToControllerDir < angleToPlayerDir)
         {
-            return new Vector3(Mathf.Cos(angleToPlayerDir), 0, Mathf.Sin(angleToPlayerDir));
+            return new Vector3(Mathf.Sin(angleToPlayerDir - 90), 0, Mathf.Cos(angleToPlayerDir - 90));
         }
         else
         {
-            return new Vector3(Mathf.Cos(-angleToPlayerDir), 0, Mathf.Sin(-angleToPlayerDir));
+            return new Vector3(Mathf.Sin(angleToPlayerDir + 90), 0, Mathf.Cos(angleToPlayerDir +90));
+
 
         }
 

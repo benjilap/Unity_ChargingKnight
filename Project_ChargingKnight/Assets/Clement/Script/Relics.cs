@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Relics : MonoBehaviour {
 
     GameObject player;
+    GameObject relicManager;
     public float modAtt = 0;
     public float modAttSp = 0;
     public float modDef = 0;
@@ -24,11 +25,13 @@ public class Relics : MonoBehaviour {
     bool canModSp = true;
     bool canModAngSp = true;
     bool canModCrit = true;
+    bool isTriggered;
 
 
 	// Use this for initialization
 	void Start () {
 
+        relicManager = GameObject.Find("RelicSpawner");
         transform.eulerAngles = new Vector3(90, 0, 0);
         nombreChasse = Random.Range(0, 5);
         transform.GetChild(nombreChasse).gameObject.SetActive(true);
@@ -189,8 +192,27 @@ public class Relics : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-		
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (isTriggered)
+        {
+            if (player.GetComponent<PlayerController>().RightBumper())
+            {
+                relicManager.GetComponent<ReliqueManager>().AddRelic(gameObject);
+                
+            }
+        }
 	}
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+            isTriggered = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+            isTriggered = false;
+    }
 }
 
 

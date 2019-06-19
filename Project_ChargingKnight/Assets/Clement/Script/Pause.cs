@@ -839,6 +839,14 @@ public class Pause : MonoBehaviour {
         }
     }
 
+    public void RelicRender(List<GameObject> biteTheDust)
+    {
+        for(int i = 0; i<biteTheDust.Count; i++)
+        {
+            biteTheDust[i].transform.SetParent(listMenuReliques[i].GetChild(0));
+        }
+    }
+
     IEnumerator MoveCursor()
     {
         yield return new WaitForSecondsRealtime(0.2f);

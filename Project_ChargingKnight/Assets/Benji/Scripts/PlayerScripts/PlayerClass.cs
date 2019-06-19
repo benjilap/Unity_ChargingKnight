@@ -254,6 +254,10 @@ public class PlayerClass : MonoBehaviour {
                     {
                         rayLayerMask.value |= 0 << i;
                     }
+                    else if (LayerMask.LayerToName(i) == "Reliques")
+                    {
+                        rayLayerMask.value |= 0 << i;
+                    }
                     else
                     {
                         rayLayerMask.value |= 1 << i;
