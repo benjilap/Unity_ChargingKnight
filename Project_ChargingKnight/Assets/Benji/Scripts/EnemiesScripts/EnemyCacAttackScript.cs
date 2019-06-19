@@ -19,11 +19,10 @@ public class EnemyCacAttackScript : AttackCacScript {
 
 
         if (canAttack)
-            {
+        {
                 canAttack = false;
-                AttackZone.isAttacking = true;
 
-                StartCoroutine(ResetAttack());
+                StartCoroutine(AttackAction());
         }
         
     }

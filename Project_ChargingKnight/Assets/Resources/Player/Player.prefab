@@ -35,9 +35,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4510726180866938}
+  - component: {fileID: 114136208891175138}
   - component: {fileID: 114247736667370372}
   - component: {fileID: 114436806141374338}
   - component: {fileID: 114649012772011052}
+  - component: {fileID: 114417630360885376}
   - component: {fileID: 54087440689412796}
   - component: {fileID: 65186165078789566}
   - component: {fileID: 136286863407310390}
@@ -185,8 +187,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1763589775628526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.75}
-  m_LocalScale: {x: 1.5, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.9}
+  m_LocalScale: {x: 1.5, y: 1, z: 0.8}
   m_Children: []
   m_Father: {fileID: 4510726180866938}
   m_RootOrder: 5
@@ -329,6 +331,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114136208891175138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101998069356690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a74cef48c99a5c4bad8bd39919d87d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useSkill: 0
+  bashingShieldEnable: 0
 --- !u!114 &114247736667370372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -352,6 +367,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e31cdb9698d956428527e6d187dafcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114417630360885376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101998069356690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cfdbc5412e03ef498a06132b6a77c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeValue: 100
 --- !u!114 &114436806141374338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -406,9 +433,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4694b87d814358248bb950b959728f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitKnokback: 5
+  AtkKnokback: 5
+  AtkCharge: 0
   AtkDuration: 0.5
-  AtkRecover: 0.3
+  AtkRecover: 0.35
+  AtkDamage: 10
   canAttack: 1
 --- !u!114 &114912700594159292
 MonoBehaviour:
@@ -423,6 +452,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAttacking: 0
   knokbackPower: 0
+  hitDamage: 0
+  hasAttacked: 0
+  inBashing: 0
 --- !u!136 &136286863407310390
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -207,6 +207,9 @@ public class EnemyScript : MonoBehaviour {
 
     protected PlayerClass TargetSelection()
     {
+
+        CleanListOfNullValue(targetsList);
+
         if(targetsList.Count == 1)
         {
             return targetsList[0];
@@ -269,6 +272,16 @@ public class EnemyScript : MonoBehaviour {
 
         }
 
+
+    }
+
+    void CleanListOfNullValue(List<PlayerClass> listToClean)
+    {
+        if (listToClean.Count != 0)
+        {
+            listToClean.Remove(null);
+
+        }
 
     }
 }

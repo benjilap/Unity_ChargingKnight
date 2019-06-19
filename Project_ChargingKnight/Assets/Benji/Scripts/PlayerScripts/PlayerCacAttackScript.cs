@@ -24,9 +24,8 @@ public class PlayerCacAttackScript : AttackCacScript {
             if (myPlayerController.LeftBumper() && canAttack)
             {
                 canAttack = false;
-                AttackZone.isAttacking = true;
 
-                StartCoroutine(ResetAttack());
+                StartCoroutine(AttackAction());
             }
         }
     }

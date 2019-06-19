@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LifeGlobalScript : MonoBehaviour {
 
-    protected float lifeValue;
+    public float lifeValue;
 
 	void Start () {
 		
@@ -12,6 +12,14 @@ public class LifeGlobalScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        CheckDeath();
 	}
+
+    void CheckDeath()
+    {
+        if (lifeValue <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
