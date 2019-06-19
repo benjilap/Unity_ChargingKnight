@@ -42,7 +42,7 @@ public class Pause : MonoBehaviour {
         gonePaused = false;
         isPaused = false;
         isInReliques = false;
-        manager = GameObject.Find("MANAGER");
+        manager = GameObject.Find("RelicSpawner");
         nombreSlots = manager.GetComponent<ReliqueManager>().nombreSlots;
         menuPause = GameObject.Find("MenuPause");
         menuQuitter = GameObject.Find("MenuQuitter");
@@ -89,7 +89,18 @@ public class Pause : MonoBehaviour {
         menuQuitter.SetActive(false);
 
         curseurPause = listMenuPause[0].gameObject;
-        if (GameObject.Find("Player1") && GameObject.Find("Player2") !=null)
+        
+       
+       
+        currentCursor = 1;
+        menuPause.SetActive(false);
+        menuStats.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (GameObject.Find("Player1") && GameObject.Find("Player2") != null)
         {
             playerOneController = GameObject.Find("Player1").GetComponent<PlayerController>();
             playerTwoController = GameObject.Find("Player2").GetComponent<PlayerController>();
@@ -100,15 +111,6 @@ public class Pause : MonoBehaviour {
             playerTwoController = null;
         }
 
-       
-        currentCursor = 1;
-        menuPause.SetActive(false);
-        menuStats.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         ////Debug.Log(currentSlot);
         //////Debug.Log(listMenuReliques.Count);
         if (playerOneController && playerTwoController != null)
@@ -834,6 +836,14 @@ public class Pause : MonoBehaviour {
         else
         {
             Time.timeScale = 1f;
+        }
+    }
+
+    public void RelicRender(List<GameObject> biteTheDust)
+    {
+        for(int i = 0; i<biteTheDust.Count; i++)
+        {
+            biteTheDust[i].transform.SetParent(listMenuReliques[i].GetChild(0));
         }
     }
 

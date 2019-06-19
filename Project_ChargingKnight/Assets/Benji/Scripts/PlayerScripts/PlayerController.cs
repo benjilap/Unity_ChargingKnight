@@ -68,6 +68,18 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public bool RightBumper()
+    {
+        if (CheckControllerNum())
+        {
+            return Input.GetButtonUp("J" + controllerNum + "RightBumper");
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public bool ButtonA()
     {
         if (CheckControllerNum())
