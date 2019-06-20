@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1196291937758740}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.53, y: 0.802, z: -3.333}
+  m_LocalPosition: {x: 0.04, y: 1, z: -2.913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,7 +61,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.425024
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -147,7 +147,7 @@ ParticleSystem:
   lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -206,7 +206,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -260,8 +260,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 333
-      minScalar: 111
+      scalar: 66
+      minScalar: 22
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -376,8 +376,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5
-      minScalar: 0.5
+      scalar: 0.99
+      minScalar: 0.33
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1064,12 +1064,12 @@ ParticleSystem:
       cycleCount: 0
       repeatInterval: 0.01
     - serializedVersion: 2
-      time: 3
+      time: 0.2
       countCurve:
         serializedVersion: 2
         minMaxState: 3
-        scalar: 100
-        minScalar: 33
+        scalar: 33
+        minScalar: 11
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -1118,8 +1118,8 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-      cycleCount: 0
-      repeatInterval: 5
+      cycleCount: 1
+      repeatInterval: 1
   SizeModule:
     enabled: 1
     curve:
@@ -3660,7 +3660,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 1
-      minScalar: 0.5
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
