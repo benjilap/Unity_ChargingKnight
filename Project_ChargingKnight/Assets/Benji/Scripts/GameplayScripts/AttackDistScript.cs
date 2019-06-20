@@ -8,7 +8,6 @@ public class AttackDistScript : MonoBehaviour {
     protected float AtkCharge;
     [SerializeField]
     protected float AtkRecover;
-    public float AtkDist;
     [SerializeField]
     protected float projectileSpd =1;
     [SerializeField]

@@ -72,14 +72,14 @@ public class PlayerClass : MonoBehaviour {
         {
             if (!characterClass.useSkill)
             {
-                UsePrimarySkill();
-                UseUltiSkill();
                 PlayerMovement();
                 PlayerDodgeActivate();
                 playerAttack.PlayerAttack();
 
             }
+            UsePrimarySkill();
             UseSecondarySkill();
+            UseUltiSkill();
         }
 
         SetLayerMask();
@@ -279,7 +279,7 @@ public class PlayerClass : MonoBehaviour {
         Ray ray = new Ray(this.transform.position, Vector3.down);
         RaycastHit hit;
 
-        Debug.DrawRay(this.transform.position, this.transform.position + Vector3.down*0.5f, Color.yellow);
+        Debug.DrawRay(this.transform.position, Vector3.down*0.5f, Color.yellow);
 
         if(Physics.Raycast(ray,out hit, 1f, rayLayerMask))
         {
@@ -337,7 +337,11 @@ public class PlayerClass : MonoBehaviour {
     {
         if (playerController.ButtonX())
         {
-            //characterClass.;
+            if (primarySkill != null)
+            {
+                primarySkill();
+
+            }
         }
     }
 
@@ -345,7 +349,12 @@ public class PlayerClass : MonoBehaviour {
     {
         if (playerController.ButtonY())
         {
-            characterClass.BashingShield();
+            if (secondarySkill != null)
+            {
+                secondarySkill();
+
+
+            }
         }
     }
 
@@ -353,7 +362,11 @@ public class PlayerClass : MonoBehaviour {
     {
         if (playerController.ButtonB())
         {
-            characterClass.BurstMode();
+            if (ultiSkill != null)
+            {
+                ultiSkill();
+
+            }
         }
     }
 }

@@ -40,10 +40,19 @@ public class ProjectileScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != this.gameObject.layer)
+        GameObject objectToModify = null;
+        if (other.name == "AttackZone")
+        {
+            objectToModify = other.transform.parent.gameObject;
+        }
+        else
+        {
+            objectToModify = other.gameObject;
+        }
+        if (objectToModify.layer != this.gameObject.layer)
         { 
-            Rigidbody targetRb = other.GetComponent<Rigidbody>();
-            LifeGlobalScript targetLife = other.GetComponent<LifeGlobalScript>();
+            Rigidbody targetRb = objectToModify.GetComponent<Rigidbody>();
+            LifeGlobalScript targetLife = objectToModify.GetComponent<LifeGlobalScript>();
 
             if (!hasHit)
             {
