@@ -505,7 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnHeight: 0.5
   EnemyDistNumber: 0
-  EnemyCacNumber: 0
+  EnemyCacNumber: 2
 --- !u!1 &563221406
 GameObject:
   m_ObjectHideFlags: 0
