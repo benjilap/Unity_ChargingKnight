@@ -17,7 +17,7 @@ public class PlayerCacAttackScript : AttackCacScript {
 
     public void PlayerAttack()
     {
-        UpdateAttackZoneTrans(myPlayer.PlayerDirFaced());
+        UpdateAttackZoneTrans(myPlayer.PlayerDirFaced(),0.9f);
 
         if (myPlayer.hittable)
         {

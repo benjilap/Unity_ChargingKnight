@@ -40,29 +40,29 @@ public class AttackCacScript : MonoBehaviour {
         StartCoroutine(ResetAttack());
     }
 
-    protected void UpdateAttackZoneTrans(int dirFaced)
+    protected void UpdateAttackZoneTrans(int dirFaced, float zonePos)
     {
         if (dirFaced == 0)
         {
-            AttackZone.transform.localPosition = new Vector3(0, 0, -0.9f);
+            AttackZone.transform.localPosition = new Vector3(0, 0, -zonePos);
             AttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         if (dirFaced == 1)
         {
-            AttackZone.transform.localPosition = new Vector3(0.9f, 0, 0);
+            AttackZone.transform.localPosition = new Vector3(zonePos, 0, 0);
             AttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
         }
         else
         if (dirFaced == 2)
         {
-            AttackZone.transform.localPosition = new Vector3(0, 0, 0.9f);
+            AttackZone.transform.localPosition = new Vector3(0, 0, zonePos);
             AttackZone.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         if (dirFaced == 3)
         {
-            AttackZone.transform.localPosition = new Vector3(-0.9f, 0, 0);
+            AttackZone.transform.localPosition = new Vector3(-zonePos, 0, 0);
             AttackZone.transform.eulerAngles = new Vector3(0, 90, 0);
         }
     }

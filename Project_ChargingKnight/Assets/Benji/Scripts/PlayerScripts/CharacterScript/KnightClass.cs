@@ -33,6 +33,18 @@ public class KnightClass : MonoBehaviour {
     float bashingShieldRecoverTime;
     bool bashingShieldRecover;
 
+    //RazorSlash
+    [HideInInspector]
+    public bool razorSlashEnable;
+    float razorSlashSpeed = 20;
+    float razorSlashKnockback = 20;
+    float razorSlashDuration = 1;
+    float razorSlashDmg = 5;
+    [SerializeField]
+    float razorSlashRecoverTime;
+    bool razorSlashRecover;
+    Vector3 razorSlashVelocityRecover;
+
     // Use this for initialization
     void Start () {
         playerClass = this.GetComponent<PlayerClass>();
@@ -41,6 +53,7 @@ public class KnightClass : MonoBehaviour {
         playerRb = this.GetComponent<Rigidbody>();
         playerController = this.GetComponent<PlayerController>();
         burstModePower = burstModePowerPourcent/100;
+        InitPlayerSkill();
 
     }
 	
@@ -50,15 +63,18 @@ public class KnightClass : MonoBehaviour {
         {
             BashingShield();
         }
-        Debug.DrawRay(this.transform.position, RazorSlashDir(),Color.red);
-        Debug.Log(RazorSlashDir());
-	}
+        Debug.DrawRay(this.transform.position,RazorSlashDir(), Color.red);
+        //Debug.Log(RazorSlashDir());
+    }
 
     void InitPlayerSkill()
     {
         if (playerClass != null)
         {
+            playerClass.primarySkill = RazorSlash;
+            playerClass.secondarySkill = BashingShield;
             playerClass.ultiSkill = BurstMode;
+
         }
     }
 
@@ -138,7 +154,25 @@ public class KnightClass : MonoBehaviour {
     }
 
     //RAZORSLASH
-    public Vector3 RazorSlashDir()
+    public void RazorSlash()
+    {
+        if (!razorSlashEnable && !useSkill)
+        {
+            useSkill = true;
+            razorSlashEnable = true;
+            razorSlashVelocityRecover = playerRb.velocity.normalized;
+            RazorSlashUpdateAtkZone(playerClass.PlayerDirFaced(), 0.9f);
+            playerRb.velocity = RazorSlashDir() * razorSlashSpeed;
+            playerAtkTrigger.hitDamage = razorSlashDmg;
+            playerAtkTrigger.knokbackPower = razorSlashKnockback;
+            playerAtkTrigger.inBashing = true;
+            playerAtkTrigger.isAttacking = true;
+            StartCoroutine(RazorSlashCooldown());
+        }
+        //playerRb.velocity = playerRb.velocity.normalized * razorSlashSpeed;
+    }
+
+    Vector3 RazorSlashDir()
     {
         Vector3 controllerDir = new Vector3(playerController.HorizontalAxis(), 0, playerController.VerticalAxis()).normalized;
         Vector3 playerDir = playerRb.velocity.normalized;
@@ -147,15 +181,41 @@ public class KnightClass : MonoBehaviour {
 
         if (angleToControllerDir < angleToPlayerDir)
         {
-            return new Vector3(Mathf.Sin(angleToPlayerDir - 90), 0, Mathf.Cos(angleToPlayerDir - 90));
+            return new Vector3(Mathf.Sin((angleToPlayerDir - 90)*Mathf.Deg2Rad), 0, Mathf.Cos((angleToPlayerDir - 90) * Mathf.Deg2Rad));
         }
         else
         {
-            return new Vector3(Mathf.Sin(angleToPlayerDir + 90), 0, Mathf.Cos(angleToPlayerDir +90));
-
-
+            return new Vector3(Mathf.Sin((angleToPlayerDir + 90) * Mathf.Deg2Rad), 0, Mathf.Cos((angleToPlayerDir + 90) * Mathf.Deg2Rad));
+            
         }
+    }
 
+    void RazorSlashUpdateAtkZone(int dirFaced, float zonePos)
+    {
+
+        if (dirFaced == 0)
+        {
+            playerAtkTrigger.transform.localPosition = new Vector3(0, 0, -zonePos);
+            playerAtkTrigger.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        if (dirFaced == 1)
+        {
+            playerAtkTrigger.transform.localPosition = new Vector3(zonePos, 0, 0);
+            playerAtkTrigger.transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+        else
+        if (dirFaced == 2)
+        {
+            playerAtkTrigger.transform.localPosition = new Vector3(0, 0, zonePos);
+            playerAtkTrigger.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        if (dirFaced == 3)
+        {
+            playerAtkTrigger.transform.localPosition = new Vector3(-zonePos, 0, 0);
+            playerAtkTrigger.transform.eulerAngles = new Vector3(0, 90, 0);
+        }
     }
 
     private float AngleTo(Vector3 pos, Vector3 target)
@@ -168,6 +228,28 @@ public class KnightClass : MonoBehaviour {
             angle = 360 - Vector3.Angle(target, pos);
 
         return angle;
+    }
+
+
+
+    IEnumerator RazorSlashCooldown()
+    {
+        yield return new WaitForSeconds(razorSlashDuration);
+        playerAtkTrigger.hitDamage = playerAttack.AtkDamage;
+        playerAtkTrigger.knokbackPower = playerAttack.AtkKnokback;
+        playerAtkTrigger.isAttacking = false;
+        playerAtkTrigger.inBashing = false;
+        razorSlashEnable = false;
+        useSkill = false;
+        playerRb.velocity = razorSlashVelocityRecover * playerClass.playerSpeed;
+        StartCoroutine(RazorSlashRecover());
+    }
+    IEnumerator RazorSlashRecover()
+    {
+        razorSlashRecover = true;
+        yield return new WaitForSeconds(razorSlashRecoverTime);
+        razorSlashRecover = false;
+
     }
 
 }

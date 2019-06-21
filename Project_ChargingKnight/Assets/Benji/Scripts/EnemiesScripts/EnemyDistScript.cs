@@ -37,8 +37,9 @@ public class EnemyDistScript : EnemyScript {
     {
 
         targetPos = TargetSelection().transform.position + TargetSelection().GetComponent<Rigidbody>().velocity;
-        if (Vector3.Distance(this.transform.position, targetPos) <= enemyAttack.AtkDist)
+        if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) <= AtkDist)
         {
+            Debug.Log("canAtk");
             enemyNavAgent.SetDestination(this.transform.position);
             enemyAttack.EnemyDistAttack();
 

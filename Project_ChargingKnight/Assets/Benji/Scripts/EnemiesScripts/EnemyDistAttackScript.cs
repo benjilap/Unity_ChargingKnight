@@ -27,6 +27,7 @@ public class EnemyDistAttackScript : AttackDistScript {
                 newProjectile.GetComponent<ProjectileScript>().knokbackPower = projectileKnokback;
                 newProjectile.GetComponent<ProjectileScript>().projectileDmg = projectileDamage;
                 newProjectile.layer = this.gameObject.layer;
+                newProjectile.transform.SetParent(this.transform);
 
                 StartCoroutine(ChargeAttack());
             }
@@ -37,7 +38,8 @@ public class EnemyDistAttackScript : AttackDistScript {
             if (hasToShoot == true)
             {
                 hasToShoot = false;
-                newProjectile.GetComponent<Rigidbody>().velocity = (myEnemy.targetPos - this.transform.position) * projectileSpd;
+                newProjectile.transform.SetParent(null);
+                newProjectile.GetComponent<Rigidbody>().velocity = (myEnemy.targetPos - this.transform.position).normalized * projectileSpd;
                 newProjectile = null;
 
                 StartCoroutine(ResetAttack());

@@ -118,7 +118,7 @@ MonoBehaviour:
   timeOfPatrol: 1
   distOfPatrol: 3
   targetsList: []
-  AtkDist: 3
+  AtkDist: 8
   targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114663041071637032
 MonoBehaviour:
@@ -131,10 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6168ccfadfbc71e44bf9da1913b19e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AtkCharge: 1
-  AtkRecover: 0.6
-  AtkDist: 5
-  projectileSpd: 1
+  AtkCharge: 0.3
+  AtkRecover: 0.1
+  projectileSpd: 8
   projectileKnokback: 5
   projectileDamage: 5
   canAttack: 1

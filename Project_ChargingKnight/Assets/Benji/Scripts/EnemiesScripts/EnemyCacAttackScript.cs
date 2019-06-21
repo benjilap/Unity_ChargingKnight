@@ -15,7 +15,7 @@ public class EnemyCacAttackScript : AttackCacScript {
 
     public void EnemyCacAttack()
     {
-        UpdateAttackZoneTrans(myEnemy.EnemyDirFaced());
+        UpdateAttackZoneTrans(myEnemy.EnemyDirFaced(),0.75f);
 
 
         if (canAttack)

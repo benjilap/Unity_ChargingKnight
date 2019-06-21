@@ -100,7 +100,7 @@ public class AttackTriggerScript : MonoBehaviour {
                 Rigidbody targetRb = objectToModify.GetComponent<Rigidbody>();
                 if (enemyAgt != null)
                 {
-                    Debug.Log("bashknockback");
+
                     targetRb.isKinematic = false;
                 }
                 if (targetRb != null)
@@ -112,7 +112,7 @@ public class AttackTriggerScript : MonoBehaviour {
                         targetLife.lifeValue -= hitDamage;
                         if (enemyAgt != null)
                         {
-                            Debug.Log("bashhit");
+
                             StartCoroutine(EnemyRecoverMovement(targetRb));
 
                         }
