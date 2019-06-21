@@ -58,7 +58,7 @@ public class ReliqueManager : MonoBehaviour
             lastCreated = Instantiate(relicPrefab, posi - new Vector3(0,0,2), new Quaternion(0, 0, 0, 0)) as GameObject;
         else lastCreated = Instantiate(relicPrefab, player.transform.position, new Quaternion(0, 0, 0, 0)) as GameObject;
 
-
+        
 
     }
 }

@@ -193,12 +193,18 @@ public class Relics : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         player = GameObject.FindGameObjectWithTag("Player");
+        if (Input.GetKeyDown("c"))
+        {
+            relicManager.GetComponent<ReliqueManager>().AddRelic(gameObject);
+            transform.localEulerAngles.Set(0, 0, 0);
+            transform.localScale.Set(1, 1, 1);
+        }
         if (isTriggered)
         {
             if (player.GetComponent<PlayerController>().RightBumper())
             {
                 relicManager.GetComponent<ReliqueManager>().AddRelic(gameObject);
-                
+     
             }
         }
 	}

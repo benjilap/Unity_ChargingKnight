@@ -844,6 +844,9 @@ public class Pause : MonoBehaviour {
         for(int i = 0; i<biteTheDust.Count; i++)
         {
             biteTheDust[i].transform.SetParent(listMenuReliques[i].GetChild(0));
+            biteTheDust[i].transform.localPosition = new Vector3(0, 0, 0);
+            biteTheDust[i].transform.localRotation = listMenuReliques[i].GetChild(0).localRotation;
+            biteTheDust[i].transform.localScale = new Vector3(150,150,150);
         }
     }
 
