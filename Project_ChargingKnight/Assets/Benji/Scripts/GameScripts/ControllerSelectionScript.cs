@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class ControllerSelectionScript : MonoBehaviour {
 
-    [HideInInspector]
-    public List<GameObject> listOfPlayers = new List<GameObject>();
 
+
+    GM_CanvasScript GameCanvasScript;
     List<ControllerSelection> listOfContSelect = new List<ControllerSelection>();
 
     Object controllerSelectCanvas;
@@ -18,7 +18,7 @@ public class ControllerSelectionScript : MonoBehaviour {
     void Start()
     {
         Input.GetJoystickNames().Initialize();
-
+        GameCanvasScript = this.GetComponent<GM_CanvasScript>();
         controllerSelectCanvas = Resources.Load("Canvas/ControllerSelection");
         CreateControllerSelection();
         SetSelectableController();
@@ -27,7 +27,7 @@ public class ControllerSelectionScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(listOfPlayers[0].GetComponent<PlayerController>().controllerNum ==0)
+        if(GameCanvasScript.listOfPlayers[0].GetComponent<PlayerController>().controllerNum ==0)
         {
             CreateControllerSelection();
         }
@@ -38,23 +38,17 @@ public class ControllerSelectionScript : MonoBehaviour {
         //}
     }
 
-    void CreateControllerSelection()
+    public void CreateControllerSelection()
     {
-        if (this.transform.childCount - 1 < GameManager.playersNmbrs)
+        if (listOfContSelect.Count < GameManager.playersNmbrs)
         {
-            float[] ImageAnchorLimit = { 0, 1 };
-            ImageAnchorLimit[1] = ImageAnchorLimit[1] / listOfPlayers.Count;
-            for (int i = 0; i < listOfPlayers.Count; i++)
+            for (int i = 0; i < GameCanvasScript.listOfPlayers.Count; i++)
             {
-                ImageAnchorLimit = new float[] { ImageAnchorLimit[1] * i, ImageAnchorLimit[1] * (i + 1) };
-                GameObject myNewControllerSelect = Instantiate(controllerSelectCanvas, this.transform.position, Quaternion.identity) as GameObject;
-                myNewControllerSelect.name = controllerSelectCanvas.name;
-                myNewControllerSelect.transform.SetParent(this.transform);
-                myNewControllerSelect.GetComponent<RectTransform>().anchorMin = new Vector2(ImageAnchorLimit[0], 0);
-                myNewControllerSelect.GetComponent<RectTransform>().anchorMax = new Vector2(ImageAnchorLimit[1], 1);
+
                 ControllerSelection newContSelect = new ControllerSelection();
-                newContSelect.SetSelectCont(listOfPlayers[i].GetComponent<PlayerClass>().playerNum, 0, myNewControllerSelect);
+                newContSelect.SetSelectCont(GameCanvasScript.listOfPlayers[i].GetComponent<PlayerClass>().playerNum, 0, GameCanvasScript.CreateCanvas(controllerSelectCanvas,i));
                 listOfContSelect.Add(newContSelect);
+
             }
         }
     }
@@ -75,7 +69,7 @@ public class ControllerSelectionScript : MonoBehaviour {
                             listOfContSelect[playerToCheck - 1].controllerNum = selectableController[i];
                             selectableController[i] = 0;
                             AssignPlCtlr(listOfContSelect[playerToCheck - 1], playerToCheck);
-                            if (playerToCheck < listOfPlayers.Count)
+                            if (playerToCheck < GameCanvasScript.listOfPlayers.Count)
                             {
                                 playerToCheck++;
                             }
@@ -108,7 +102,7 @@ public class ControllerSelectionScript : MonoBehaviour {
 
     void AssignPlCtlr(ControllerSelection newCtlr, int playerNum)
     {
-        foreach (GameObject player in listOfPlayers)
+        foreach (GameObject player in GameCanvasScript.listOfPlayers)
         {
             if (player.GetComponent<PlayerClass>().playerNum == playerNum)
             {
