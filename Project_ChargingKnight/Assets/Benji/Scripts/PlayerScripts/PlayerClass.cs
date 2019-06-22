@@ -13,8 +13,6 @@ public class PlayerClass : MonoBehaviour {
 
     PlayerController playerController;
     Rigidbody playerRb;
-    Transform plyrDir;
-    Transform cldDir;
     Transform angularInd;
     PlayerCacAttackScript playerAttack;
     
@@ -60,9 +58,6 @@ public class PlayerClass : MonoBehaviour {
         playerAttack = this.GetComponent<PlayerCacAttackScript>();
         characterClass = this.GetComponent<KnightClass>();
         playerRb = this.GetComponent<Rigidbody>();
-        cldDir = this.transform.Find("CtlrDir");
-        plyrDir = this.transform.Find("PlyrDir");
-        angularInd = this.transform.Find("ControllerDirT");
         
         //InitAccelCurve();
     }
@@ -89,8 +84,6 @@ public class PlayerClass : MonoBehaviour {
     //PlayerMecanics//
     void PlayerMovement()
     {
-        //VisualInfos
-        plyrDir.localPosition = playerRb.velocity;
 
         if (hittable )
         {
@@ -131,9 +124,6 @@ public class PlayerClass : MonoBehaviour {
         Vector3 tempPlayerDir = Vector3.zero;
 
         tempPlayerDir = Vector3.RotateTowards(playerRb.velocity.normalized, ControllerDir(), playerAngularSpeed * Time.deltaTime, 1f);
-
-        //VisualInfos
-        cldDir.localPosition = tempPlayerDir;
 
         return tempPlayerDir * AccelerationSpeed();
     }
