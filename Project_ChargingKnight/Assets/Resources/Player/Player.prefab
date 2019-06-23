@@ -314,11 +314,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useSkill: 0
   burstModePower: 0.3
-  burstModeRecoverTime: 0
+  burstModeRecoverTime: 1
+  burstModeRecover: 0
   bashingShieldEnable: 0
-  bashingShieldRecoverTime: 0
+  bashingShieldRecoverTime: 1
+  bashingShieldRecover: 0
   razorSlashEnable: 0
-  razorSlashRecoverTime: 0
+  razorSlashRecoverTime: 1
+  razorSlashRecover: 0
 --- !u!114 &114247736667370372
 MonoBehaviour:
   m_ObjectHideFlags: 1
