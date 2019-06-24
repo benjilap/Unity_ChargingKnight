@@ -13,9 +13,9 @@ public class PlayerUIScript : MonoBehaviour {
 
     Text lifeText;
     Scrollbar lifeBar;
-    Scrollbar burstRecover;
-    Scrollbar bashRecover;
-    Scrollbar slashRecover;
+    public Scrollbar burstRecover;
+    public Scrollbar bashRecover;
+    public Scrollbar slashRecover;
 
     public float[] saveTime = new float[3];
 
@@ -28,26 +28,30 @@ public class PlayerUIScript : MonoBehaviour {
 	void Update () {
         UpdateLifeVisual();
         CheckSkillUse();
-	}
+
+        Debug.Log(burstRecover.transform.parent);
+        Debug.Log(bashRecover.transform.parent);
+        Debug.Log(slashRecover.transform.parent);
+    }
 
     void InitUI()
     {
         if (myPlayer.playerNum == 2) {
             this.transform.localScale = new Vector3(-this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
             this.transform.Find("PlayerLifeBar/PlayerLifePoint").GetComponent<RectTransform>().localScale = this.transform.localScale;
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    this.transform.Find("SkillPanel").GetChild(i).Find("SkillText").GetComponent<RectTransform>().localScale = this.transform.localScale;
-            //}
+            for (int i = 0; i < 3; i++)
+            {
+                this.transform.Find("SkillPanel").GetChild(i).Find("SkillText").GetComponent<RectTransform>().localScale = this.transform.localScale;
+            }
         }
         lifeScript = myPlayer.GetComponent<LifeGlobalScript>();
         characClass = myPlayer.GetComponent<KnightClass>();
 
         lifeText = this.transform.Find("PlayerLifeBar/PlayerLifePoint").GetComponent<Text>();
         lifeBar = this.transform.Find("PlayerLifeBar/Scrollbar").GetComponent<Scrollbar>();
-        burstRecover = this.transform.Find("SkillPanel/BurstModeRecover/Scrollbar").GetComponent<Scrollbar>();
-        bashRecover = this.transform.Find("SkillPanel/BashingShieldRecover/Scrollbar").GetComponent<Scrollbar>();
-        slashRecover = this.transform.Find("SkillPanel/RazorSlashRecover/Scrollbar").GetComponent<Scrollbar>();
+        slashRecover = this.transform.Find("SkillPanel").GetChild(0).Find("SlashScrollbar").GetComponent<Scrollbar>();
+        bashRecover = this.transform.Find("SkillPanel").GetChild(1).Find("BashScrollbar").GetComponent<Scrollbar>();
+        burstRecover = this.transform.Find("SkillPanel").GetChild(2).Find("BurstScrollbar").GetComponent<Scrollbar>();
 
 
     }
@@ -81,7 +85,7 @@ public class PlayerUIScript : MonoBehaviour {
             saveTime[2] = SaveTimeRecover(characClass.razorSlashRecover);
         }
         slashRecover.size = RecoverSkill(saveTime[2], characClass.razorSlashRecoverTime);
-        
+
     }
 
     float SaveTimeRecover(bool capNoUsed)
@@ -98,7 +102,7 @@ public class PlayerUIScript : MonoBehaviour {
     {
 
             float recoverTimer = Time.time - savedTime;
-            return Mathf.Lerp(0, 1, (recoverTimer / timeToRecover) * 100);
+            return Mathf.Lerp(0, 1, (recoverTimer / timeToRecover));
 
     }
 }
