@@ -34,18 +34,20 @@ public class RoomEnemiesManager : MonoBehaviour {
     }
 
 	void Update () {
-        if (EnemyCacNumber != 0)
+        if (FindObjectOfType<GM_CanvasScript>().playersReady)
         {
-            CheckEnemyCacNumbers(EnemyCac, listOfCacEnemy, EnemyCacNumber);
-            CheckCacEnemiesTargets();
-        }
+            if (EnemyCacNumber != 0)
+            {
+                CheckEnemyCacNumbers(EnemyCac, listOfCacEnemy, EnemyCacNumber);
+                CheckCacEnemiesTargets();
+            }
 
-        if(EnemyDistNumber != 0)
-        {
-            CheckEnemyDistNumbers(EnemyDist, listOfDistEnemy, EnemyDistNumber);
-            CheckDistEnemiesTargets();
+            if (EnemyDistNumber != 0)
+            {
+                CheckEnemyDistNumbers(EnemyDist, listOfDistEnemy, EnemyDistNumber);
+                CheckDistEnemiesTargets();
+            }
         }
-
 
     }
 
@@ -165,7 +167,7 @@ public class RoomEnemiesManager : MonoBehaviour {
                 }
             }
 
-            if (distEnemy.GetComponent<EnemyDistScript>().targetsList.Count < targetsList.Count)
+            if (distEnemy.GetComponent<EnemyDistScript>().targetsList.Count < targetsList.Count && distEnemy.GetComponent<EnemyDistScript>().targetsList.Count!=0)
             {
                 for (int i = 0; i < targetsList.Count; i++)
                 {

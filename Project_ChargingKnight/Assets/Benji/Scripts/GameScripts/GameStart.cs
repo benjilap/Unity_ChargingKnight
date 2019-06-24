@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameStart : MonoBehaviour {
 
     [SerializeField]
+    bool respawnPlayers;
+    [SerializeField]
     float spawnHeight;
     [SerializeField]
     float spawnOffset = 2;
@@ -15,7 +17,7 @@ public class GameStart : MonoBehaviour {
     Object GM_Canvas;
 
     List<GameObject> actualsPlayer = new List<GameObject>();
-
+    bool loopCheck = true;
 
     void Start () {
         playerPrefab = Resources.Load("Player/Player");
@@ -38,61 +40,68 @@ public class GameStart : MonoBehaviour {
 
     void CheckPlayer()
     {
-        if (GameManager.playersNmbrs == 2)
+        if (loopCheck)
         {
-            PlayerClass[] currentPlayers = GameObject.FindObjectsOfType<PlayerClass>();
-            if (currentPlayers.Length == 0)
+            if (GameManager.playersNmbrs == 2)
             {
-
-                for(int i=1; i <= GameManager.playersNmbrs; i++)
+                PlayerClass[] currentPlayers = GameObject.FindObjectsOfType<PlayerClass>();
+                if (currentPlayers.Length == 0)
                 {
-                    GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(i, spawnOffset), Quaternion.identity) as GameObject;
+
+                    for (int i = 1; i <= GameManager.playersNmbrs; i++)
+                    {
+                        GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(i, spawnOffset), Quaternion.identity) as GameObject;
+                        if (myNewPlayer.GetComponent<PlayerClass>() != null)
+                        {
+                            myNewPlayer.GetComponent<PlayerClass>().playerNum = i;
+                            myNewPlayer.name = "Player" + i.ToString();
+
+                        }
+                        actualsPlayer.Add(myNewPlayer);
+                    }
+                }
+                else if (actualsPlayer.Count < GameManager.playersNmbrs)
+                {
+                    if (currentPlayers.Length < 2)
+                    {
+                        GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(GameManager.playersNmbrs, spawnOffset), Quaternion.identity) as GameObject;
+                    }
+
+                    currentPlayers = GameObject.FindObjectsOfType<PlayerClass>();
+                    for (int i = 1; i <= GameManager.playersNmbrs; i++)
+                    {
+                        currentPlayers[i - 1].transform.position = SetStartPos(i, spawnOffset);
+                        currentPlayers[i - 1].playerNum = i;
+                        currentPlayers[i - 1].gameObject.name = "Player" + i.ToString();
+                        actualsPlayer.Add(currentPlayers[i - 1].gameObject);
+                    }
+
+                }
+            }
+            else if (GameManager.playersNmbrs == 1)
+            {
+                if (GameObject.FindObjectOfType<PlayerClass>() == null)
+                {
+                    GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(0, 0), Quaternion.identity) as GameObject;
                     if (myNewPlayer.GetComponent<PlayerClass>() != null)
                     {
-                        myNewPlayer.GetComponent<PlayerClass>().playerNum = i;
-                        myNewPlayer.name = "Player" + i.ToString();
-
+                        myNewPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
+                        myNewPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
                     }
                     actualsPlayer.Add(myNewPlayer);
                 }
-            }
-            else if (actualsPlayer.Count < GameManager.playersNmbrs)
-            {
-                if (currentPlayers.Length < 2)
+                else if (actualsPlayer.Count < GameManager.playersNmbrs)
                 {
-                    GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(GameManager.playersNmbrs, spawnOffset), Quaternion.identity) as GameObject;
+                    GameObject actualPlayer = GameObject.FindObjectOfType<PlayerClass>().gameObject;
+                    actualPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
+                    actualPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
+                    actualPlayer.transform.position = SetStartPos(0, 0);
+                    actualsPlayer.Add(actualPlayer);
                 }
-
-                currentPlayers = GameObject.FindObjectsOfType<PlayerClass>();
-                for (int i = 1; i <= GameManager.playersNmbrs; i++)
-                {
-                    currentPlayers[i - 1].transform.position = SetStartPos(i, spawnOffset);
-                    currentPlayers[i-1].playerNum = i;
-                    currentPlayers[i-1].gameObject.name = "Player" + i.ToString();
-                    actualsPlayer.Add(currentPlayers[i-1].gameObject);
-                }
-                
             }
-        }
-        else if(GameManager.playersNmbrs == 1)
-        {
-            if (GameObject.FindObjectOfType<PlayerClass>() == null)
+            if (!respawnPlayers)
             {
-                GameObject myNewPlayer = Instantiate(playerPrefab, SetStartPos(0, 0), Quaternion.identity) as GameObject;
-                if (myNewPlayer.GetComponent<PlayerClass>() != null)
-                {
-                    myNewPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
-                    myNewPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
-                }
-                actualsPlayer.Add(myNewPlayer);
-            }
-            else if (actualsPlayer.Count < GameManager.playersNmbrs)
-            {
-                GameObject actualPlayer = GameObject.FindObjectOfType<PlayerClass>().gameObject;
-                actualPlayer.GetComponent<PlayerClass>().playerNum = GameManager.playersNmbrs;
-                actualPlayer.name = "Player" + GameManager.playersNmbrs.ToString();
-                actualPlayer.transform.position = SetStartPos(0, 0);
-                actualsPlayer.Add(actualPlayer);
+                loopCheck = false;
             }
         }
     }

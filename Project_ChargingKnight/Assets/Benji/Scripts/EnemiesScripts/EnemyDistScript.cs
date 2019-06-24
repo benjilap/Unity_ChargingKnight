@@ -35,20 +35,22 @@ public class EnemyDistScript : EnemyScript {
 
     void MoveToAttack()
     {
-
-        targetPos = TargetSelection().transform.position + TargetSelection().GetComponent<Rigidbody>().velocity;
-        if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) <= AtkDist)
+        if (TargetSelection() != null)
         {
-            Debug.Log("canAtk");
-            enemyNavAgent.SetDestination(this.transform.position);
-            enemyAttack.EnemyDistAttack();
-
-        }
-        else if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) > AtkDist)
-        {
-            if (enemyNavAgent.destination != TargetSelection().transform.position)
+            targetPos = TargetSelection().transform.position + TargetSelection().GetComponent<Rigidbody>().velocity/3;
+            if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) <= AtkDist)
             {
-                enemyNavAgent.SetDestination(TargetSelection().transform.position);
+
+                enemyNavAgent.SetDestination(this.transform.position);
+                enemyAttack.EnemyDistAttack();
+
+            }
+            else if (Vector3.Distance(this.transform.position, TargetSelection().transform.position) > AtkDist)
+            {
+                if (enemyNavAgent.destination != TargetSelection().transform.position)
+                {
+                    enemyNavAgent.SetDestination(TargetSelection().transform.position);
+                }
             }
         }
     }
