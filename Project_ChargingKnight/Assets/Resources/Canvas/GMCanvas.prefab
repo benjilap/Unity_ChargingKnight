@@ -106,7 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8d9902ae756c145975a8148d85ccdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listOfPlayers: []
 --- !u!114 &114353603281418186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da97c494476446e40ae3439da7212ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listOfPlayers: []
+  listOfPlayersCanvas: []
 --- !u!114 &114978408762650468
 MonoBehaviour:
   m_ObjectHideFlags: 1

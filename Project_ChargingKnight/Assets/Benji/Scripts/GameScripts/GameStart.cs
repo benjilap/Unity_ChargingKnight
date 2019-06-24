@@ -111,13 +111,13 @@ public class GameStart : MonoBehaviour {
         if (GameObject.FindObjectOfType<GM_CanvasScript>() == null)
         {
             GameObject myNewGMCanvas = Instantiate(GM_Canvas, Vector3.zero, Quaternion.identity) as GameObject;
-            myNewGMCanvas.GetComponent<ControllerSelectionScript>().listOfPlayers = actualsPlayer;
+            myNewGMCanvas.GetComponent<GM_CanvasScript>().listOfPlayers = actualsPlayer;
             myNewGMCanvas.name = GM_Canvas.name;
         }
         else
         {
             GameObject actualGMCanvas = GameObject.FindObjectOfType<GM_CanvasScript>().gameObject;
-            actualGMCanvas.GetComponent<ControllerSelectionScript>().listOfPlayers = actualsPlayer;
+            actualGMCanvas.GetComponent<GM_CanvasScript>().listOfPlayers = actualsPlayer;
         }
     }
 

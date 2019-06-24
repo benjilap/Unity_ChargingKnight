@@ -18,9 +18,9 @@ public class KnightClass : MonoBehaviour {
     float burstModePowerPourcent = 30;
     [SerializeField]
     float burstModePower;
-    [SerializeField]
-    float burstModeRecoverTime;
-    bool burstModeRecover;
+    public float burstModeRecoverTime =1;
+    [HideInInspector]
+    public bool burstModeRecover;
 
     //BashingShieldValue
     [HideInInspector]
@@ -29,9 +29,9 @@ public class KnightClass : MonoBehaviour {
     float bashingShieldKnockback = 20;
     float bashingShieldDuration = 1;
     float bashingShieldDmg = 5;
-    [SerializeField]
-    float bashingShieldRecoverTime;
-    bool bashingShieldRecover;
+    public float bashingShieldRecoverTime =1;
+    [HideInInspector]
+    public bool bashingShieldRecover;
 
     //RazorSlash
     [HideInInspector]
@@ -40,9 +40,9 @@ public class KnightClass : MonoBehaviour {
     float razorSlashKnockback = 20;
     float razorSlashDuration = 1;
     float razorSlashDmg = 5;
-    [SerializeField]
-    float razorSlashRecoverTime;
-    bool razorSlashRecover;
+    public float razorSlashRecoverTime =1;
+    [HideInInspector]
+    public bool razorSlashRecover;
     Vector3 razorSlashVelocityRecover;
 
     // Use this for initialization
