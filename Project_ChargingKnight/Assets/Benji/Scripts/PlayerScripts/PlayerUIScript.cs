@@ -29,9 +29,7 @@ public class PlayerUIScript : MonoBehaviour {
         UpdateLifeVisual();
         CheckSkillUse();
 
-        Debug.Log(burstRecover.transform.parent);
-        Debug.Log(bashRecover.transform.parent);
-        Debug.Log(slashRecover.transform.parent);
+
     }
 
     void InitUI()

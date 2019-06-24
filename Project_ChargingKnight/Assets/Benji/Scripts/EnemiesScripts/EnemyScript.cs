@@ -32,7 +32,7 @@ public class EnemyScript : MonoBehaviour {
     protected NavMeshAgent enemyNavAgent;
     protected int enemyDirFaced;
 
-    [HideInInspector]
+    //[HideInInspector]
     public List<PlayerClass> targetsList = new List<PlayerClass>();
 
     [SerializeField]
@@ -209,24 +209,27 @@ public class EnemyScript : MonoBehaviour {
     {
 
         CleanListOfNullValue(targetsList);
-
-        if(targetsList.Count == 1)
+        if (targetsList.Count != 0)
         {
-            return targetsList[0];
-        }
-        else 
-        {
-            PlayerClass tempTarget = targetsList[0];
-            for(int i = 0; i < targetsList.Count; i++)
+            if (targetsList.Count == 1)
             {
-                
-                if(Vector3.Distance(this.transform.position,tempTarget.transform.position)> Vector3.Distance(this.transform.position, targetsList[i].transform.position))
-                {
-                    tempTarget = targetsList[i];
-                }
+                return targetsList[0];
             }
-            return tempTarget;
+            else
+            {
+                PlayerClass tempTarget = targetsList[0];
+                for (int i = 0; i < targetsList.Count; i++)
+                {
+
+                    if (Vector3.Distance(this.transform.position, tempTarget.transform.position) > Vector3.Distance(this.transform.position, targetsList[i].transform.position))
+                    {
+                        tempTarget = targetsList[i];
+                    }
+                }
+                return tempTarget;
+            }
         }
+        else return null;
     }
 
     public int EnemyDirFaced()
