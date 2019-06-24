@@ -27,7 +27,6 @@ public class ReliqueManager : MonoBehaviour
         manager = GameObject.Find("MANAGER");
         relicPrefab = Resources.Load("Relics/Relic");
         player = GameObject.Find("Player1");
-
     }
 
     // Update is called once per frame
@@ -46,9 +45,11 @@ public class ReliqueManager : MonoBehaviour
 
     public void AddRelic(GameObject anotherOne)
     {
-        relicsEquip.Add(anotherOne);
-        manager.GetComponent<Pause>().RelicRender(relicsEquip);
-
+        if (relicsEquip.Count < nombreSlots)
+        {
+            relicsEquip.Add(anotherOne);
+            manager.GetComponent<Pause>().RelicRender(relicsEquip);
+        }
     }
 
     void SpawnRelic(Vector3 posi)
@@ -56,9 +57,12 @@ public class ReliqueManager : MonoBehaviour
 
         if (posi != null)
             lastCreated = Instantiate(relicPrefab, posi - new Vector3(0,0,2), new Quaternion(0, 0, 0, 0)) as GameObject;
-        else lastCreated = Instantiate(relicPrefab, player.transform.position, new Quaternion(0, 0, 0, 0)) as GameObject;
+        else lastCreated = Instantiate(relicPrefab, player.transform.position, new Quaternion(0, 0, 0, 0)) as GameObject;       
 
-        
+    }
+
+    public void StatModifier(GameObject modifier)
+    {
 
     }
 }
