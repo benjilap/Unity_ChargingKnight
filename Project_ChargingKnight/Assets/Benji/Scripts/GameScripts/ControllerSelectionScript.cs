@@ -27,11 +27,14 @@ public class ControllerSelectionScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(GameCanvasScript.listOfPlayers[0].GetComponent<PlayerController>().controllerNum ==0)
+        if (GameCanvasScript.listOfPlayers.Count != 0)
         {
-            CreateControllerSelection();
+            if (GameCanvasScript.listOfPlayers[0].GetComponent<PlayerController>().controllerNum == 0)
+            {
+                CreateControllerSelection();
+            }
+            CheckController();
         }
-        CheckController();
         //foreach(GameObject player in listOfPlayers)
         //{
         //    Debug.Log(player.GetComponent<PlayerClass>().playerNum);

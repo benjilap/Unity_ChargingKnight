@@ -34,16 +34,26 @@ public class CameraScript : MonoBehaviour {
 
     void CheckPlayer()
     {
+        bool canCheck = true;
         camTargets = GameObject.FindObjectsOfType<PlayerClass>();
-        if (camTargets != null)
+        foreach(PlayerClass target in camTargets)
+        {
+            if (target == null)
+            {
+                canCheck = false;
+            }
+        }
+        if (canCheck)
         {
             if (camTargets.Length == 2)
             {
+                
                 camCurrentTarget = new Vector3((camTargets[0].transform.position.x + camTargets[1].transform.position.x) / 2, camHeight, 
                                                (camTargets[0].transform.position.z + camTargets[1].transform.position.z) / 2);
             }
-            else
+            else if (camTargets.Length !=0)
             {
+
                 camCurrentTarget = camTargets[0].transform.position + new Vector3(0,camHeight,0);
             }
 
@@ -57,10 +67,9 @@ public class CameraScript : MonoBehaviour {
     {
         if (camTargets != null)
         {
-            //if (Vector3.Distance(this.transform.position, camCurrentTarget) > 0.5f)
-            //{
+
                 this.transform.position = Vector3.Lerp(this.transform.position, camCurrentTarget, camOffset);
-            //}
+
         }
     }
 
@@ -74,4 +83,6 @@ public class CameraScript : MonoBehaviour {
             }
         }
     }
+
+
 }

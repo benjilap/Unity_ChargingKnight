@@ -53,6 +53,9 @@ public class KnightClass : MonoBehaviour {
         playerRb = this.GetComponent<Rigidbody>();
         playerController = this.GetComponent<PlayerController>();
         burstModePower = burstModePowerPourcent/100;
+        burstModeRecoverTime += burstModeDuration;
+        bashingShieldRecoverTime += bashingShieldDuration;
+        razorSlashRecoverTime += razorSlashDuration;
         InitPlayerSkill();
 
     }
@@ -89,6 +92,8 @@ public class KnightClass : MonoBehaviour {
                 burstModeEnable = true;
                 BurstModeStatsAlteration(playerClass, playerAtkTrigger, 1);
                 StartCoroutine(BurstModeCooldown());
+                StartCoroutine(BurstModeRecover());
+
             }
 
         }
@@ -106,7 +111,6 @@ public class KnightClass : MonoBehaviour {
         yield return new WaitForSeconds(burstModeDuration);
         BurstModeStatsAlteration(playerClass, playerAtkTrigger, -1);
         burstModeEnable = false;
-        StartCoroutine(BurstModeRecover());
     }
     IEnumerator BurstModeRecover()
     {
@@ -129,8 +133,10 @@ public class KnightClass : MonoBehaviour {
             playerAtkTrigger.inBashing = true;
             playerAtkTrigger.isAttacking = true;
             StartCoroutine(BashingShieldCooldown());
+            StartCoroutine(BashingShieldRecover());
+
         }
-            playerRb.velocity = playerRb.velocity.normalized * bashingShieldSpeed;
+        playerRb.velocity = playerRb.velocity.normalized * bashingShieldSpeed;
 
     }
 
@@ -143,7 +149,6 @@ public class KnightClass : MonoBehaviour {
         playerAtkTrigger.inBashing = false;
         bashingShieldEnable = false;
         useSkill = false;
-        StartCoroutine(BashingShieldRecover());
     }
     IEnumerator BashingShieldRecover()
     {
@@ -168,6 +173,8 @@ public class KnightClass : MonoBehaviour {
             playerAtkTrigger.inBashing = true;
             playerAtkTrigger.isAttacking = true;
             StartCoroutine(RazorSlashCooldown());
+            StartCoroutine(RazorSlashRecover());
+
         }
         //playerRb.velocity = playerRb.velocity.normalized * razorSlashSpeed;
     }
@@ -242,7 +249,6 @@ public class KnightClass : MonoBehaviour {
         razorSlashEnable = false;
         useSkill = false;
         playerRb.velocity = razorSlashVelocityRecover * playerClass.playerSpeed;
-        StartCoroutine(RazorSlashRecover());
     }
     IEnumerator RazorSlashRecover()
     {

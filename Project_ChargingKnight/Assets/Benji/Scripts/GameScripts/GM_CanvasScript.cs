@@ -8,27 +8,44 @@ public class GM_CanvasScript : MonoBehaviour {
     public List<GameObject> listOfPlayers = new List<GameObject>();
     [HideInInspector]
     public List<GameObject> listOfPlayersCanvas = new List<GameObject>();
+    //[HideInInspector]
+    public bool playersReady;
 
     Object playerUI;
+    Object gameOverFlame;
+
 
     private void Start()
     {
         playerUI = Resources.Load("Canvas/UIPlayer");
+        gameOverFlame = Resources.Load("Canvas/GameOver");
+
     }
 
     private void Update()
     {
+        listOfPlayers.Remove(null);
         CheckPlayerIsReady();
+        CheckPlayersDeath();
     }
 
     void CheckPlayerIsReady()
     {
         if (listOfPlayers.Count == GameManager.playersNmbrs)
         {
-            if( listOfPlayers[listOfPlayers.Count-1].GetComponent<PlayerController>().controllerNum != 0)
+            bool check = true;
+            foreach(GameObject player in listOfPlayers)
             {
+                if(player.GetComponent<PlayerController>().controllerNum == 0)
+                {
+                    check = false;
+                }
+            }
+            if(check)
+            {
+                playersReady = true;
                 CreatePlayerUI();
-
+                
             }
         }
     }
@@ -59,5 +76,24 @@ public class GM_CanvasScript : MonoBehaviour {
                 listOfPlayersCanvas[i].GetComponent<PlayerUIScript>().myPlayer = listOfPlayers[i].GetComponent<PlayerClass>();
             }
         }
+    }
+
+    void CheckPlayersDeath()
+    {
+        if (FindObjectOfType<GameOverScript>() == null)
+        {
+            if (listOfPlayers.Count == 0)
+            {
+                CreateGameOver();
+            }
+        }
+    }
+
+    void CreateGameOver()
+    {
+        GameObject GameOverScreen = Instantiate(gameOverFlame, Vector3.zero, Quaternion.identity) as GameObject;
+        GameOverScreen.transform.SetParent(this.transform);
+        GameOverScreen.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+        GameOverScreen.GetComponent<RectTransform>().offsetMax = Vector2.zero;
     }
 }
