@@ -25624,11 +25624,11 @@ Transform:
   - {fileID: 2131970411}
   - {fileID: 177201507}
   - {fileID: 14519802}
-  - {fileID: 1441373274}
   - {fileID: 489490586}
-  - {fileID: 357965869}
+  - {fileID: 1441373274}
   - {fileID: 1815323676}
   - {fileID: 454690674}
+  - {fileID: 357965869}
   m_Father: {fileID: 512371510}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -37674,7 +37674,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 0.63450885, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -37712,7 +37712,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1083971239}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 6.4, y: 40, z: 19.6}
+  m_LocalPosition: {x: 5.93, y: 37.13, z: 20.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -39008,7 +39008,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4510726180866938, guid: 22809e7ecf07c9d41b2376c59d7aea40, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -13.182121
+      value: 4.19
       objectReference: {fileID: 0}
     - target: {fileID: 4510726180866938, guid: 22809e7ecf07c9d41b2376c59d7aea40, type: 2}
       propertyPath: m_LocalPosition.y
@@ -39016,7 +39016,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4510726180866938, guid: 22809e7ecf07c9d41b2376c59d7aea40, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 6.759314
+      value: 12.09
       objectReference: {fileID: 0}
     - target: {fileID: 4510726180866938, guid: 22809e7ecf07c9d41b2376c59d7aea40, type: 2}
       propertyPath: m_LocalRotation.x
@@ -39050,6 +39050,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.575
       objectReference: {fileID: 0}
+    - target: {fileID: 212644726377382398, guid: 22809e7ecf07c9d41b2376c59d7aea40,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bcc799fcf0f2e6b488addbe637dee498, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22809e7ecf07c9d41b2376c59d7aea40, type: 2}
   m_IsPrefabAsset: 0
