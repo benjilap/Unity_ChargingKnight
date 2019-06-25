@@ -26,110 +26,123 @@ public class Relics : MonoBehaviour {
     bool canModAngSp = true;
     bool canModCrit = true;
     bool isTriggered;
+    [SerializeField]
+    Sprite mAtt;
+    [SerializeField]
+    Sprite mDef;
+    [SerializeField]
+    Sprite mAttSp;
+    [SerializeField]
+    Sprite mSp;
+    [SerializeField]
+    Sprite mAngSp;
+    [SerializeField]
+    Sprite mCrit;
+    [SerializeField]
+    Sprite bAtt;
+    [SerializeField]
+    Sprite bDef;
+    [SerializeField]
+    Sprite bAttSp;
+    [SerializeField]
+    Sprite bSp;
+    [SerializeField]
+    Sprite bAngSp;
+    [SerializeField]
+    Sprite bCrit;
+    [SerializeField]
+    Sprite triangle;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         relicManager = GameObject.Find("RelicSpawner");
         transform.eulerAngles = new Vector3(90, 0, 0);
         nombreChasse = Random.Range(0, 5);
         transform.GetChild(nombreChasse).gameObject.SetActive(true);
-        //Debug.Log(nombreChasse);
+        ////Debug.Log(nombreChasse);
         for (int i = 0; i <= nombreChasse; i++)
         {
             randomInt = Random.Range(0, 5);
             switch (randomInt)
-            {
-                case 0: //Debug.Log("case 0");
+            {                
+                case 0: 
                     if (modAtt == 0 && canModAtt)
                     {
                         modAtt = Random.Range(minRandomMod, maxRandomMod);
                         for (int j = 0; j < transform.GetChild(nombreChasse).childCount; j++)
                         {
-                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color == Color.white)
-                            {
-                                //Debug.Log(transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color);
-                                transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color = new Color(255, 0, 0);
+                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite == null)
+                            {                               
                                 if (modAtt < 0)
                                 {
-                                    Debug.Log(transform.GetChild(nombreChasse).GetChild(j));
-                                    transform.GetChild(nombreChasse).GetChild(j).Rotate(new Vector3(0, 0, 180));
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = mAtt;
                                 }
-
+                                else if(modAtt>0)
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = bAtt;
                                 break;
                             }
-
-
                         }
                         canModAtt = false;
                     }
                     else i--;
                     break;
                 case 1:
-                    //Debug.Log("case 1");
                     if (modAttSp == 0 && canModAttSp)
                     {
                         modAttSp = Random.Range(minRandomMod, maxRandomMod);
                         for (int j = 0; j < transform.GetChild(nombreChasse).childCount; j++)
                         {
-                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color == Color.white)
-                            {
-                                //Debug.Log(transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color);
-                                transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color = new Color(253, 255, 0);
+                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite == null)
+                            {                                
                                 if (modAttSp < 0)
                                 {
-                                    Debug.Log(transform.GetChild(nombreChasse).GetChild(j));
-                                    transform.GetChild(nombreChasse).GetChild(j).Rotate(new Vector3(0, 0, 180));
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = mAttSp;
                                 }
+                                else if(modAttSp >0)
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = bAttSp;
                                 break;
                             }
-
                         }
                         canModAttSp = false;
                     }
                     else i--;
                     break;
                 case 2:
-                    //Debug.Log("case 2");
                     if (modDef == 0 && canModDef)
                     {
                         modDef = Random.Range(minRandomMod, maxRandomMod);
                         for (int j = 0; j < transform.GetChild(nombreChasse).childCount; j++)
                         {
-                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color == Color.white)
+                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite == null)
                             {
-                                //Debug.Log(transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color);
-                                transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color = new Color(0, 0, 0);
                                 if (modDef < 0)
                                 {
-                                    Debug.Log(transform.GetChild(nombreChasse).GetChild(j));
-                                    transform.GetChild(nombreChasse).GetChild(j).Rotate(new Vector3(0, 0, 180));
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = mDef;
                                 }
+                                else if(modDef > 0)
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = bDef;
                                 break;
                             }
-
                         }
                         canModDef = false;
                     }
                     else i--;
                     break;
                 case 3:
-                    //Debug.Log("case 3");
                     if (modSp == 0 && canModSp)
                     {
                         modSp = Random.Range(minRandomMod, maxRandomMod);
                         for (int j = 0; j < transform.GetChild(nombreChasse).childCount; j++)
                         {
-                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color == Color.white)
-                            {
-                                //Debug.Log(transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color);
-                                transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color = new Color(49,255,0);
+                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite == null)
+                            { 
                                 if (modSp < 0)
                                 {
-                                    Debug.Log(transform.GetChild(nombreChasse).GetChild(j));
-                                    transform.GetChild(nombreChasse).GetChild(j).Rotate(new Vector3(0, 0, 180));
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = mSp;
                                 }
+                                else if(modSp > 0)
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = bSp;
                                 break;
                             }
                         }
@@ -138,48 +151,41 @@ public class Relics : MonoBehaviour {
                     else i--;
                     break;
                 case 4:
-                    //Debug.Log("case 4");
                     if (modAngSp == 0 && canModAngSp)
                     {
                         modAngSp = Random.Range(minRandomMod, maxRandomMod);
                         for (int j = 0; j < transform.GetChild(nombreChasse).childCount; j++)
                         {
-                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color == Color.white)
+                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite == null)
                             {
-                                //Debug.Log(transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color);
-                                transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color =  new Color(0, 232, 245);
                                 if (modAngSp < 0)
                                 {
-                                    Debug.Log(transform.GetChild(nombreChasse).GetChild(j));
-                                    transform.GetChild(nombreChasse).GetChild(j).Rotate(new Vector3(0, 0, 180));
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = mAngSp;
                                 }
-                                break;
+                                else if(modAngSp>0)
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = bAngSp;
                             }
-
                         }
                         canModAngSp = false;
                     }
                     else i--;
                     break;
                 case 5:
-                    //Debug.Log("case 5");
                     if (modCrit == 0 && canModCrit)
                     {
                         modCrit = Random.Range(minRandomMod, maxRandomMod);
                         for (int j = 0; j < transform.GetChild(nombreChasse).childCount; j++)
                         {
-                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color == Color.white)
+                            if (transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite == null)
                             {
-                                //Debug.Log(transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color);
-                                transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().color = new Color(255, 116, 0);
                                 if (modCrit < 0)
                                 {
-                                    Debug.Log(transform.GetChild(nombreChasse).GetChild(j));
-                                    transform.GetChild(nombreChasse).GetChild(j).Rotate(new Vector3(0, 0, 180));
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = mCrit;
                                 }
+                                else if(modCrit >0)
+                                    transform.GetChild(nombreChasse).GetChild(j).gameObject.GetComponent<Image>().sprite = bCrit;
                                 break;
                             }
-
                         }
                         canModCrit = false;
                     }
@@ -187,7 +193,6 @@ public class Relics : MonoBehaviour {
                     break;
                     
             }
-            Debug.Log(i);
         }
     }
 	// Update is called once per frame
@@ -203,8 +208,10 @@ public class Relics : MonoBehaviour {
         {
             if (player.GetComponent<PlayerController>().RightBumper())
             {
+                Debug.Log("Jajj");
                 relicManager.GetComponent<ReliqueManager>().AddRelic(gameObject);
-     
+                transform.localEulerAngles.Set(0, 0, 0);
+                transform.localScale.Set(1, 1, 1);
             }
         }
 	}

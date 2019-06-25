@@ -18,7 +18,12 @@ public class ReliqueManager : MonoBehaviour
     public float coefSp;
     public float coefAngSp;
     public float coefCrit;
-
+    float initAtt;
+    float initAttSp;
+    float initDef;
+    float initSp;
+    float initAngSp;
+    float initCrit;
 
 
     // Use this for initialization
@@ -27,6 +32,7 @@ public class ReliqueManager : MonoBehaviour
         manager = GameObject.Find("MANAGER");
         relicPrefab = Resources.Load("Relics/Relic");
         player = GameObject.Find("Player1");
+        //initAtt = player.GetComponent<PlayerCacAttackScript>().AttackZone.
     }
 
     // Update is called once per frame
