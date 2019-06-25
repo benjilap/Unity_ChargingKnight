@@ -895,8 +895,8 @@ MonoBehaviour:
   modAngSp: 0
   modCrit: 0
   nombreChasse: 0
-  minRandomMod: -10
-  maxRandomMod: 10
+  minRandomMod: -0.1
+  maxRandomMod: 0.1
   mAtt: {fileID: 21300000, guid: 9b2db6751e8df8c49abf4a3ccb68047b, type: 3}
   mDef: {fileID: 21300000, guid: a60557e8932996d44b96ed4df3b2682b, type: 3}
   mAttSp: {fileID: 21300000, guid: 751ece8eb49b90b49a2c3f35108e8f4b, type: 3}

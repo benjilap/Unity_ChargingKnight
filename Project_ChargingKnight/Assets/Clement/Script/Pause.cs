@@ -48,6 +48,7 @@ public class Pause : MonoBehaviour {
         menuQuitter = GameObject.Find("MenuQuitter");
         menuReliques = GameObject.Find("MenuReliques");
         menuStats = GameObject.Find("MenuStats");
+        player = GameObject.Find("Player1");
         curseurReliques = menuReliques.transform.GetChild(1).gameObject;
         curseurReliques.transform.SetAsFirstSibling();
         slot = menuReliques.transform.GetChild(1).gameObject;
@@ -100,6 +101,7 @@ public class Pause : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
         if (GameObject.Find("Player1") && GameObject.Find("Player2") != null)
         {
             playerOneController = GameObject.Find("Player1").GetComponent<PlayerController>();
@@ -119,23 +121,9 @@ public class Pause : MonoBehaviour {
                 if (playerOneController.Start() )
                 {
                     pause();
-                    menuStats.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = ("Dégats : " + 0); //Inserer valeur attaque joueur
-                    menuStats.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse d'attaque : " + 0); //Inserer valeur vitesse attaque joueur
-                    menuStats.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = ("Defense : " + 0); //Inserer valeur defense joueur
-                    menuStats.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerSpeed));
-                    menuStats.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse rotation : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerAngularSpeed));
-                    menuStats.transform.GetChild(6).GetChild(0).gameObject.GetComponent<Text>().text = ("Taux critique : " + 0); //Inserer valeur % critique joueur
+                    StatsRenderer();
                 }
-                else if(playerTwoController.Start())
-                {
-                    pause();
-                    menuStats.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = ("Dégats : " + 0); //Inserer valeur attaque joueur
-                    menuStats.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse d'attaque : " + 0); //Inserer valeur vitesse attaque joueur
-                    menuStats.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = ("Defense : " + 0); //Inserer valeur defense joueur
-                    menuStats.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse : " + (GameObject.Find("Player2").GetComponent<PlayerClass>().playerSpeed));
-                    menuStats.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse rotation : " + (GameObject.Find("Player2").GetComponent<PlayerClass>().playerAngularSpeed));
-                    menuStats.transform.GetChild(6).GetChild(0).gameObject.GetComponent<Text>().text = ("Taux critique : " + 0); //Inserer valeur % critique joueur
-                }
+               
 
                 if (isInReliques == false && menuPause.active == true && isPaused && ((playerOneController.HorizontalAxisRaw() < 0) || (playerTwoController.HorizontalAxisRaw() < 0)))
                 {
@@ -451,12 +439,7 @@ public class Pause : MonoBehaviour {
             if (playerOneController.Start())
             {
                 pause();
-                menuStats.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = ("Dégats : " + 0); //Inserer valeur attaque joueur
-                menuStats.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse d'attaque : " + 0); //Inserer valeur vitesse attaque joueur
-                menuStats.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = ("Defense : " + 0); //Inserer valeur defense joueur
-                menuStats.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerSpeed));
-                menuStats.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse rotation : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerAngularSpeed));
-                menuStats.transform.GetChild(6).GetChild(0).gameObject.GetComponent<Text>().text = ("Taux critique : " + 0); //Inserer valeur % critique joueur
+                StatsRenderer();
             }
 
             if (isInReliques == false && menuPause.active == true && isPaused && (playerOneController.HorizontalAxisRaw() < 0))
@@ -466,7 +449,14 @@ public class Pause : MonoBehaviour {
                 curseurPause.SetActive(false);
             }
 
-            if(isInReliques && isPaused)
+            if (isInReliques == false && menuPause.active == true && isPaused && playerOneController.ButtonX())
+            {
+                manager.GetComponent<ReliqueManager>().relicsEquip.RemoveAt(nombreSlots);
+                Destroy(listMenuReliques[nombreSlots].transform.GetChild(0).GetChild(0).gameObject);
+                manager.GetComponent<ReliqueManager>().StatModifier();
+            }
+
+            if (isInReliques && isPaused)
             {
                 if(playerOneController.HorizontalAxisRaw() != 0)
                 {
@@ -837,6 +827,16 @@ public class Pause : MonoBehaviour {
         {
             Time.timeScale = 1f;
         }
+    }
+
+    public void StatsRenderer()
+    {
+        menuStats.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = ("Dégats : " + player.GetComponent<PlayerCacAttackScript>().AtkDamage); //Inserer valeur attaque joueur
+        menuStats.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse d'attaque : " + player.GetComponent<PlayerCacAttackScript>().AtkRecover); //Inserer valeur vitesse attaque joueur
+        menuStats.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = ("Defense : " + manager.GetComponent<ReliqueManager>().def); //Inserer valeur defense joueur
+        menuStats.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerSpeed));
+        menuStats.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse rotation : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerAngularSpeed));
+        menuStats.transform.GetChild(6).GetChild(0).gameObject.GetComponent<Text>().text = ("Taux critique : " + manager.GetComponent<ReliqueManager>().crit); //Inserer valeur % critique joueur
     }
 
     public void RelicRender(List<GameObject> biteTheDust)

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Relics : MonoBehaviour {
-
+    GameObject clone;
+    GameObject hud;
     GameObject player;
     GameObject relicManager;
     public float modAtt = 0;
@@ -55,7 +56,7 @@ public class Relics : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        hud = GameObject.Find("RelicRender");
         relicManager = GameObject.Find("RelicSpawner");
         transform.eulerAngles = new Vector3(90, 0, 0);
         nombreChasse = Random.Range(0, 5);
@@ -203,15 +204,30 @@ public class Relics : MonoBehaviour {
             relicManager.GetComponent<ReliqueManager>().AddRelic(gameObject);
             transform.localEulerAngles.Set(0, 0, 0);
             transform.localScale.Set(1, 1, 1);
+            if (hud.transform.childCount != 0)
+            {
+                for (int i = 0; i < hud.transform.childCount; i++)
+                {
+                    Destroy(hud.transform.GetChild(i).gameObject);
+                }
+            }
         }
         if (isTriggered)
         {
+
             if (player.GetComponent<PlayerController>().RightBumper())
             {
                 Debug.Log("Jajj");
                 relicManager.GetComponent<ReliqueManager>().AddRelic(gameObject);
                 transform.localEulerAngles.Set(0, 0, 0);
                 transform.localScale.Set(1, 1, 1);
+                if (hud.transform.childCount != 0)
+                {
+                    for (int i = 0; i < hud.transform.childCount; i++)
+                    {
+                        Destroy(hud.transform.GetChild(i).gameObject);
+                    }
+                }
             }
         }
 	}
@@ -219,12 +235,32 @@ public class Relics : MonoBehaviour {
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
+        {
+
             isTriggered = true;
+            if (hud.transform.childCount == 0)
+            {
+                for(int i = 0; i <=nombreChasse ; i++)
+                clone = Instantiate(gameObject.transform.GetChild(nombreChasse).GetChild(i).gameObject, hud.transform);
+                clone.transform.localEulerAngles.Set(0, 0, 0);
+                clone.transform.localPosition.Set(0, 0, 0);
+                hud.transform.localScale = new Vector3(4, 4, 4);
+            }
+        }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
+        {
             isTriggered = false;
+            if (hud.transform.childCount !=0)
+            {
+                for(int i =0; i<hud.transform.childCount; i++)
+                {
+                    Destroy(hud.transform.GetChild(i).gameObject);
+                }
+            }
+        }
     }
 }
 
