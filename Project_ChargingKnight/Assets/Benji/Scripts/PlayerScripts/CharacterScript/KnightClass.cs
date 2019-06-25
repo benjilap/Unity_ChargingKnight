@@ -170,7 +170,7 @@ public class KnightClass : MonoBehaviour {
             playerRb.velocity = RazorSlashDir() * razorSlashSpeed;
             playerAtkTrigger.hitDamage = razorSlashDmg;
             playerAtkTrigger.knokbackPower = razorSlashKnockback;
-            playerAtkTrigger.inBashing = true;
+            playerAtkTrigger.inRazor = true;
             playerAtkTrigger.isAttacking = true;
             StartCoroutine(RazorSlashCooldown());
             StartCoroutine(RazorSlashRecover());
@@ -245,7 +245,7 @@ public class KnightClass : MonoBehaviour {
         playerAtkTrigger.hitDamage = playerAttack.AtkDamage;
         playerAtkTrigger.knokbackPower = playerAttack.AtkKnokback;
         playerAtkTrigger.isAttacking = false;
-        playerAtkTrigger.inBashing = false;
+        playerAtkTrigger.inRazor = false;
         razorSlashEnable = false;
         useSkill = false;
         playerRb.velocity = razorSlashVelocityRecover * playerClass.playerSpeed;

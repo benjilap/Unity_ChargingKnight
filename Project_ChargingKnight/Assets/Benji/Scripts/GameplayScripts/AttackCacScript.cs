@@ -25,6 +25,7 @@ public class AttackCacScript : MonoBehaviour {
     protected IEnumerator ResetAttack()
     {
         yield return new WaitForSeconds(AtkDuration);
+        AttackZone.inAttack = false;
         AttackZone.isAttacking = false;
         yield return new WaitForSeconds(AtkRecover);
         canAttack = true;
@@ -34,6 +35,7 @@ public class AttackCacScript : MonoBehaviour {
 
     protected IEnumerator AttackAction()
     {
+        AttackZone.inAttack =true;
         yield return new WaitForSeconds(AtkCharge);
         AttackZone.isAttacking = true;
 
