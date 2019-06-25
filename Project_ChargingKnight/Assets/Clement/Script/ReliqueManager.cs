@@ -18,12 +18,14 @@ public class ReliqueManager : MonoBehaviour
     public float coefSp;
     public float coefAngSp;
     public float coefCrit;
+    public float crit = 5; //Temporaire (pour la demo)
+    public float def = 10; //Temporaire (pour la demo)
     float initAtt;
     float initAttSp;
-    float initDef;
+    float initDef = 10;
     float initSp;
     float initAngSp;
-    float initCrit;
+    float initCrit = 5;
 
 
     // Use this for initialization
@@ -32,13 +34,20 @@ public class ReliqueManager : MonoBehaviour
         manager = GameObject.Find("MANAGER");
         relicPrefab = Resources.Load("Relics/Relic");
         player = GameObject.Find("Player1");
-        //initAtt = player.GetComponent<PlayerCacAttackScript>().AttackZone.
+        initAtt = player.GetComponent<PlayerCacAttackScript>().AtkDamage;
+        initAttSp = player.GetComponent<PlayerCacAttackScript>().AtkRecover;
+        initSp = player.GetComponent<PlayerClass>().playerSpeed;
+        initAngSp = player.GetComponent<PlayerClass>().playerAngularSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            relicsEquip.Clear();
+            StatModifier();
+        }
 
     }
 
@@ -55,6 +64,7 @@ public class ReliqueManager : MonoBehaviour
         {
             relicsEquip.Add(anotherOne);
             manager.GetComponent<Pause>().RelicRender(relicsEquip);
+            StatModifier();
         }
     }
 
@@ -67,8 +77,32 @@ public class ReliqueManager : MonoBehaviour
 
     }
 
-    public void StatModifier(GameObject modifier)
+    public void StatModifier()
     {
+        for(int i = 0; i < relicsEquip.Count; i++)
+        {
+            coefAtt += relicsEquip[i].GetComponent<Relics>().modAtt;
+            coefAttSp += relicsEquip[i].GetComponent<Relics>().modAttSp;
+            coefDef += relicsEquip[i].GetComponent<Relics>().modDef;
+            coefSp += relicsEquip[i].GetComponent<Relics>().modSp;
+            coefAngSp += relicsEquip[i].GetComponent<Relics>().modAngSp;
+            coefCrit += relicsEquip[i].GetComponent<Relics>().modCrit;
+        }
+        player.GetComponent<PlayerCacAttackScript>().AtkDamage = initAtt * (1+coefAtt);
+        player.GetComponent<PlayerCacAttackScript>().AtkRecover = initAttSp * (1+coefAttSp);
+        def = initDef * (1+coefDef);
+        initSp = player.GetComponent<PlayerClass>().playerSpeed = initSp * (1+coefSp);
+        initAngSp = player.GetComponent<PlayerClass>().playerAngularSpeed = initAngSp * (1+coefAngSp);
+        crit = initCrit * (1+coefCrit);
+
+        manager.GetComponent<Pause>().StatsRenderer();
+
+        coefAtt = 0;
+        coefAttSp = 0;
+        coefDef = 0;
+        coefSp = 0;
+        coefAngSp = 0;
+        coefCrit = 0;
 
     }
 }
