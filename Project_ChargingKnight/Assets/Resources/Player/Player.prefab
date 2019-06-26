@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 54087440689412796}
   - component: {fileID: 65186165078789566}
   - component: {fileID: 136286863407310390}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4693694552070636}
   - component: {fileID: 114486229906778508}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PlayerCtlrDir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 23198780939946432}
   - component: {fileID: 65197344165110662}
   - component: {fileID: 114912700594159292}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: AttackZone
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 212644726377382398}
   - component: {fileID: 95018173842635296}
   - component: {fileID: 114323368063389294}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Player
   m_Icon: {fileID: 0}

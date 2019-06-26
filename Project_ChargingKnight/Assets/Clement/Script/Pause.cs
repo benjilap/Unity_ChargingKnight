@@ -33,17 +33,35 @@ public class Pause : MonoBehaviour {
     GameObject curseurReliques;
     GameObject lastSlot;
 
+    Object pauseMenu;
+    Object miniMap;
+    bool initState;
+
 
 
     // Use this for initialization
-    void Start () {
+    void InitPause () {
+        miniMap = Resources.Load("Canvas/CadreMinimap");
+        pauseMenu = Resources.Load("Canvas/Pause_Menu");
+        GameObject pause = Instantiate(pauseMenu, this.transform.position, Quaternion.identity) as GameObject;
+        GameObject Minimap = Instantiate(miniMap, this.transform.position, Quaternion.identity) as GameObject;
+        pause.transform.SetParent(this.transform);
+        pause.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+        pause.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+        Minimap.transform.SetParent(this.transform);
+        Minimap.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f,0.9f);
+        Minimap.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f,0.9f);
+
 
         canMoveCursor = true;
         gonePaused = false;
         isPaused = false;
         isInReliques = false;
         manager = GameObject.Find("RelicSpawner");
-        nombreSlots = manager.GetComponent<ReliqueManager>().nombreSlots;
+        if (manager != null)
+        {
+            nombreSlots = manager.GetComponent<ReliqueManager>().nombreSlots;
+        }
         menuPause = GameObject.Find("MenuPause");
         menuQuitter = GameObject.Find("MenuQuitter");
         menuReliques = GameObject.Find("MenuReliques");
@@ -101,6 +119,11 @@ public class Pause : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (!initState && this.GetComponent<GM_CanvasScript>().playersReady)
+        {
+            initState = true;
+            InitPause();
+        }
 
         if (GameObject.Find("Player1") && GameObject.Find("Player2") != null)
         {
@@ -115,7 +138,7 @@ public class Pause : MonoBehaviour {
 
         ////Debug.Log(currentSlot);
         //////Debug.Log(listMenuReliques.Count);
-        if (playerOneController && playerTwoController != null)
+        if (playerOneController && playerTwoController != null && menuPause !=null)
         {
             {
                 if (playerOneController.Start() )
@@ -434,9 +457,9 @@ public class Pause : MonoBehaviour {
         }
         ///////////////////
         ///////////////////
-        else
+        else if( menuPause != null)
         {
-            if (playerOneController.Start())
+            if (playerOneController.Start() )
             {
                 pause();
                 StatsRenderer();

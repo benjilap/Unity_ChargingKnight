@@ -27,17 +27,16 @@ public class ReliqueManager : MonoBehaviour
     float initAngSp;
     float initCrit = 5;
 
+    bool initDone;
 
     // Use this for initialization
     void Start()
     {
-        manager = GameObject.Find("MANAGER");
+        manager = GameObject.Find("GM_Canvas");
         relicPrefab = Resources.Load("Relics/Relic");
         player = GameObject.Find("Player1");
-        initAtt = player.GetComponent<PlayerCacAttackScript>().AtkDamage;
-        initAttSp = player.GetComponent<PlayerCacAttackScript>().AtkRecover;
-        initSp = player.GetComponent<PlayerClass>().playerSpeed;
-        initAngSp = player.GetComponent<PlayerClass>().playerAngularSpeed;
+        
+
     }
 
     // Update is called once per frame
@@ -49,6 +48,17 @@ public class ReliqueManager : MonoBehaviour
             StatModifier();
         }
 
+    }
+
+    void InitVar()
+    {
+        if (!initDone &&player != null)
+        {
+            initAtt = player.GetComponent<PlayerCacAttackScript>().AtkDamage;
+            initAttSp = player.GetComponent<PlayerCacAttackScript>().AtkRecover;
+            initSp = player.GetComponent<PlayerClass>().playerSpeed;
+            initAngSp = player.GetComponent<PlayerClass>().playerAngularSpeed;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -18,7 +18,7 @@ public static class GameManager
             return P1Color;
         }
         else
-        if (playerNum == 1)
+        if (playerNum == 2)
         {
             return P2Color;
         }else
