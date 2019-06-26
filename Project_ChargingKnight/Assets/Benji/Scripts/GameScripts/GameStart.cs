@@ -145,17 +145,17 @@ public class GameStart : MonoBehaviour {
     {
         if (playerNum == 2)
         {
-            return startPos = new Vector3(playerOffset, spawnHeight, 0);
+            return startPos = new Vector3(transform.position.x+playerOffset, spawnHeight, transform.position.z);
 
         }
         else if (playerNum == 1)
         {
-            return startPos = new Vector3(-playerOffset, spawnHeight, 0);
+            return startPos = new Vector3(transform.position.x-playerOffset, spawnHeight, transform.position.z);
 
         }
         else
         {
-            return startPos = new Vector3(0, spawnHeight, 0);
+            return startPos = new Vector3(transform.position.x, spawnHeight, transform.position.z);
 
         }
     }

@@ -34,7 +34,8 @@ public class RoomEnemiesManager : MonoBehaviour {
     }
 
 	void Update () {
-        if (FindObjectOfType<GM_CanvasScript>().playersReady)
+        if (FindObjectOfType<GM_CanvasScript>() != null&&
+            FindObjectOfType<GM_CanvasScript>().playersReady)
         {
             if (EnemyCacNumber != 0)
             {
