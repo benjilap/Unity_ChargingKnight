@@ -47,7 +47,6 @@ public class AnimationController : MonoBehaviour {
             if (myAtor.GetBool(boolVar) != actionVar)
             {
 
-                Debug.Log(myAtor.GetBool(boolVar) + "" + actionVar);
                 myAtor.SetBool(boolVar, actionVar);
             }
 
