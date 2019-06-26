@@ -15,6 +15,10 @@ public class AttackTriggerScript : MonoBehaviour {
     public bool hasAttacked;
     [HideInInspector]
     public bool inBashing;
+    [HideInInspector]
+    public bool inRazor;
+    [HideInInspector]
+    public bool inAttack;
 
 
     private void Update()
@@ -24,14 +28,14 @@ public class AttackTriggerScript : MonoBehaviour {
 
     private void TriggerActive()
     {
-        if (isAttacking)
-        {
-            this.GetComponent<MeshRenderer>().enabled = true;
-        }
-        else
-        {
-            this.GetComponent<MeshRenderer>().enabled = false;
-        }
+        //if (isAttacking)
+        //{
+        //    this.GetComponent<MeshRenderer>().enabled = true;
+        //}
+        //else
+        //{
+        //    this.GetComponent<MeshRenderer>().enabled = false;
+        //}
     }
 
     private void OnTriggerStay(Collider other)
