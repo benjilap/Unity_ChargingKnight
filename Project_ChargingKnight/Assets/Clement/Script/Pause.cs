@@ -130,7 +130,7 @@ public class Pause : MonoBehaviour {
             playerOneController = GameObject.Find("Player1").GetComponent<PlayerController>();
             playerTwoController = GameObject.Find("Player2").GetComponent<PlayerController>();
         }
-        else
+        else if (GameObject.Find("Player1") != null)
         {
             playerOneController = GameObject.Find("Player1").GetComponent<PlayerController>();
             playerTwoController = null;

@@ -38,7 +38,7 @@ public class KnightClass : MonoBehaviour {
     public bool razorSlashEnable;
     float razorSlashSpeed = 20;
     float razorSlashKnockback = 20;
-    float razorSlashDuration = 1;
+    float razorSlashDuration = 0.5f;
     float razorSlashDmg = 5;
     public float razorSlashRecoverTime =1;
     [HideInInspector]
