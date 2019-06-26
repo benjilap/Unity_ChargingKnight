@@ -311,28 +311,28 @@ public class Pause : MonoBehaviour {
                     if ((playerOneController.VerticalAxisRaw() < 0 || playerTwoController.VerticalAxisRaw() < 0) && currentCursor < (listMenuPause.Count - 1) && canMoveCursor)
                     {
                         currentCursor++;
-                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
                     else if ((playerOneController.VerticalAxisRaw() > 0 || playerTwoController.VerticalAxisRaw() > 0) && currentCursor > 1 && canMoveCursor)
                     {
                         currentCursor--;
-                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
                     else if ((playerOneController.VerticalAxisRaw() > 0 || playerTwoController.VerticalAxisRaw() > 0) && currentCursor == 1 && canMoveCursor)
                     {
                         currentCursor = 4;
-                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
                     if ((playerOneController.VerticalAxisRaw() < 0 || playerTwoController.VerticalAxisRaw() < 0) && currentCursor == (listMenuPause.Count - 1) && canMoveCursor)
                     {
                         currentCursor = 1;
-                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                        curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
@@ -345,7 +345,7 @@ public class Pause : MonoBehaviour {
                         curseurPause.SetActive(false);
                         curseurReliques.SetActive(true);
                         currentSlot = 0;
-                        curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                        curseurReliques.transform.position = listMenuReliques[currentSlot].position - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
@@ -355,7 +355,7 @@ public class Pause : MonoBehaviour {
                         curseurPause.SetActive(false);
                         curseurReliques.SetActive(true);
                         currentSlot = 0;
-                        curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                        curseurReliques.transform.position = listMenuReliques[currentSlot].position - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
@@ -389,14 +389,14 @@ public class Pause : MonoBehaviour {
                     if ((playerOneController.HorizontalAxisRaw() != 0 || playerTwoController.HorizontalAxisRaw() != 0) && currentCursor == 2 && canMoveCursor)
                     {
                         currentCursor--;
-                        curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition;
+                        curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
                     if (playerOneController.HorizontalAxisRaw() != 0 || playerTwoController.HorizontalAxisRaw() != 0 && currentCursor == 1 && canMoveCursor)
                     {
                         currentCursor++;
-                        curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition;
+                        curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition - new Vector3(35, 0, 0);
                         canMoveCursor = false;
                         StartCoroutine(MoveCursor());
                     }
@@ -634,28 +634,28 @@ public class Pause : MonoBehaviour {
                 if (playerOneController.VerticalAxisRaw() < 0 && currentCursor < (listMenuPause.Count - 1) && canMoveCursor)
                 {
                     currentCursor++;
-                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35, 0, 0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
                 else if (playerOneController.VerticalAxisRaw() > 0 && currentCursor > 1 && canMoveCursor)
                 {
                     currentCursor--;
-                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35,0,0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
                 else if (playerOneController.VerticalAxisRaw() > 0 && currentCursor == 1 && canMoveCursor)
                 {
                     currentCursor = 4;
-                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35, 0, 0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
                 if (playerOneController.VerticalAxisRaw() < 0 && currentCursor == (listMenuPause.Count - 1) && canMoveCursor)
                 {
                     currentCursor = 1;
-                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition;
+                    curseurPause.transform.localPosition = listMenuPause[currentCursor].localPosition - new Vector3(35, 0, 0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
@@ -668,7 +668,7 @@ public class Pause : MonoBehaviour {
                     curseurPause.SetActive(false);
                     curseurReliques.SetActive(true);
                     currentSlot = 0;
-                    curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                    curseurReliques.transform.position = listMenuReliques[currentSlot].position - new Vector3(35, 0, 0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
@@ -678,7 +678,7 @@ public class Pause : MonoBehaviour {
                     curseurPause.SetActive(false);
                     curseurReliques.SetActive(true);
                     currentSlot = 0;
-                    curseurReliques.transform.position = listMenuReliques[currentSlot].position;
+                    curseurReliques.transform.position = listMenuReliques[currentSlot].position - new Vector3(35, 0, 0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
@@ -712,14 +712,14 @@ public class Pause : MonoBehaviour {
                 if (playerOneController.HorizontalAxisRaw() != 0 && currentCursor == 2  && canMoveCursor)
                 {
                     currentCursor--;
-                    curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition;
+                    curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition - new Vector3(35, 0, 0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
                 if (playerOneController.HorizontalAxisRaw() != 0 && currentCursor == 1 && canMoveCursor)
                 {
                     currentCursor++;
-                    curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition;
+                    curseurQuitter.transform.localPosition = listMenuQuitter[currentCursor].localPosition - new Vector3(35, 0, 0);
                     canMoveCursor = false;
                     StartCoroutine(MoveCursor());
                 }
@@ -831,12 +831,12 @@ public class Pause : MonoBehaviour {
 
     public void StatsRenderer()
     {
-        menuStats.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = ("Dégats : " + player.GetComponent<PlayerCacAttackScript>().AtkDamage); //Inserer valeur attaque joueur
-        menuStats.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse d'attaque : " + player.GetComponent<PlayerCacAttackScript>().AtkRecover); //Inserer valeur vitesse attaque joueur
-        menuStats.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = ("Defense : " + manager.GetComponent<ReliqueManager>().def); //Inserer valeur defense joueur
-        menuStats.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerSpeed));
-        menuStats.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse rotation : " + (GameObject.Find("Player1").GetComponent<PlayerClass>().playerAngularSpeed));
-        menuStats.transform.GetChild(6).GetChild(0).gameObject.GetComponent<Text>().text = ("Taux critique : " + manager.GetComponent<ReliqueManager>().crit); //Inserer valeur % critique joueur
+        menuStats.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = ("Dégats : " + System.Math.Round(player.GetComponent<PlayerCacAttackScript>().AtkDamage, 2)); //Inserer valeur attaque joueur
+        menuStats.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse d'attaque : " + System.Math.Round(player.GetComponent<PlayerCacAttackScript>().AtkRecover,2)); //Inserer valeur vitesse attaque joueur
+        menuStats.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = ("Defense : " + System.Math.Round(manager.GetComponent<ReliqueManager>().def,2)); //Inserer valeur defense joueur
+        menuStats.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse : " + System.Math.Round(GameObject.Find("Player1").GetComponent<PlayerClass>().playerSpeed,2));
+        menuStats.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Text>().text = ("Vitesse rotation : " + System.Math.Round(GameObject.Find("Player1").GetComponent<PlayerClass>().playerAngularSpeed,2));
+        menuStats.transform.GetChild(6).GetChild(0).gameObject.GetComponent<Text>().text = ("Taux critique : " + System.Math.Round(manager.GetComponent<ReliqueManager>().crit,2)); //Inserer valeur % critique joueur
     }
 
     public void RelicRender(List<GameObject> biteTheDust)
