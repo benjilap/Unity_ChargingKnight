@@ -400,6 +400,7 @@ MonoBehaviour:
   playerAngularSpeed: 3
   playerDodgeAngle: 40
   playerDodgeTime: 0.4
+  dodgeState: 0
 --- !u!114 &114486229906778508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -566,7 +567,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bcc799fcf0f2e6b488addbe637dee498, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
