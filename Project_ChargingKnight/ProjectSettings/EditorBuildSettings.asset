@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Benji/Scenes/Menu.unity
     guid: 9d677e2fd91e4214fa8a50f2bf3fef25
+  - enabled: 1
+    path: Assets/Benji/Scenes/BenjiScene.unity
+    guid: 123afc6cabb5237488dcfecec7544dad
   m_configObjects: {}

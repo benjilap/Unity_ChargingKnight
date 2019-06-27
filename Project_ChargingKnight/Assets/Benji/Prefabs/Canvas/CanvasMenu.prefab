@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33aab49b355f417438c82c9c96a2659b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Zone_Test
+  sceneToLoad: BenjiScene
 --- !u!114 &114635491125717250
 MonoBehaviour:
   m_ObjectHideFlags: 1
