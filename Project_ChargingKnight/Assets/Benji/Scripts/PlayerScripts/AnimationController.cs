@@ -8,9 +8,7 @@ public class AnimationController : MonoBehaviour {
     AttackTriggerScript playerAtkTrigger;
     Animator myAtor;
 
-    bool atkActive;
-    bool slashActive;
-    bool bashActive;
+
 
 	void Start () {
         playerClss = this.transform.parent.GetComponent<PlayerClass>();
@@ -39,6 +37,8 @@ public class AnimationController : MonoBehaviour {
 
         SetAtorBool("SlashEnable", playerAtkTrigger.inRazor);
         SetAtorBool("BashEnable", playerAtkTrigger.inBashing);
+        SetAtorBool("DodgeEnable", !playerClss.hittable);
+
     }
 
     void SetAtorBool(string boolVar, bool actionVar)

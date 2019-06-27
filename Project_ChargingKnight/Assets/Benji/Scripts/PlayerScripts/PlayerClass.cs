@@ -32,9 +32,10 @@ public class PlayerClass : MonoBehaviour {
     Vector3 controllerDir;
     Vector3 dodgeDir;
 
+    [HideInInspector]
+    public bool dodgeState;
     bool accelerationState;
     float accelerationTime;
-    bool dodgeState;
     float dodgeTime;
     int playerDirFaced;
 
